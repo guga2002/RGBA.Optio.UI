@@ -36,14 +36,25 @@ namespace RGBA.Optio.Core.Repositories
 
         public IValuteCourse IValuteCourse => new ValuteRepository(db);
 
+        public async Task CheckAndCommitAsync()
+        {
+            try
+            {
+              await  db.SaveChangesAsync();
+              await db.Database.CommitTransactionAsync();
+            }
+            catch (Exception)
+            {
+                await db.Database.RollbackTransactionAsync();
+            }
+        }
+
         public void Dispose()
         {
             db.Dispose();
+            _userManager.Dispose();
+            _roleManager.Dispose();
         }
 
-        public async Task SaveAsync()
-        {
-           await db.SaveChangesAsync();
-        }
     }
 }

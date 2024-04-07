@@ -5,12 +5,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Optio.Core.Entities
 {
     [Table("Channels")]
-    [Index(nameof(ChannelType),IsUnique =true)]
+    [Index(nameof(ChannelType),IsUnique =true,IsDescending =new bool[] {true})]
     public class Channels:AbstractClass
     {
         [Column("Channel_Type")]
-        [MaxLength(50)]
+        [StringLength(50,ErrorMessage ="Such  a  CHanell Name  is not Valid",MinimumLength =2)]
         public required string ChannelType { get; set; }
-        public required IEnumerable<Transaction> Transactions { get; set;}
+
+        public virtual IEnumerable<Transaction> Transactions { get; set;}
+
     }
 }

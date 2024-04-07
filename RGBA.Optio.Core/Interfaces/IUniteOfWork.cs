@@ -19,6 +19,6 @@ namespace RGBA.Optio.Core.Interfaces
         IUserRepository UserRepository { get; }
        
         IValuteCourse IValuteCourse { get; }
-        Task SaveAsync();
+        Task CheckAndCommitAsync();
     }
 }

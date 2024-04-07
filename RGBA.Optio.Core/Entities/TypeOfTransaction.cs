@@ -1,24 +1,18 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Optio.Core.Entities
 {
-
     [Table("TypeOfTransactions")]
-    [Index(nameof(TransactionName),IsUnique =true)]
+    [Index(nameof(TransactionName),IsUnique =true,IsDescending =new bool[] { true })]
     public class TypeOfTransaction:AbstractClass
     {
         [Column("Transaction_Name")]
-        [MaxLength(100)]
+        [StringLength(100,ErrorMessage ="Transaction name is not valid!!",MinimumLength =3)]
         public required string TransactionName { get; set; }
 
-        public required IEnumerable<Transaction> Transactions { get; set; }
+        public virtual IEnumerable<Transaction> Transactions { get; set; }
 
     }
 }

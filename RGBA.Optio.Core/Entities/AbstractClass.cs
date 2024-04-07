@@ -6,7 +6,8 @@ namespace Optio.Core.Entities
         [Key]
         public Guid Id { get; set; }
         protected AbstractClass()
-        {       
+        {  
+            Id = Guid.NewGuid();
         }
     }
 }

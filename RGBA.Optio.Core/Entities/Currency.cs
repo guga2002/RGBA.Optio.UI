@@ -6,18 +6,20 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace RGBA.Optio.Core.Entities
 {
     [Table("Curencies")]
+    [Index(nameof(NameOfValute),IsDescending =new bool[]{true})]
+    [Index(nameof(CurrencyCode),IsUnique =true,IsDescending =new bool[] { true })]
     public class Currency
     {
         [Key]
         public int Id { get; set; }
 
         [Column("Name_Of_Valute")]
-        [MaxLength(30)]
+        [StringLength(30,ErrorMessage ="No such a valute exist",MinimumLength =2)]
         [Unicode(false)]
         public required string NameOfValute { get; set; }
 
         [Column("Currency_Code")]
-        [MaxLength(15)]
+        [StringLength(30, ErrorMessage = "Curency code is not valid", MinimumLength = 2)]
         [Unicode(false)]
         public required string CurrencyCode {  get; set; }
 

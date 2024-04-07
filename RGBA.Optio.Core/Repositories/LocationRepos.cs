@@ -2,11 +2,6 @@
 using Optio.Core.Data;
 using Optio.Core.Entities;
 using Optio.Core.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Optio.Core.Repositories
 {

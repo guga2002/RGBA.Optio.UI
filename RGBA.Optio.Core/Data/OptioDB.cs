@@ -9,11 +9,13 @@ namespace Optio.Core.Data
     { 
         public OptioDB(DbContextOptions<OptioDB> bs) : base(bs) { }
 
-        public DbSet<Category> CategoryOfTransactions { get; set; }
-        public DbSet<Channels>Channels { get; set; }
-        public DbSet<Location> Locations { get; set; }
-        public DbSet<Merchant> Merchants { get; set; }
-        public DbSet<Transaction> Transactions { get; set; }
-        public DbSet<TypeOfTransaction> Types { get; set; }
+        public virtual DbSet<Category> CategoryOfTransactions { get; set; }
+        public virtual DbSet<Channels>Channels { get; set; }
+        public virtual DbSet<Location> Locations { get; set; }
+        public virtual DbSet<Merchant> Merchants { get; set; }
+        public virtual DbSet<Transaction> Transactions { get; set; }
+        public virtual DbSet<TypeOfTransaction> Types { get; set; }
+        public virtual DbSet<ValuteCourse> ValuteCourses { get; set; }
+        public virtual DbSet<Currency> Currencies { get; set; }
     }
 }

@@ -1,21 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Optio.Core.Entities
 {
     [Table("Merchants")]
-    [Index(nameof(Name),IsUnique =true)]
+    [Index(nameof(Name),IsUnique =true,IsDescending =new bool[] { true })]
     public class Merchant:AbstractClass
     {
         [Column("Name")]
-        [MaxLength(50)]
+        [StringLength(50,ErrorMessage ="Mercvhant name is not valid!",MinimumLength =3)]
         public required string Name { get; set; }
-        public required IEnumerable<Transaction> Transactions { get; set; }
+
+        public virtual IEnumerable<Transaction> Transactions { get; set; }
     }
 }

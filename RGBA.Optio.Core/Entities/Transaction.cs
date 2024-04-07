@@ -19,6 +19,9 @@ namespace Optio.Core.Entities
         [Column("Amount_Equivalent")]
         public decimal AmountEquivalent { get; set; }
 
+        [Column("Transaction_Status")]
+        public bool IsActive { get; set; } = true;
+
         [ForeignKey("Currency")]
         public int CurrencyId { get; set; }
 

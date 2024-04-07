@@ -21,64 +21,106 @@ namespace RGBA.Optio.Core.Repositories
 
         public async Task<bool> AddRoles(string RoleName)
         {
-            var res = await _roleManager.RoleExistsAsync(RoleName.ToUpper());
-            if(!res)
+            try
             {
-                await _roleManager.CreateAsync(new IdentityRole(RoleName));
-                return true;
+                var res = await _roleManager.RoleExistsAsync(RoleName.ToUpper());
+                if (!res)
+                {
+                    await _roleManager.CreateAsync(new IdentityRole(RoleName));
+                    return true;
+                }
+                return false;
             }
-            return false;
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public async  Task<bool> AssignRoleToUser(string UserId, string Role)
         {
-            var res = context.Users.Where(io => io.Id == UserId).FirstOrDefault();
-            if(res!=null)
+            try
             {
-                if (await _roleManager.RoleExistsAsync(Role))
+                var res = context.Users.Where(io => io.Id == UserId).FirstOrDefault();
+                if (res != null)
                 {
-                    await _userManager.AddToRoleAsync(res, Role);
-                    return true;
+                    if (await _roleManager.RoleExistsAsync(Role))
+                    {
+                        await _userManager.AddToRoleAsync(res, Role);
+                        return true;
+                    }
                 }
+                return false;
             }
-            return false;
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public async Task<bool> RegisterUser(User User, string Password)
         {
-            var res=await _userManager.AddPasswordAsync(User, Password);
-            if(res.Succeeded)
+            try
             {
-                return true;
+                var res = await _userManager.AddPasswordAsync(User, Password);
+                if (res.Succeeded)
+                {
+                    return true;
+                }
+                return false;
             }
-            return false;
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public async Task<bool> ResetPassword(string UserId,string OldPassword, string NewPassword)
         {
-            var res = context.Users.Where(io => io.Id == UserId).FirstOrDefault();
-            if(res!=null)
+            try
             {
-                await _userManager.ChangePasswordAsync(res, OldPassword, NewPassword);
-                return true;
+                var res = context.Users.Where(io => io.Id == UserId).FirstOrDefault();
+                if (res != null)
+                {
+                    await _userManager.ChangePasswordAsync(res, OldPassword, NewPassword);
+                    return true;
+                }
+                return false;
             }
-            return false;
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public async Task<bool> SignIn(string Username, string Password)
         {
-           var res=await _signInManager.PasswordSignInAsync(Username, Password,false,false);
-            if(res.Succeeded)
+            try
             {
-                return true;
+                var res = await _signInManager.PasswordSignInAsync(Username, Password, false, false);
+                if (res.Succeeded)
+                {
+                    return true;
+                }
+                return false;
             }
-            return false;
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public async Task<bool> SignOut()
         {
-          await _signInManager.SignOutAsync();
-            return true;
+            try
+            {
+                await _signInManager.SignOutAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

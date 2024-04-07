@@ -12,6 +12,9 @@ namespace Optio.Core.Entities
         [StringLength(100,ErrorMessage ="Transaction name is not valid!!",MinimumLength =3)]
         public required string TransactionName { get; set; }
 
+        [Column("Status_Of_Transaction_Type")]
+        public bool IsActive { get; set; } = true;
+
         public virtual IEnumerable<Transaction> Transactions { get; set; }
 
     }

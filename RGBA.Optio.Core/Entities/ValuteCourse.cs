@@ -18,6 +18,9 @@ namespace RGBA.Optio.Core.Entities
         [ForeignKey("Currency")]
         public int CurrencyID {  get; set; }
 
+        [Column("Status_Of_Valute")]
+        public bool IsActive { get; set; } = true;
+
         public virtual Currency Currency { get; set; }
     }
 }

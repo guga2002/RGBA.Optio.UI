@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -13,9 +14,11 @@ namespace Optio.Core.Entities
     [Index(nameof(TransactionName),IsUnique =true)]
     public class TypeOfTransaction:AbstractClass
     {
-        public string? TransactionName { get; set; }
+        [Column("Transaction_Name")]
+        [MaxLength(100)]
+        public required string TransactionName { get; set; }
 
-        public IEnumerable<Transaction>? Transactions { get; set; }
+        public required IEnumerable<Transaction> Transactions { get; set; }
 
     }
 }

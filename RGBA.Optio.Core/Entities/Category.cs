@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Optio.Core.Entities
@@ -7,8 +8,10 @@ namespace Optio.Core.Entities
     [Index(nameof(TransactionCategory),IsUnique = true)]
     public class Category:AbstractClass
     {
-        public string? TransactionCategory { get; set; }
+        [Column("Transaction_Category")]
+        [MaxLength(50)]
+        public required string TransactionCategory { get; set; }
 
-        public IEnumerable<Transaction>?Transactions { get; set; }
+        public required IEnumerable<Transaction> Transactions { get; set; }
     }
 }

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace RGBA.Optio.Core.Migrations
 {
     /// <inheritdoc />
-    public partial class migrate : Migration
+    public partial class UpdateTables : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -30,8 +30,8 @@ namespace RGBA.Optio.Core.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    User_Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    User_Surname = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    User_Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    User_Surname = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     User_BirthDay = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -58,7 +58,7 @@ namespace RGBA.Optio.Core.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    TransactionCategory = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    TransactionCategory = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -70,7 +70,7 @@ namespace RGBA.Optio.Core.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ChannelType = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    ChannelType = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -78,11 +78,24 @@ namespace RGBA.Optio.Core.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Curencies",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    NameOfValute = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Curencies", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Locations",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    LocationName = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    LocationName = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -94,7 +107,7 @@ namespace RGBA.Optio.Core.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -106,7 +119,7 @@ namespace RGBA.Optio.Core.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    TransactionName = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    TransactionName = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -220,13 +233,33 @@ namespace RGBA.Optio.Core.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ValutesCourses",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Amount = table.Column<float>(type: "real", nullable: false),
+                    DateOfValuteCourse = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CurrencyID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ValutesCourses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ValutesCourses_Curencies_CurrencyID",
+                        column: x => x.CurrencyID,
+                        principalTable: "Curencies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Transactions",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Currency = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Date_Of_Transaction = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Amount = table.Column<float>(type: "real", nullable: false),
+                    CurencyId = table.Column<int>(type: "int", nullable: false),
                     AmountEquivalent = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     TypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -247,6 +280,12 @@ namespace RGBA.Optio.Core.Migrations
                         name: "FK_Transactions_Channels_ChannelId",
                         column: x => x.ChannelId,
                         principalTable: "Channels",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Transactions_Curencies_CurencyId",
+                        column: x => x.CurencyId,
+                        principalTable: "Curencies",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -312,34 +351,25 @@ namespace RGBA.Optio.Core.Migrations
                 name: "IX_CategoryOfTransactions_TransactionCategory",
                 table: "CategoryOfTransactions",
                 column: "TransactionCategory",
-                unique: true,
-                filter: "[TransactionCategory] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Channels_ChannelType",
                 table: "Channels",
                 column: "ChannelType",
-                unique: true,
-                filter: "[ChannelType] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Locations_LocationName",
                 table: "Locations",
                 column: "LocationName",
-                unique: true,
-                filter: "[LocationName] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Merchants_Name",
                 table: "Merchants",
                 column: "Name",
-                unique: true,
-                filter: "[Name] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Transactions_Amount",
-                table: "Transactions",
-                column: "Amount");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Transactions_CategoryId",
@@ -352,9 +382,9 @@ namespace RGBA.Optio.Core.Migrations
                 column: "ChannelId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Transactions_Currency",
+                name: "IX_Transactions_CurencyId",
                 table: "Transactions",
-                column: "Currency");
+                column: "CurencyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Transactions_LocationId",
@@ -375,8 +405,12 @@ namespace RGBA.Optio.Core.Migrations
                 name: "IX_TypeOfTransactions_TransactionName",
                 table: "TypeOfTransactions",
                 column: "TransactionName",
-                unique: true,
-                filter: "[TransactionName] IS NOT NULL");
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ValutesCourses_CurrencyID",
+                table: "ValutesCourses",
+                column: "CurrencyID");
         }
 
         /// <inheritdoc />
@@ -401,6 +435,9 @@ namespace RGBA.Optio.Core.Migrations
                 name: "Transactions");
 
             migrationBuilder.DropTable(
+                name: "ValutesCourses");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
@@ -420,6 +457,9 @@ namespace RGBA.Optio.Core.Migrations
 
             migrationBuilder.DropTable(
                 name: "TypeOfTransactions");
+
+            migrationBuilder.DropTable(
+                name: "Curencies");
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,10 @@ namespace Optio.Core.Entities
     [Index(nameof(LocationName),IsUnique =true)]
     public class Location:AbstractClass
     {
-        public string? LocationName {  get; set; }
-        public IEnumerable<Transaction>? Transactions { get; set; }
+        [Column("Location_Name")]
+        [MaxLength(50)]
+        public required string LocationName {  get; set; }
+
+        public required IEnumerable<Transaction> Transactions { get; set; }
     }
 }

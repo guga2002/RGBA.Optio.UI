@@ -1,4 +1,5 @@
 ﻿using Optio.Core.Entities;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RGBA.Optio.Core.Entities
@@ -6,10 +7,15 @@ namespace RGBA.Optio.Core.Entities
     [Table("ValutesCourses")]
     public class ValuteCourse:AbstractClass
     {
-        public string ValuteName { get; set; }
+        [Column("Exchange_Rate")]
+        public float ExchangeRate { get; set; }
 
-        public float Amount { get; set; }
+        [Column("Last_Updated")]
+        public DateTime DateOfValuteCourse { get; set; }
 
-        public DateTime dateOfValuteCourse { get; set; }
+        [ForeignKey("Currency")]
+        public int CurrencyID {  get; set; }
+
+        public Currency Currency { get; set; }
     }
 }

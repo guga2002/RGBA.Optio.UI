@@ -11,10 +11,10 @@ namespace Optio.Core.Repositories
         private readonly DbSet<Transaction> transactions;
         private readonly CacheService _cache;
 
-        public TransactionRepos(OptioDB optioDB, CacheService _cache) :base(optioDB)
+        public TransactionRepos(OptioDB optioDB, CacheService cache) :base(optioDB)
         {
             transactions=context.Set<Transaction>();
-            this._cache = _cache;
+            this._cache = cache;
         }
 
         public async Task<bool> Add(Transaction entity)

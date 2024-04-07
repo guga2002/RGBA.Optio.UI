@@ -42,6 +42,8 @@ builder.Services.AddScoped<ITransactionService, TransactionService>();
 
 builder.Services.AddSingleton<CacheService>();
 
+builder.Services.AddMemoryCache();
+
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
 builder.Services.AddDbContext<OptioDB>(opt =>

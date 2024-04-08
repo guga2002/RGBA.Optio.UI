@@ -16,6 +16,8 @@ namespace RGBA.Optio.Domain.Models
         [Required]
         public string Email { get; set; }
 
+        public string PersonalNumber { get; set; }
+
         [Required]
         public string Password { get; set; }
     }

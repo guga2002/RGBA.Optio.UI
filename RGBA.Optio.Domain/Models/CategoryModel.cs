@@ -4,7 +4,10 @@ namespace RGBA.Optio.Domain.Models
 {
     public class CategoryModel
     {
-        [Required]
-        public string TransactionCategory { get; set; }
+        [Required(ErrorMessage = "Category  Name is required.")]
+        [StringLength(50, ErrorMessage = "Category Name is not valid", MinimumLength = 3)]
+        [Display(Name = "Transaction category name")]
+        [RegularExpression(@"^[a-zA-Z\s]*$", ErrorMessage = "Transaction Type Name should contain only letters and spaces.")]
+        public required string TransactionCategory { get; set; }
     }
 }

@@ -12,6 +12,8 @@ namespace Optio.Core.Entities
         [StringLength(50,ErrorMessage ="Location name is not valid",MinimumLength =3)]
         public required string LocationName {  get; set; }
 
+        public bool IsActive { get; set; } = true;
+
         public virtual IEnumerable<Transaction> Transactions { get; set; }
     }
 }

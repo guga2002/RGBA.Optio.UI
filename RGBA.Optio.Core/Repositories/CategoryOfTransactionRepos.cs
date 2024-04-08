@@ -2,47 +2,146 @@
 using Optio.Core.Data;
 using Optio.Core.Interfaces;
 using Optio.Core.Entities;
+using DnsClient.Protocol;
 
 namespace Optio.Core.Repositories
 {
     public class CategoryOfTransactionRepos : AbstractClass, ICategoryRepo
     {
-        private readonly DbSet<CategoryOfTransactionRepos> categoriesOfTransactionRepos;
+        private readonly DbSet<Category> categoriesOfTransactionRepos;
 
         public CategoryOfTransactionRepos(OptioDB optioDB):base(optioDB)
         {
-            categoriesOfTransactionRepos= context.Set<CategoryOfTransactionRepos>();
+            categoriesOfTransactionRepos = context.Set<Category>();
         }
 
     
-        public Task<bool> Add(Category entity)
+        public async Task<bool> Add(Category entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var category = await categoriesOfTransactionRepos.SingleOrDefaultAsync(i=>i.TransactionCategory == entity.TransactionCategory);
+                if (category == null)
+                {
+                    await categoriesOfTransactionRepos.AddAsync(entity);
+                    await context.SaveChangesAsync();
+                    return true;
+                }
+                throw new ArgumentException("There is a similar category");
+                
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
-        public Task<IEnumerable<Category>> GetAll()
+
+        public async Task<IEnumerable<Category>> GetAll()
         {
-            throw new NotImplementedException();
+            try
+            {
+                var entities = await categoriesOfTransactionRepos.AsNoTracking().ToListAsync();
+                if (entities.Any())
+                {
+                    return entities;
+                }
+               else return Enumerable.Empty<Category>();
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
-        public Task<Category> GetById(Guid id)
+
+        public async Task<Category> GetById(Guid id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var category = await categoriesOfTransactionRepos.AsNoTracking().SingleOrDefaultAsync(i => i.Id == id);
+                if(category == null)
+                {
+                    throw new InvalidOperationException($"Category with ID {id} was not found.");
+                }
+                    return category;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
         }
 
-        public Task<bool> Remove(Category entity)
+
+        public async Task<bool> Remove(Category entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var category = await categoriesOfTransactionRepos.Where(i => i.TransactionCategory == entity.TransactionCategory).SingleOrDefaultAsync();
+                if (category == null)
+                {
+                    throw new InvalidOperationException("There is no such category");
+                }
+                categoriesOfTransactionRepos.Remove(entity);
+                context.SaveChanges();
+                return true;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
         }
 
-        public Task<bool> SoftDelete(Guid id)
+
+        public async Task<bool> SoftDelete(Guid id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var category = await categoriesOfTransactionRepos.SingleOrDefaultAsync(i => i.Id == id);
+                if (category == null)
+                {
+                    throw new InvalidOperationException("There is no such category");
+                }
+                category.IsActive = false;
+                context.SaveChanges();
+                return true;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
-        public Task<bool> Update(Category entity)
+
+        public async Task<bool> Update(Category entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var category = await categoriesOfTransactionRepos.SingleOrDefaultAsync(i => i.Id == entity.Id);
+                if (category == null)
+                {
+                    throw new InvalidOperationException("There is no such category");
+                }
+                else
+                {
+                    category.TransactionCategory = entity.TransactionCategory;
+                    category.IsActive = entity.IsActive;
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

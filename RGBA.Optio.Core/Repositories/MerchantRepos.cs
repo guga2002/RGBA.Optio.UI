@@ -1,12 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Optio.Core.Data;
 using Optio.Core.Entities;
 using Optio.Core.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Optio.Core.Repositories
 {
@@ -20,34 +17,164 @@ namespace Optio.Core.Repositories
         }
       
 
-        public Task<bool> Add(Entities.Merchant entity)
+        public async Task<bool> Add(Merchant entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var obj = merchant.SingleOrDefaultAsync(i => i.Name.ToLower() == entity.Name.ToLower());
+                if (obj == null)
+                {
+                    await merchant.AddAsync(entity);
+                    await context.SaveChangesAsync();
+                    return true;
+                }
+                else
+                {
+                    throw new InvalidOperationException("Such a merchant already exists");
+                }
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
-        public Task<IEnumerable<Entities.Merchant>> GetAll()
+        public async Task<IEnumerable<Merchant>> GetAll()
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (merchant.IsNullOrEmpty())
+                {
+                    throw new InvalidOperationException("No merchants found");
+                }
+                else
+                {
+                    return await merchant
+                        .AsNoTracking()
+                        .ToListAsync();
+                }
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
-        public Task<Entities.Merchant> GetById(Guid id)
+        public async Task<IEnumerable<Merchant>> GetAllActiveMerchant()
         {
-            throw new NotImplementedException();
+            try
+            {
+                var store = await merchant.AsNoTracking().Where(i => i.IsActive == true).ToListAsync();
+                if (store == null)
+                {
+                    throw new InvalidOperationException("No active merchants found");
+                }
+                else
+                {
+                    return store;
+                }
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
-        public Task<bool> Remove(Entities.Merchant entity)
+        public async Task<Merchant> GetById(Guid id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var store = await merchant.AsNoTracking().SingleOrDefaultAsync(i => i.Id == id);
+                if (store == null)
+                {
+                    throw new InvalidOperationException("No merchant found");
+                }
+                else
+                {
+                    return store;
+                }
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
-        public Task<bool> SoftDelete(Guid id)
+        public async Task<bool> Remove(Merchant entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var store = await merchant.SingleOrDefaultAsync(i => i.Name.ToLower() == entity.Name.ToLower());
+                if (store == null)
+                {
+                    throw new InvalidOperationException("No merchant found");
+                }
+                else
+                {
+                    merchant.Remove(store);
+                    await context.SaveChangesAsync();
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
-        public Task<bool> Update(Entities.Merchant entity)
+        public async Task<bool> SoftDelete(Guid id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var store=await merchant.SingleOrDefaultAsync(i=>i.Id==id);
+                if (store == null)
+                {
+                    throw new InvalidOperationException("No merchant found");
+                }
+                else
+                {
+                    store.IsActive = false;
+                    await context.SaveChangesAsync();
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public async Task<bool> Update(Merchant entity)
+        {
+            try
+            {
+                var store = await merchant.SingleOrDefaultAsync(i => i.Id == entity.Id);
+                if (store == null)
+                {
+                    throw new InvalidOperationException("No merchant found");
+                }
+                else
+                {
+                    store.IsActive = entity.IsActive;
+                    store.Name = entity.Name;
+                    await context.SaveChangesAsync();
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
     }
 }

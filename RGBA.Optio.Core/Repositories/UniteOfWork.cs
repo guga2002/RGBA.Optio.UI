@@ -56,5 +56,6 @@ namespace RGBA.Optio.Core.Repositories
             _roleManager.Dispose();
         }
 
+       
     }
 }

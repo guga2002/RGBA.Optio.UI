@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Optio.Core.Data;
 using Optio.Core.Entities;
 using Optio.Core.Interfaces;
+using SharpCompress.Common;
 
 namespace Optio.Core.Repositories
 {
@@ -15,34 +17,157 @@ namespace Optio.Core.Repositories
         }
       
 
-        public Task<bool> Add(Location entity)
+        public async Task<bool> Add(Location entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var city = await locations.SingleOrDefaultAsync(i => i.LocationName.ToLower() == entity.LocationName.ToLower());
+                if (city != null)
+                {
+                    throw new InvalidOperationException("Such a city already exists");
+                }
+                else
+                {
+                    await locations.AddAsync(entity);
+                    await context.SaveChangesAsync();
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
-        public Task<IEnumerable<Location>> GetAll()
+        public async Task<IEnumerable<Location>> GetAll()
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (locations.IsNullOrEmpty())
+                {
+                    throw new InvalidOperationException("No cities found");
+                }
+                return await locations.AsNoTracking().ToListAsync();
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
-        public Task<Location> GetById(Guid id)
+        public async Task<IEnumerable<Location>> GetAllActiveLocation()
         {
-            throw new NotImplementedException();
+            try
+            {
+                var city = await locations.AsNoTracking().Where(i => i.IsActive == true).ToListAsync();
+                if (city == null)
+                {
+                    throw new InvalidOperationException("No active city found");
+                }
+                else
+                {
+                    return city;
+                }
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
-        public Task<bool> Remove(Location entity)
+        public async Task<Location> GetById(Guid id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var city = await locations.Where(i => i.Id == id).SingleOrDefaultAsync();
+                if (city == null)
+                {
+                    throw new InvalidOperationException("No such city was found");
+                }
+                else return city;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
-        public Task<bool> SoftDelete(Guid id)
+        public async Task<bool> Remove(Location entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var city = await locations.SingleOrDefaultAsync(i => i.LocationName.ToLower() == entity.LocationName.ToLower());
+                if (city == null)
+                {
+                    throw new InvalidOperationException("No such city was found");
+                }
+                else
+                {
+                    locations.Remove(entity);
+                    await context.SaveChangesAsync();
+                    return true;
+                }
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
-        public Task<bool> Update(Location entity)
+        public async Task<bool> SoftDelete(Guid id)
         {
-            throw new NotImplementedException();
+            try
+            {
+            var city = await locations.SingleOrDefaultAsync(i => i.Id == id);
+                if (city == null)
+                {
+                    throw new InvalidOperationException("No such city was found");
+                }
+                else
+                {
+                    city.IsActive = false;
+                    await context.SaveChangesAsync();
+                    return true;
+                }
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public async Task<bool> Update(Location entity)
+        {
+            try
+            {
+                var city = await locations.SingleOrDefaultAsync(i => i.Id == entity.Id);
+                if (city == null)
+                {
+                    throw new InvalidOperationException("No such city was found");
+                }
+                else
+                {
+                    city.IsActive = entity.IsActive;
+                    city.LocationName = entity.LocationName;
+                    await context.SaveChangesAsync();
+                    return true;
+                }
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
     }
 }

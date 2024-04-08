@@ -12,6 +12,8 @@ namespace Optio.Core.Entities
         [StringLength(50,ErrorMessage ="Such  a  CHanell Name  is not Valid",MinimumLength =2)]
         public required string ChannelType { get; set; }
 
+        public bool IsActive { get; set; }=true;
+
         public virtual IEnumerable<Transaction> Transactions { get; set;}
 
     }

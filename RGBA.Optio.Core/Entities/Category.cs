@@ -12,6 +12,10 @@ namespace Optio.Core.Entities
         [StringLength(50,ErrorMessage ="Such Transaction Cattegory is not valid",MinimumLength=4)]
         public required string TransactionCategory { get; set; }
 
+        public bool IsActive { get; set; } = true;
+
         public virtual IEnumerable<Transaction> Transactions { get; set; }
+
+        
     }
 }

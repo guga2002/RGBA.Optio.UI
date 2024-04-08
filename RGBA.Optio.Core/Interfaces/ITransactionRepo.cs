@@ -1,4 +1,6 @@
-﻿using System.Transactions;
+﻿
+
+using Optio.Core.Entities;
 
 namespace Optio.Core.Interfaces
 {
@@ -6,6 +8,6 @@ namespace Optio.Core.Interfaces
     {
         Task<IEnumerable<Transaction>> GetAllWithDetails();
 
-        Task<Transaction> GetByIdWithDetails();
+        Task<Transaction> GetByIdWithDetails(Guid Id);
     }
 }

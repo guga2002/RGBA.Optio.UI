@@ -7,6 +7,7 @@ using Optio.Core.Interfaces;
 using Optio.Core.Repositories;
 using RGBA.Optio.Core.Entities;
 using RGBA.Optio.Core.Interfaces;
+using RGBA.Optio.Core.PerformanceImprovmentServices;
 using RGBA.Optio.Core.Repositories;
 using RGBA.Optio.Domain;
 using RGBA.Optio.Domain.Interfaces;
@@ -38,6 +39,10 @@ builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<IStatisticService, StatisticService>();
 builder.Services.AddScoped<ITransactionEventService, TransactionEventService>();
 builder.Services.AddScoped<ITransactionService, TransactionService>();
+
+builder.Services.AddSingleton<CacheService>();
+
+builder.Services.AddMemoryCache();
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 

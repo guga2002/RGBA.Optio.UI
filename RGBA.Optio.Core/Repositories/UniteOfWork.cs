@@ -4,6 +4,7 @@ using Optio.Core.Interfaces;
 using Optio.Core.Repositories;
 using RGBA.Optio.Core.Entities;
 using RGBA.Optio.Core.Interfaces;
+using RGBA.Optio.Core.PerformanceImprovmentServices;
 
 namespace RGBA.Optio.Core.Repositories
 {
@@ -13,12 +14,14 @@ namespace RGBA.Optio.Core.Repositories
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        public UniteOfWork(OptioDB db, UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole> role)
+        private readonly CacheService chash;
+        public UniteOfWork(OptioDB db, UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole> role,CacheService cash)
         {
             this.db = db;
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = role;
+            this.chash = cash;
         }
         public ICategoryRepo CategoryOfTransactionRepository =>new CategoryOfTransactionRepos(db);
 
@@ -28,7 +31,7 @@ namespace RGBA.Optio.Core.Repositories
 
         public IMerchantRepo MerchantRepository => new MerchantRepos(db);
 
-        public ITransactionRepo TransactionRepository => new TransactionRepos(db);
+        public ITransactionRepo TransactionRepository => new TransactionRepos(db,chash);
 
         public ITypeOfTransactionRepo TypeOfTransactionRepository => new TypeOfTransactionRepos(db);
 

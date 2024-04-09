@@ -23,11 +23,11 @@ namespace RGBA.Optio.Core.Repositories
             _roleManager = role;
             this.chash = cash;
         }
-        public ICategoryRepo CategoryOfTransactionRepository =>new CategoryOfTransactionRepos(db);
+        public ICategoryRepo CategoryOfTransactionRepository =>new CategoryOfTransactionRepos(db,chash);
 
-        public IChannel ChanellRepository => new ChannelRepos(db);
+        public IChannelRepo ChanellRepository => new ChannelRepos(db,chash);
 
-        public ILocationRepo LocationRepository => new LocationRepos(db);
+        public ILocationRepo LocationRepository => new LocationRepos(db, chash);
 
         public IMerchantRepo MerchantRepository => new MerchantRepos(db);
 

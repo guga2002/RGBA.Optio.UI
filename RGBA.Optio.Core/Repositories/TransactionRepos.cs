@@ -44,6 +44,7 @@ namespace Optio.Core.Repositories
             }
         }
 
+
         Func<OptioDB, IEnumerable<Transaction>> CompiledQUeryGetAll =
             EF.CompileQuery(
                 (OptioDB db) =>

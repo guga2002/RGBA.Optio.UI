@@ -9,6 +9,6 @@ namespace Optio.Core.Interfaces
 {
     public interface ICategoryRepo:ICrudRepo<Category>
     {
-     
+        Task<IEnumerable<Category>> GetAllActive();
     }
 }

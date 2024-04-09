@@ -3,6 +3,7 @@ using Microsoft.IdentityModel.Tokens;
 using Optio.Core.Data;
 using Optio.Core.Entities;
 using Optio.Core.Interfaces;
+using RGBA.Optio.Core.PerformanceImprovmentServices;
 using SharpCompress.Common;
 
 namespace Optio.Core.Repositories
@@ -10,10 +11,12 @@ namespace Optio.Core.Repositories
     public class LocationRepos : AbstractClass, ILocationRepo
     {
         private readonly DbSet<Location> locations;
+        private readonly CacheService cacheService;
 
-        public LocationRepos(OptioDB optioDB):base(optioDB)
+        public LocationRepos(OptioDB optioDB, CacheService cacheService):base(optioDB)
         {
             locations=context.Set<Location>();
+            this.cacheService=cacheService;
         }
       
 
@@ -82,12 +85,19 @@ namespace Optio.Core.Repositories
         {
             try
             {
-                var city = await locations.Where(i => i.Id == id).SingleOrDefaultAsync();
-                if (city == null)
-                {
-                    throw new InvalidOperationException("No such city was found");
-                }
-                else return city;
+                string key = $"Location by Id:{id}";
+                await Task.Delay(1);
+                Location location = cacheService.GetOrCreate(
+                    key, () =>
+                    {
+                        return locations
+                        .AsNoTracking()
+                        .Single(i => i.Id == id) ??
+                        throw new ArgumentException($"No location found by id: {id}");
+
+                    }, TimeSpan.FromMinutes(15)
+                    ) ;
+                return location ?? throw new ArgumentException($"No location found by id: {id}"); ;
 
             }
             catch (Exception)
@@ -156,12 +166,15 @@ namespace Optio.Core.Repositories
                 }
                 else
                 {
-                    city.IsActive = entity.IsActive;
-                    city.LocationName = entity.LocationName;
+                    locations.Entry(city).CurrentValues.SetValues(entity);
                     await context.SaveChangesAsync();
                     return true;
                 }
 
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                throw;
             }
             catch (Exception)
             {

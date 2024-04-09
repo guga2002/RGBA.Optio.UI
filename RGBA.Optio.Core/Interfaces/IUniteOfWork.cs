@@ -6,7 +6,7 @@ namespace RGBA.Optio.Core.Interfaces
     {
         ICategoryRepo CategoryOfTransactionRepository { get; }
 
-        IChannel ChanellRepository { get; }
+        IChannelRepo ChanellRepository { get; }
 
         ILocationRepo LocationRepository { get; }
 

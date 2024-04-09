@@ -164,11 +164,14 @@ namespace Optio.Core.Repositories
                 }
                 else
                 {
-                    store.IsActive = entity.IsActive;
-                    store.Name = entity.Name;
-                    await context.SaveChangesAsync();
+                    merchant.Entry(store).CurrentValues.SetValues(entity);
+                    await context.SaveChangesAsync();   
                     return true;
                 }
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                throw;
             }
             catch (Exception)
             {

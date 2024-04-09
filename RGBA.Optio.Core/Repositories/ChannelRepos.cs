@@ -1,20 +1,21 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using Optio.Core.Data;
 using Optio.Core.Entities;
 using Optio.Core.Interfaces;
-using SharpCompress.Common;
+using RGBA.Optio.Core.PerformanceImprovmentServices;
 
 namespace Optio.Core.Repositories
 {
-    public class ChannelRepos :AbstractClass, IChannel
+    public class ChannelRepos :AbstractClass,IChannelRepo
     {
       
         private readonly DbSet<Channels> channels;
+        private readonly CacheService cacheService;
 
-        public ChannelRepos(OptioDB optioDB):base(optioDB)
+        public ChannelRepos(OptioDB optioDB, CacheService cacheService) :base(optioDB)
         {
             channels = optioDB.Set<Channels>();
+            this.cacheService = cacheService;
         }
      
 
@@ -41,16 +42,24 @@ namespace Optio.Core.Repositories
         }
 
 
+        Func<OptioDB, IEnumerable<Channels>> CompiledQueryGetAll =
+            EF.CompileQuery(
+                (OptioDB db) =>
+                db.Channels.ToList()
+                );
+
         public async Task<IEnumerable<Channels>> GetAll()
         {
             try
             {
-                if (channels.IsNullOrEmpty())
-                {
-                    throw new InvalidOperationException($"{nameof(channels)} is  empty");
-                }
-                return await channels.AsNoTracking().ToListAsync();
-
+                string cachekey = "all channels";
+                await Task.Delay(1);
+                IEnumerable<Channels> ch = cacheService.GetOrCreate(cachekey, () =>
+                    {
+                        return CompiledQueryGetAll.Invoke(context) ??
+                        throw new ArgumentException("No channel found");
+                    }, TimeSpan.FromMinutes(30)); 
+                return ch ?? throw new ArgumentException("No channel found");
             }
             catch (Exception)
             {
@@ -58,21 +67,28 @@ namespace Optio.Core.Repositories
             }
         }
 
+
+        Func<OptioDB, IEnumerable<Channels>?> CompiledQueryGetAllActiveChannel =
+            EF.CompileQuery(
+                (OptioDB db) =>
+                db.Channels
+                .Where(i=>i.IsActive==true)
+                .ToList()
+                );
 
         public async Task<IEnumerable<Channels>> GetAllActiveChannel()
         {
             try
             {
-                var channel = await channels.AsNoTracking().Where(i => i.IsActive == true).ToListAsync();
-                if (channel == null)
+                string cacheKey = "All Channels";
+                await Task.Delay(1);
+               IEnumerable<Channels> ch = cacheService.GetOrCreate(cacheKey, () =>
                 {
-                    throw new InvalidOperationException("No active channel found");
-                }
-                else
-                {
-                    return channel;
-                }
-
+                    return CompiledQueryGetAllActiveChannel.Invoke(context) ??
+                    throw new ArgumentException("No active channel found");
+                }, TimeSpan.FromMinutes(30)
+                    );
+                return ch ?? throw new ArgumentException("No active channel found");
             }
             catch (Exception)
             {
@@ -81,16 +97,24 @@ namespace Optio.Core.Repositories
         }
 
 
+        Func<OptioDB, Guid, Channels?> CompiledQueryGetBtId =
+            EF.CompileQuery(
+                (OptioDB db, Guid id) =>
+                db.Channels.SingleOrDefault(i=>i.Id==id)
+                );
         public async Task<Channels> GetById(Guid id)
         {
             try
             {
-                var channel = await channels.AsNoTracking().SingleOrDefaultAsync(i => i.Id == id);
-                if (channel == null)
+                string cacheKey = $"channel with {id}";
+                await Task.Delay(1);
+                Channels channel = cacheService.GetOrCreate(cacheKey, () =>
                 {
-                    throw new InvalidOperationException($"Channel not found with ID: {id}");
-                }
-                return channel;
+                    return CompiledQueryGetBtId.Invoke(context, id) ??
+                    throw new ArgumentException("No channel found");
+                }, TimeSpan.FromMinutes(15));
+
+                return channel ?? throw new ArgumentException("No channel found");
 
             }
             catch (Exception)
@@ -156,8 +180,7 @@ namespace Optio.Core.Repositories
                 var channel = await channels.SingleOrDefaultAsync(i => i.ChannelType == entity.ChannelType);
                 if (channel != null)
                 {
-                    channel.IsActive = entity.IsActive;
-                    channel.ChannelType = entity.ChannelType;
+                    context.Entry(channel).CurrentValues.SetValues(entity);
                     await context.SaveChangesAsync();
                     return true;
                 }
@@ -167,7 +190,11 @@ namespace Optio.Core.Repositories
                 }
 
             }
-            catch (Exception)
+            catch (DbUpdateConcurrencyException ex)
+            {
+                throw;
+            }
+            catch(Exception )
             {
                 throw;
             }

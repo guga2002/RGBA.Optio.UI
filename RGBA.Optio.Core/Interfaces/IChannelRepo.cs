@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Optio.Core.Interfaces
 {
-    public interface IChannel : ICrudRepo<Channels>
+    public interface IChannelRepo : ICrudRepo<Channels>
     {
         Task<IEnumerable<Channels>> GetAllActiveChannel();
     }

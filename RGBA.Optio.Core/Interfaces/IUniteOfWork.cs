@@ -15,8 +15,6 @@ namespace RGBA.Optio.Core.Interfaces
         ITransactionRepo TransactionRepository { get; }
 
         ITypeOfTransactionRepo TypeOfTransactionRepository { get; }
-
-        IUserRepository UserRepository { get; }
        
         IValuteCourse IValuteCourse { get; }
         Task CheckAndCommitAsync();

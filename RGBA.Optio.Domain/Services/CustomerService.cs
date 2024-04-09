@@ -1,15 +1,22 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.Logging;
 using RGBA.Optio.Core.Interfaces;
+using RGBA.Optio.Core.Repositories.UserRelate;
 using RGBA.Optio.Domain.Interfaces;
 using RGBA.Optio.Domain.Models;
 
 namespace RGBA.Optio.Domain.Services
 {
-    public class CustomerService : AbstractService<CustomerService>, ICustomerService
+    public class CustomerService : ICustomerService
     {
-        public CustomerService(IUniteOfWork work, IMapper map, ILogger<CustomerService> log) : base(work, map, log)
+        private readonly CustomRoleManager role;
+        private readonly CustomSignInManager signin;
+        private readonly CustomUserManager userManager;
+        public CustomerService(CustomSignInManager signin, CustomUserManager userManager,CustomRoleManager rol)
         {
+            this.signin = signin;
+            this.userManager = userManager;
+            role = rol;
         }
 
         public Task<bool> AddRolesAsync(string RoleName)

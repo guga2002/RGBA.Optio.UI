@@ -9,9 +9,9 @@ using RGBA.Optio.Core.Entities;
 using RGBA.Optio.Core.Interfaces;
 using RGBA.Optio.Core.PerformanceImprovmentServices;
 using RGBA.Optio.Core.Repositories;
-using RGBA.Optio.Domain;
 using RGBA.Optio.Domain.Interfaces;
 using RGBA.Optio.Domain.LoggerFiles;
+using RGBA.Optio.Domain.Mapper;
 using RGBA.Optio.Domain.Services;
 using System.Text;
 

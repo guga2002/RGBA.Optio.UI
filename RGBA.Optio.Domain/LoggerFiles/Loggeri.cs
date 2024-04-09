@@ -35,7 +35,7 @@ namespace RGBA.Optio.Domain.LoggerFiles
                {
                    { "LogLevel", logLevel.ToString() },
                    { "Message", formatter(state, exception) }
-            };
+                };
                 context.UserLogs.InsertOne(doc);
             }
         }

@@ -35,7 +35,6 @@ namespace RGBA.Optio.Core.Repositories
 
         public ITypeOfTransactionRepo TypeOfTransactionRepository => new TypeOfTransactionRepos(db);
 
-        public IUserRepository UserRepository => new UserRepository(db,_userManager,_signInManager,_roleManager);
 
         public IValuteCourse IValuteCourse => new ValuteRepository(db);
 

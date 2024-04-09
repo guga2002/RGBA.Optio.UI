@@ -9,6 +9,7 @@ using RGBA.Optio.Core.Entities;
 using RGBA.Optio.Core.Interfaces;
 using RGBA.Optio.Core.PerformanceImprovmentServices;
 using RGBA.Optio.Core.Repositories;
+using RGBA.Optio.Core.Repositories.UserRelate;
 using RGBA.Optio.Domain;
 using RGBA.Optio.Domain.Interfaces;
 using RGBA.Optio.Domain.LoggerFiles;
@@ -32,13 +33,16 @@ builder.Services.AddScoped<ILocationRepo, LocationRepos>();
 builder.Services.AddScoped<IMerchantRepo, MerchantRepos>();
 builder.Services.AddScoped<ITransactionRepo, TransactionRepos>();
 builder.Services.AddScoped<ITypeOfTransactionRepo, TypeOfTransactionRepos>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUniteOfWork, UniteOfWork>();
 
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<IStatisticService, StatisticService>();
 builder.Services.AddScoped<ITransactionEventService, TransactionEventService>();
 builder.Services.AddScoped<ITransactionService, TransactionService>();
+
+builder.Services.AddScoped<UserManager<User>, CustomUserManager>();
+builder.Services.AddScoped<SignInManager<User>, CustomSignInManager>();
+builder.Services.AddScoped<RoleManager<IdentityRole>, CustomRoleManager>();
 
 builder.Services.AddSingleton<CacheService>();
 
@@ -51,9 +55,14 @@ builder.Services.AddDbContext<OptioDB>(opt =>
     opt.UseSqlServer(builder.Configuration.GetConnectionString("OptiosString"));
 });
 
-builder.Services.AddIdentity<User, IdentityRole>().
-    AddEntityFrameworkStores<OptioDB>().
-    AddDefaultTokenProviders();
+
+builder.Services.AddIdentityApiEndpoints<User>()
+    .AddRoles<IdentityRole>()
+    .AddRoleManager<CustomRoleManager>()
+    .AddSignInManager<CustomSignInManager>()
+    .AddUserManager<CustomUserManager>()
+    .AddEntityFrameworkStores<OptioDB>()
+    .AddDefaultTokenProviders();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -81,7 +90,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.MapIdentityApi<User>();
 app.UseHttpsRedirection();
 app.UseRouting();
 app.UseAuthentication();

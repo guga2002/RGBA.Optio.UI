@@ -15,8 +15,4 @@
     <ProjectReference Include="..\RGBA.Optio.Core\RGBA.Optio.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Validation\" />
-  </ItemGroup>
-
 </Project>

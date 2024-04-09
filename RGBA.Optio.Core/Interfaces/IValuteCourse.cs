@@ -5,5 +5,6 @@ namespace RGBA.Optio.Core.Interfaces
 {
     public interface IValuteCourse:ICrudRepo<ValuteCourse>
     {
+        Task<IEnumerable<ValuteCourse>> GetAllActiveValuteAsync();
     }
 }

@@ -9,6 +9,6 @@ namespace Optio.Core.Interfaces
 {
     public interface ILocationRepo:ICrudRepo<Location>
     {
-        Task<IEnumerable<Location>> GetAllActiveLocation();
+        Task<IEnumerable<Location>> GetAllActiveLocationAsync();
     }
 }

@@ -4,11 +4,11 @@ namespace RGBA.Optio.Core.Interfaces
 {
     public interface IUserRepository
     {
-        Task<bool> RegisterUser(User User,string Password);
-        Task<bool> SignIn(string Username, string Password);
-        Task<bool> AddRoles(string RoleName);
-        Task<bool> AssignRoleToUser(string UserId, string Role);
-        Task<bool> ResetPassword(string UserId, string OldPassword, string NewPassword);
-        Task<bool> SignOut();
+        Task<bool> RegisterUserAsync(User User,string Password);
+        Task<bool> SignInAsync(string Username, string Password);
+        Task<bool> AddRolesAsync(string RoleName);
+        Task<bool> AssignRoleToUserAsync(string UserId, string Role);
+        Task<bool> ResetPasswordAsync(string UserId, string OldPassword, string NewPassword);
+        Task<bool> SignOutAsync();
     }
 }

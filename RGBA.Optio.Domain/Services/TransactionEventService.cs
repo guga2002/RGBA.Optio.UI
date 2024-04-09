@@ -12,162 +12,152 @@ namespace RGBA.Optio.Domain.Services
         {
         }
 
-        public Task<bool> Add(CategoryModel entity)
+        public Task<bool> AddAsync(CategoryModel entity)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> Add(ChanellModel entity)
+        public Task<bool> AddAsync(ChanellModel entity)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> Add(locationModel entity)
+        public Task<bool> AddAsync(locationModel entity)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> Add(MerchantModel entity)
+        public Task<bool> AddAsync(MerchantModel entity)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> Add(TransactionTypeModel entity)
+        public Task<bool> AddAsync(TransactionTypeModel entity)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> Add(ValuteModel entity)
+        public Task<bool> AddAsync(ValuteModel entity)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<CategoryModel>> GetAll()
+        public Task<IEnumerable<CategoryModel>> GetAllCategoriesAsync()
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<CategoryModel>> GetAllCategories()
+        public Task<IEnumerable<ChanellModel>> GetAllChanellsAsync()
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<ChanellModel>> GetAllChanells()
+        public Task<IEnumerable<locationModel>> GetAllLocationsAsync()
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<locationModel>> GetAllLocations()
+        public Task<IEnumerable<MerchantModel>> GetAllMerchantsAsync()
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<MerchantModel>> GetAllMerchants()
+        public Task<IEnumerable<TransactionTypeModel>> GetAllTransactionTypesAsync()
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<TransactionTypeModel>> GetAllTransactionTypes()
+        public Task<CategoryModel> GetcategoryByidAsync(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<CategoryModel> GetById(Guid id)
+        public Task<ChanellModel> GetChanellByIdAsync(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<CategoryModel> GetcategoryByid(Guid id)
+        public Task<locationModel> GetLocationByIdAsync(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<ChanellModel> GetChanellById(Guid id)
+        public Task<MerchantModel> GetMerchantByItAsync(Guid Id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<locationModel> GetLocationById(Guid id)
+        public Task<TransactionTypeModel> GetTransactionTypeByIdAsync(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<MerchantModel> GetMerchantByIt(Guid Id)
+        public Task<ValuteModel> GetValueByIdAsync(Guid Id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<TransactionTypeModel> GetTransactionTypeById(Guid id)
+        public Task<bool> RemoveAsync(CategoryModel entity)
         {
             throw new NotImplementedException();
         }
 
-        public Task<ValuteModel> GetValueById(Guid Id)
+        public Task<bool> RemoveAsync(ChanellModel entity)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> Remove(CategoryModel entity)
+        public Task<bool> RemoveAsync(locationModel entity)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> Remove(ChanellModel entity)
+        public Task<bool> RemoveAsync(MerchantModel entity)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> Remove(locationModel entity)
+        public Task<bool> RemoveAsync(TransactionTypeModel entity)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> Remove(MerchantModel entity)
+        public Task<bool> RemoveAsync(ValuteModel entity)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> Remove(TransactionTypeModel entity)
+        public Task<bool> SoftDeleteAsync(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> Remove(ValuteModel entity)
+        public Task<bool> UpdateAsync(CategoryModel entity)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> SoftDelete(Guid id)
+        public Task<bool> UpdateAsync(ChanellModel entity)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> Update(CategoryModel entity)
+        public Task<bool> UpdateAsync(locationModel entity)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> Update(ChanellModel entity)
+        public Task<bool> UpdateAsync(MerchantModel entity)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> Update(locationModel entity)
+        public Task<bool> UpdateAsync(TransactionTypeModel entity)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> Update(MerchantModel entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> Update(TransactionTypeModel entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> Update(ValuteModel entity)
+        public Task<bool> UpdateAsync(ValuteModel entity)
         {
             throw new NotImplementedException();
         }

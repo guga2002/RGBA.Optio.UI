@@ -10,6 +10,6 @@ namespace Optio.Core.Interfaces
 {
     public interface IChannelRepo : ICrudRepo<Channels>
     {
-        Task<IEnumerable<Channels>> GetAllActiveChannel();
+        Task<IEnumerable<Channels>> GetAllActiveChannelAsync();
     }
 }

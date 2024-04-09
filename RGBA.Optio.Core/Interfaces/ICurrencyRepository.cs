@@ -10,11 +10,12 @@ namespace RGBA.Optio.Core.Interfaces
 {
     public interface ICurrencyRepository
     {
-        Task<bool> Add(Currency entity);
-        Task<bool> Remove(Currency entity);
-        Task<bool> Update(Currency entity);
-        Task<bool> SoftDelete(int id);
-        Task<IEnumerable<Currency>> GetAll();
-        Task<Currency> GetById(int id);
+        Task<bool> AddAsync(Currency entity);
+        Task<bool> RemoveAsync(Currency entity);
+        Task<bool> UpdateAsync(Currency entity);
+        Task<bool> SoftDeleteAsync(int id);
+        Task<IEnumerable<Currency>> GetAllAsync();
+        Task<IEnumerable<Currency>> GetAllActiveAsync();
+        Task<Currency> GetByIdAsync(int id);
     }
 }

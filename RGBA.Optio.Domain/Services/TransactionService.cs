@@ -12,32 +12,27 @@ namespace RGBA.Optio.Domain.Services
         {
         }
 
-        public Task<bool> Add(TransactionModel entity)
+        public Task<bool> AddAsync(TransactionModel entity)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<TransactionModel>> GetAll()
+        public Task<IEnumerable<TransactionModel>> GetActiveTransactionsAsync()
         {
             throw new NotImplementedException();
         }
 
-        public Task<TransactionModel> GetById(Guid id)
+        public Task<bool> RemoveAsync(TransactionModel entity)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> Remove(TransactionModel entity)
+        public Task<bool> SoftDeleteAsync(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> SoftDelete(Guid id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> Update(TransactionModel entity)
+        public Task<bool> UpdateAsync(TransactionModel entity)
         {
             throw new NotImplementedException();
         }

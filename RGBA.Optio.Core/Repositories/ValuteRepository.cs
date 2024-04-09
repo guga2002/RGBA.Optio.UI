@@ -14,7 +14,7 @@ namespace RGBA.Optio.Core.Repositories
             courses = context.Set<ValuteCourse>();
         }
 
-        public async Task<bool> Add(ValuteCourse entity)
+        public async Task<bool> AddAsync(ValuteCourse entity)
         {
             try
             {
@@ -39,13 +39,12 @@ namespace RGBA.Optio.Core.Repositories
             }
         }
 
-        public async Task<IEnumerable<ValuteCourse>> GetAll()
+        public async Task<IEnumerable<ValuteCourse>> GetAllAsync()
         {
             try
             {
                 return await courses
                     .AsNoTracking()
-                    .Where(io => io.IsActive)
                     .ToListAsync();
             }
             catch (Exception)
@@ -54,7 +53,22 @@ namespace RGBA.Optio.Core.Repositories
             }
         }
 
-        public async Task<ValuteCourse> GetById(Guid id)
+        public async Task<IEnumerable<ValuteCourse>> GetAllActiveValuteAsync()
+        {
+            try
+            {
+                return await courses
+                    .AsNoTracking()
+                    .Where(io=>io.IsActive)
+                    .ToListAsync();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<ValuteCourse> GetByIdAsync(Guid id)
         {
             try
             {
@@ -69,7 +83,7 @@ namespace RGBA.Optio.Core.Repositories
             }
         }
 
-        public async Task<bool> Remove(ValuteCourse entity)
+        public async Task<bool> RemoveAsync(ValuteCourse entity)
         {
             try
             {
@@ -92,7 +106,7 @@ namespace RGBA.Optio.Core.Repositories
             }
         }
 
-        public async Task<bool> SoftDelete(Guid id)
+        public async Task<bool> SoftDeleteAsync(Guid id)
         {
             try
             {
@@ -112,7 +126,7 @@ namespace RGBA.Optio.Core.Repositories
             }
         }
 
-        public async Task<bool> Update(ValuteCourse entity)
+        public async Task<bool> UpdateAsync(ValuteCourse entity)
         {
             try
             {

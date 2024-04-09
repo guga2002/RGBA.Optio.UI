@@ -9,5 +9,6 @@ namespace Optio.Core.Interfaces
 {
     public interface ITypeOfTransactionRepo:ICrudRepo<TypeOfTransaction>
     {
+        Task<IEnumerable<TypeOfTransaction>> GetAllActiveTypeOfTransactionAsync();
     }
 }

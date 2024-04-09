@@ -20,7 +20,7 @@ namespace Optio.Core.Repositories
         }
       
 
-        public async Task<bool> Add(Location entity)
+        public async Task<bool> AddAsync(Location entity)
         {
             try
             {
@@ -42,7 +42,7 @@ namespace Optio.Core.Repositories
             }
         }
 
-        public async Task<IEnumerable<Location>> GetAll()
+        public async Task<IEnumerable<Location>> GetAllAsync()
         {
             try
             {
@@ -60,7 +60,7 @@ namespace Optio.Core.Repositories
             }
         }
 
-        public async Task<IEnumerable<Location>> GetAllActiveLocation()
+        public async Task<IEnumerable<Location>> GetAllActiveLocationAsync()
         {
             try
             {
@@ -81,7 +81,7 @@ namespace Optio.Core.Repositories
             }
         }
 
-        public async Task<Location> GetById(Guid id)
+        public async Task<Location> GetByIdAsync(Guid id)
         {
             try
             {
@@ -107,7 +107,7 @@ namespace Optio.Core.Repositories
             }
         }
 
-        public async Task<bool> Remove(Location entity)
+        public async Task<bool> RemoveAsync(Location entity)
         {
             try
             {
@@ -131,7 +131,7 @@ namespace Optio.Core.Repositories
             }
         }
 
-        public async Task<bool> SoftDelete(Guid id)
+        public async Task<bool> SoftDeleteAsync(Guid id)
         {
             try
             {
@@ -155,7 +155,7 @@ namespace Optio.Core.Repositories
             }
         }
 
-        public async Task<bool> Update(Location entity)
+        public async Task<bool> UpdateAsync(Location entity)
         {
             try
             {

@@ -14,7 +14,7 @@ namespace Optio.Core.Repositories
             TypeOfTransaction=context.Set<TypeOfTransaction>();
         }
 
-        public async Task<bool> Add(TypeOfTransaction entity)
+        public async Task<bool> AddAsync(TypeOfTransaction entity)
         {
             try
             {
@@ -32,7 +32,22 @@ namespace Optio.Core.Repositories
             }
         }
 
-        public async Task<IEnumerable<TypeOfTransaction>> GetAll()
+        public async Task<IEnumerable<TypeOfTransaction>> GetAllAsync()
+        {
+            try
+            {
+                return await TypeOfTransaction.
+                     AsNoTracking()
+                     .ToListAsync();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public async Task<IEnumerable<TypeOfTransaction>> GetAllActiveTypeOfTransactionAsync()
         {
             try
             {
@@ -48,7 +63,7 @@ namespace Optio.Core.Repositories
             }
         }
 
-        public async Task<TypeOfTransaction> GetById(Guid id)
+        public async Task<TypeOfTransaction> GetByIdAsync(Guid id)
         {
             return await (from typ in TypeOfTransaction
                     where typ.Id == id && typ.IsActive
@@ -57,7 +72,7 @@ namespace Optio.Core.Repositories
                     ??throw new ArgumentException(" No exist  type on this Id");
         }
 
-        public async Task<bool> Remove(TypeOfTransaction entity)
+        public async Task<bool> RemoveAsync(TypeOfTransaction entity)
         {
             try
             {
@@ -76,7 +91,7 @@ namespace Optio.Core.Repositories
             }
         }
 
-        public async Task<bool> SoftDelete(Guid id)
+        public async Task<bool> SoftDeleteAsync(Guid id)
         {
             try
             {
@@ -98,7 +113,7 @@ namespace Optio.Core.Repositories
             }
         }
 
-        public async Task<bool> Update(TypeOfTransaction entity)
+        public async Task<bool> UpdateAsync(TypeOfTransaction entity)
         {
             try
             {

@@ -19,9 +19,9 @@ namespace RGBA.Optio.Domain.Models
         public required float Amount { get; set; }
 
         [Required(ErrorMessage = "Equivalent in GEL is required.")]
-        [Range(0.01, double.MaxValue, ErrorMessage = "Equivalent in GEL must be greater than 0.")]
+        [Range(0.01,double.MaxValue, ErrorMessage = "Equivalent in GEL must be greater than 0.")]
         [Display(Name = "Equvalent in GEL")]
-        public required float EquivalentInGel { get; set; }
+        public required double EquivalentInGel { get; set; }
 
         [Required(ErrorMessage = "Type ID is required.")]
         public required Guid TypeId { get; set; }

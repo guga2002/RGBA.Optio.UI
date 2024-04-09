@@ -22,6 +22,7 @@ namespace RGBA.Optio.Domain.Services
         public Task<bool> AddRolesAsync(string RoleName)
         {
             throw new NotImplementedException();
+           
         }
 
         public Task<bool> AssignRoleToUserAsync(string UserId, string Role)

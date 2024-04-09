@@ -4,10 +4,10 @@ namespace RGBA.Optio.Domain.Interfaces
 {
     public interface IStatisticService
     {
-        Task<IEnumerable<TransactionModel>> GetMostPopularTransactions(DateTime start, DateTime end);
-        Task<IEnumerable<MerchantModel>> GetMostPopularMerchants(int count,DateTime start, DateTime end);
-        Task<IEnumerable<CategoryModel>>GetMostPopularCategory(DateTime start, DateTime end);
-        Task<IEnumerable<TransactionTypeModel>> GetMostPopularTransactionType(DateTime start, DateTime end);
-        Task<IEnumerable<locationModel>> GetMostPopularLocation(DateTime start, DateTime end);
+        Task<IEnumerable<TransactionModel>> GetMostPopularTransactionsAsync(DateTime start, DateTime end);
+        Task<IEnumerable<MerchantModel>> GetMostPopularMerchantsAsync(int count,DateTime start, DateTime end);
+        Task<IEnumerable<CategoryModel>> GetMostPopularCategoryAsync(DateTime start, DateTime end);
+        Task<IEnumerable<TransactionTypeModel>> GetMostPopularTransactionTypeAsync(DateTime start, DateTime end);
+        Task<IEnumerable<locationModel>> GetMostPopularLocationAsync(DateTime start, DateTime end);
     }
 }

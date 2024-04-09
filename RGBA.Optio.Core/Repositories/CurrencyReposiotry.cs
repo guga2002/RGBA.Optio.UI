@@ -15,7 +15,7 @@ namespace RGBA.Optio.Core.Repositories
         {
             currencies = context.Set<Currency>();
         }
-        public async Task<bool> Add(Currency entity)
+        public async Task<bool> AddAsync(Currency entity)
         {
             try
             {
@@ -37,12 +37,17 @@ namespace RGBA.Optio.Core.Repositories
             }
         }
 
-        public async Task<IEnumerable<Currency>> GetAll()
+        public async Task<IEnumerable<Currency>> GetAllAsync()
+        {
+            return await currencies.AsNoTracking().ToListAsync();
+        }
+
+        public async Task<IEnumerable<Currency>> GetAllActiveAsync()
         {
             return await currencies.AsNoTracking().Where(io=>io.IsActive).ToListAsync();
         }
 
-        public async Task<Currency> GetById(int id)
+        public async Task<Currency> GetByIdAsync(int id)
         {
             try
             {
@@ -57,7 +62,7 @@ namespace RGBA.Optio.Core.Repositories
             }
         }
 
-        public async Task<bool> Remove(Currency entity)
+        public async Task<bool> RemoveAsync(Currency entity)
         {
             try
             {
@@ -76,7 +81,7 @@ namespace RGBA.Optio.Core.Repositories
             }
         }
 
-        public async Task<bool> SoftDelete(int id)
+        public async Task<bool> SoftDeleteAsync(int id)
         {
             try
             {
@@ -96,7 +101,7 @@ namespace RGBA.Optio.Core.Repositories
             }
         }
 
-        public async Task<bool> Update(Currency entity)
+        public async Task<bool> UpdateAsync(Currency entity)
         {
             try
             {

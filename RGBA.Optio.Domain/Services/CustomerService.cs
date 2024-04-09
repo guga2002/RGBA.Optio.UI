@@ -12,33 +12,33 @@ namespace RGBA.Optio.Domain.Services
         {
         }
 
-        public Task<bool> AddRoles(string RoleName)
+        public Task<bool> AddRolesAsync(string RoleName)
         {
             throw new NotImplementedException();
            
         }
 
-        public Task<bool> AssignRoleToUser(string UserId, string Role)
+        public Task<bool> AssignRoleToUserAsync(string UserId, string Role)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> RegisterUser(UserModel User, string Password)
+        public Task<bool> RegisterUserAsync(UserModel User, string Password)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> ResetPassword(string UserId, string OldPassword, string NewPassword)
+        public Task<bool> ResetPasswordAsync(string UserId, string OldPassword, string NewPassword)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> SignIn(string Username, string Password)
+        public Task<bool> SignInAsync(string Username, string Password)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> SignOut()
+        public Task<bool> SignOutAsync()
         {
             throw new NotImplementedException();
         }

@@ -4,5 +4,6 @@ namespace RGBA.Optio.Domain.Interfaces
 {
     public interface ITransactionService:Icrud<TransactionModel>
     {
+        Task<IEnumerable<TransactionModel>> GetActiveTransactionsAsync();
     }
 }

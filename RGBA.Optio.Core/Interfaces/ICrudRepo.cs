@@ -2,11 +2,11 @@
 {
     public interface ICrudRepo<T> where T : class
     {
-        Task<bool>Add(T entity);   
-        Task<bool>Remove(T entity);
-        Task<bool>Update(T entity);
-        Task<bool>SoftDelete(Guid id);
-        Task<IEnumerable<T>> GetAll();
-        Task<T> GetById(Guid id);
+        Task<bool>AddAsync(T entity);   
+        Task<bool> RemoveAsync(T entity);
+        Task<bool> UpdateAsync(T entity);
+        Task<bool> SoftDeleteAsync(Guid id);
+        Task<IEnumerable<T>> GetAllAsync();
+        Task<T> GetByIdAsync(Guid id);
     }
 }

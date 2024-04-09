@@ -17,7 +17,7 @@ namespace Optio.Core.Repositories
         }
       
 
-        public async Task<bool> Add(Merchant entity)
+        public async Task<bool> AddAsync(Merchant entity)
         {
             try
             {
@@ -41,7 +41,7 @@ namespace Optio.Core.Repositories
             }
         }
 
-        public async Task<IEnumerable<Merchant>> GetAll()
+        public async Task<IEnumerable<Merchant>> GetAllAsync()
         {
             try
             {
@@ -64,7 +64,7 @@ namespace Optio.Core.Repositories
             }
         }
 
-        public async Task<IEnumerable<Merchant>> GetAllActiveMerchant()
+        public async Task<IEnumerable<Merchant>> GetAllActiveMerchantAsync()
         {
             try
             {
@@ -85,7 +85,7 @@ namespace Optio.Core.Repositories
             }
         }
 
-        public async Task<Merchant> GetById(Guid id)
+        public async Task<Merchant> GetByIdAsync(Guid id)
         {
             try
             {
@@ -107,7 +107,7 @@ namespace Optio.Core.Repositories
             }
         }
 
-        public async Task<bool> Remove(Merchant entity)
+        public async Task<bool> RemoveAsync(Merchant entity)
         {
             try
             {
@@ -130,7 +130,7 @@ namespace Optio.Core.Repositories
             }
         }
 
-        public async Task<bool> SoftDelete(Guid id)
+        public async Task<bool> SoftDeleteAsync(Guid id)
         {
             try
             {
@@ -153,7 +153,7 @@ namespace Optio.Core.Repositories
             }
         }
 
-        public async Task<bool> Update(Merchant entity)
+        public async Task<bool> UpdateAsync(Merchant entity)
         {
             try
             {

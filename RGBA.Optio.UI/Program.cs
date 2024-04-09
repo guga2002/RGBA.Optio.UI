@@ -27,7 +27,7 @@ builder.Services.AddScoped<SignInManager<User>>();
 
 
 builder.Services.AddScoped<ICategoryRepo, CategoryOfTransactionRepos>();
-builder.Services.AddScoped<IChannel, ChannelRepos>();
+builder.Services.AddScoped<IChannelRepo, ChannelRepos>();
 builder.Services.AddScoped<ILocationRepo, LocationRepos>();
 builder.Services.AddScoped<IMerchantRepo, MerchantRepos>();
 builder.Services.AddScoped<ITransactionRepo, TransactionRepos>();

@@ -2,9 +2,9 @@
 {
     public interface Icrud<T>where T:class
     {
-        Task<bool> Add(T entity);
-        Task<bool> Remove(T entity);
-        Task<bool> Update(T entity);
-        Task<bool> SoftDelete(Guid id);
+        Task<bool> AddAsync(T entity);
+        Task<bool> RemoveAsync(T entity);
+        Task<bool> UpdateAsync(T entity);
+        Task<bool> SoftDeleteAsync(Guid id);
     }
 }

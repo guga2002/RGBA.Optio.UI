@@ -19,7 +19,7 @@ namespace RGBA.Optio.Core.Repositories
             _roleManager = role;
         }
 
-        public async Task<bool> AddRoles(string RoleName)
+        public async Task<bool> AddRolesAsync(string RoleName)
         {
             try
             {
@@ -37,7 +37,7 @@ namespace RGBA.Optio.Core.Repositories
             }
         }
 
-        public async  Task<bool> AssignRoleToUser(string UserId, string Role)
+        public async  Task<bool> AssignRoleToUserAsync(string UserId, string Role)
         {
             try
             {
@@ -58,7 +58,7 @@ namespace RGBA.Optio.Core.Repositories
             }
         }
 
-        public async Task<bool> RegisterUser(User User, string Password)
+        public async Task<bool> RegisterUserAsync(User User, string Password)
         {
             try
             {
@@ -75,7 +75,7 @@ namespace RGBA.Optio.Core.Repositories
             }
         }
 
-        public async Task<bool> ResetPassword(string UserId,string OldPassword, string NewPassword)
+        public async Task<bool> ResetPasswordAsync(string UserId,string OldPassword, string NewPassword)
         {
             try
             {
@@ -93,7 +93,7 @@ namespace RGBA.Optio.Core.Repositories
             }
         }
 
-        public async Task<bool> SignIn(string Username, string Password)
+        public async Task<bool> SignInAsync(string Username, string Password)
         {
             try
             {
@@ -110,7 +110,7 @@ namespace RGBA.Optio.Core.Repositories
             }
         }
 
-        public async Task<bool> SignOut()
+        public async Task<bool> SignOutAsync()
         {
             try
             {

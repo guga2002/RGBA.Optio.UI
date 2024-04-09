@@ -19,7 +19,7 @@ namespace Optio.Core.Repositories
         }
      
 
-        public async Task<bool> Add(Channels entity)
+        public async Task<bool> AddAsync(Channels entity)
         {
             try
             {
@@ -48,7 +48,7 @@ namespace Optio.Core.Repositories
                 db.Channels.ToList()
                 );
 
-        public async Task<IEnumerable<Channels>> GetAll()
+        public async Task<IEnumerable<Channels>> GetAllAsync()
         {
             try
             {
@@ -76,7 +76,7 @@ namespace Optio.Core.Repositories
                 .ToList()
                 );
 
-        public async Task<IEnumerable<Channels>> GetAllActiveChannel()
+        public async Task<IEnumerable<Channels>> GetAllActiveChannelAsync()
         {
             try
             {
@@ -102,7 +102,7 @@ namespace Optio.Core.Repositories
                 (OptioDB db, Guid id) =>
                 db.Channels.SingleOrDefault(i=>i.Id==id)
                 );
-        public async Task<Channels> GetById(Guid id)
+        public async Task<Channels> GetByIdAsync(Guid id)
         {
             try
             {
@@ -124,7 +124,7 @@ namespace Optio.Core.Repositories
         }
 
 
-        public async Task<bool> Remove(Channels entity)
+        public async Task<bool> RemoveAsync(Channels entity)
         {
             try
             {
@@ -149,7 +149,7 @@ namespace Optio.Core.Repositories
         }
 
 
-        public async Task<bool> SoftDelete(Guid id)
+        public async Task<bool> SoftDeleteAsync(Guid id)
         {
             try
             {
@@ -173,7 +173,7 @@ namespace Optio.Core.Repositories
         }
 
 
-        public async Task<bool> Update(Channels entity)
+        public async Task<bool> UpdateAsync(Channels entity)
         {
             try
             {

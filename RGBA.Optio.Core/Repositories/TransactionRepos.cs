@@ -17,7 +17,7 @@ namespace Optio.Core.Repositories
             this._cache = cache;
         }
 
-        public async Task<bool> Add(Transaction entity)
+        public async Task<bool> AddAsync(Transaction entity)
         {
             try
             {
@@ -50,7 +50,7 @@ namespace Optio.Core.Repositories
                 (OptioDB db) =>
                     db.Transactions.AsNoTracking().ToList());
 
-        public async Task<IEnumerable<Transaction>> GetAll()
+        public async Task<IEnumerable<Transaction>> GetAllAsync()
         {
             try
             {
@@ -81,7 +81,7 @@ namespace Optio.Core.Repositories
                .Include(io=>io.Location)
                 .ToList());
 
-        public async Task<IEnumerable<Transaction>> GetAllWithDetails()
+        public async Task<IEnumerable<Transaction>> GetAllWithDetailsAsync()
         {
             try
             {
@@ -100,7 +100,7 @@ namespace Optio.Core.Repositories
             }
         }
 
-        public async Task<Transaction> GetById(Guid id)
+        public async Task<Transaction> GetByIdAsync(Guid id)
         {
             try
             {
@@ -132,7 +132,7 @@ namespace Optio.Core.Repositories
              .Include(io => io.Location)
               .SingleOrDefault(io=>io.Id==id));
 
-        public async Task<Transaction> GetByIdWithDetails(Guid ID)
+        public async Task<Transaction> GetByIdWithDetailsAsync(Guid ID)
         {
             try
             {
@@ -152,7 +152,7 @@ namespace Optio.Core.Repositories
             }
         }
 
-        public async Task<bool> Remove(Transaction entity)
+        public async Task<bool> RemoveAsync(Transaction entity)
         {
             try
             {
@@ -172,7 +172,7 @@ namespace Optio.Core.Repositories
             }
         }
 
-        public async Task<bool> SoftDelete(Guid id)
+        public async Task<bool> SoftDeleteAsync(Guid id)
         {
             try
             {
@@ -191,7 +191,7 @@ namespace Optio.Core.Repositories
             }
         }
 
-        public async Task<bool> Update(Transaction entity)
+        public async Task<bool> UpdateAsync(Transaction entity)
         {
             try
             {
@@ -210,6 +210,29 @@ namespace Optio.Core.Repositories
                 var value = (Transaction)en.Entity;
                 en.CurrentValues.SetValues(value);
                 throw;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        Func<OptioDB, IEnumerable<Transaction>> CompiledQUeryGetAllActive =
+          EF.CompileQuery(
+              (OptioDB db) =>
+                  db.Transactions.AsNoTracking().ToList());
+        public async Task<IEnumerable<Transaction>> GetAllActiveAsync()
+        {
+            try
+            {
+                string cacheKey = $"GetAllActiveTransactions";
+                await Task.Delay(1);
+                IEnumerable<Transaction> transactions = _cache.GetOrCreate(cacheKey, () =>
+                {
+                    return CompiledQUeryGetAllActive.Invoke(context);
+                }, TimeSpan.FromMinutes(15));
+
+                return transactions ?? throw new ArgumentException("No transactions found");
             }
             catch (Exception)
             {

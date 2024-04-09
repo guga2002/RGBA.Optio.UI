@@ -12,27 +12,27 @@ namespace RGBA.Optio.Domain.Services
         {
         }
 
-        public Task<IEnumerable<CategoryModel>> GetMostPopularCategory(DateTime start, DateTime end)
+        public Task<IEnumerable<CategoryModel>> GetMostPopularCategoryAsync(DateTime start, DateTime end)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<locationModel>> GetMostPopularLocation(DateTime start, DateTime end)
+        public Task<IEnumerable<locationModel>> GetMostPopularLocationAsync(DateTime start, DateTime end)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<MerchantModel>> GetMostPopularMerchants(int count, DateTime start, DateTime end)
+        public Task<IEnumerable<MerchantModel>> GetMostPopularMerchantsAsync(int count, DateTime start, DateTime end)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<TransactionModel>> GetMostPopularTransactions(DateTime start, DateTime end)
+        public Task<IEnumerable<TransactionModel>> GetMostPopularTransactionsAsync(DateTime start, DateTime end)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<TransactionTypeModel>> GetMostPopularTransactionType(DateTime start, DateTime end)
+        public Task<IEnumerable<TransactionTypeModel>> GetMostPopularTransactionTypeAsync(DateTime start, DateTime end)
         {
             throw new NotImplementedException();
         }

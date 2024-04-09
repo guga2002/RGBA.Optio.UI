@@ -20,7 +20,7 @@ namespace Optio.Core.Repositories
         }
 
     
-        public async Task<bool> Add(Category entity)
+        public async Task<bool> AddAsync(Category entity)
         {
             try
             {
@@ -50,7 +50,7 @@ namespace Optio.Core.Repositories
              .ToList()
             );*/
 
-        public async Task<IEnumerable<Category>> GetAll()
+        public async Task<IEnumerable<Category>> GetAllAsync()
         {
             try
             {
@@ -81,7 +81,7 @@ namespace Optio.Core.Repositories
              .SingleOrDefault(i=>i.Id==id)
             );*/
 
-        public async Task<Category> GetById(Guid id)
+        public async Task<Category> GetByIdAsync(Guid id)
         {
             try
             {
@@ -105,7 +105,7 @@ namespace Optio.Core.Repositories
 
         }
 
-        public async Task<IEnumerable<Category>> GetAllActive()
+        public async Task<IEnumerable<Category>> GetAllActiveAsync()
         {
             try
             {
@@ -127,7 +127,7 @@ namespace Optio.Core.Repositories
             }
         }
 
-        public async Task<bool> Remove(Category entity)
+        public async Task<bool> RemoveAsync(Category entity)
         {
             try
             {
@@ -150,7 +150,7 @@ namespace Optio.Core.Repositories
         }
 
 
-        public async Task<bool> SoftDelete(Guid id)
+        public async Task<bool> SoftDeleteAsync(Guid id)
         {
             try
             {
@@ -172,7 +172,7 @@ namespace Optio.Core.Repositories
         }
 
 
-        public async Task<bool> Update(Category entity)
+        public async Task<bool> UpdateAsync(Category entity)
         {
             try
             {

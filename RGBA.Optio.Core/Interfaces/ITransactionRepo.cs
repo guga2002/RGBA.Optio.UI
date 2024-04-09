@@ -6,8 +6,10 @@ namespace Optio.Core.Interfaces
 {
     public interface ITransactionRepo:ICrudRepo<Transaction>
     {
-        Task<IEnumerable<Transaction>> GetAllWithDetails();
+        Task<IEnumerable<Transaction>> GetAllWithDetailsAsync();
 
-        Task<Transaction> GetByIdWithDetails(Guid Id);
+        Task<Transaction> GetByIdWithDetailsAsync(Guid Id);
+
+        Task<IEnumerable<Transaction>> GetAllActiveAsync();
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Optio.Core.Interfaces
 {
-    public interface ILocationRepo:ICrudRepo<Location>
+    public interface ILocationRepo:ICrudRepo<Location, Guid>
     {
         Task<IEnumerable<Location>> GetAllActiveLocationAsync();
     }

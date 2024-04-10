@@ -13,7 +13,9 @@ using RGBA.Optio.Core.Repositories.UserRelate;
 using RGBA.Optio.Domain;
 using RGBA.Optio.Domain.Interfaces;
 using RGBA.Optio.Domain.LoggerFiles;
+using RGBA.Optio.Domain.Mapper;
 using RGBA.Optio.Domain.Services;
+using RGBA.Optio.Domain.Services.TransactionRelated;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -35,10 +37,12 @@ builder.Services.AddScoped<ITransactionRepo, TransactionRepos>();
 builder.Services.AddScoped<ITypeOfTransactionRepo, TypeOfTransactionRepos>();
 builder.Services.AddScoped<IUniteOfWork, UniteOfWork>();
 
-builder.Services.AddScoped<ICustomerService, CustomerService>();
+builder.Services.AddScoped<IAdminPanelService, AdminPanelService>();
 builder.Services.AddScoped<IStatisticService, StatisticService>();
-builder.Services.AddScoped<ITransactionEventService, TransactionEventService>();
 builder.Services.AddScoped<ITransactionService, TransactionService>();
+builder.Services.AddScoped<ICurrencyRelatedService,CurrencyRelatedService>();
+builder.Services.AddScoped<IMerchantRelatedService, MerchantRelatedService>();
+builder.Services.AddScoped<ITransactionRelatedService, TransactionRelatedService>();
 
 builder.Services.AddScoped<UserManager<User>, CustomUserManager>();
 builder.Services.AddScoped<SignInManager<User>, CustomSignInManager>();

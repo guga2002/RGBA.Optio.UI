@@ -8,5 +8,6 @@ namespace RGBA.Optio.Core.Repositories.UserRelate
         public CustomRoleManager(IRoleStore<IdentityRole> store, IEnumerable<IRoleValidator<IdentityRole>> roleValidators, ILookupNormalizer keyNormalizer, IdentityErrorDescriber errors, ILogger<RoleManager<IdentityRole>> logger) : base(store, roleValidators, keyNormalizer, errors, logger)
         {
         }
+
     }
 }

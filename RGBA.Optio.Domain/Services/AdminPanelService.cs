@@ -7,12 +7,12 @@ using RGBA.Optio.Domain.Models;
 
 namespace RGBA.Optio.Domain.Services
 {
-    public class CustomerService : ICustomerService
+    public class AdminPanelService : IAdminPanelService
     {
         private readonly CustomRoleManager role;
         private readonly CustomSignInManager signin;
         private readonly CustomUserManager userManager;
-        public CustomerService(CustomSignInManager signin, CustomUserManager userManager,CustomRoleManager rol)
+        public AdminPanelService(CustomSignInManager signin, CustomUserManager userManager,CustomRoleManager rol)
         {
             this.signin = signin;
             this.userManager = userManager;

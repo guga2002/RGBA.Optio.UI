@@ -8,14 +8,9 @@ using System.Threading.Tasks;
 
 namespace RGBA.Optio.Core.Interfaces
 {
-    public interface ICurrencyRepository
+    public interface ICurrencyRepository:ICrudRepo<Currency,int>
     {
-        Task<bool> AddAsync(Currency entity);
-        Task<bool> RemoveAsync(Currency entity);
-        Task<bool> UpdateAsync(Currency entity);
-        Task<bool> SoftDeleteAsync(int id);
-        Task<IEnumerable<Currency>> GetAllAsync();
         Task<IEnumerable<Currency>> GetAllActiveAsync();
-        Task<Currency> GetByIdAsync(int id);
+
     }
 }

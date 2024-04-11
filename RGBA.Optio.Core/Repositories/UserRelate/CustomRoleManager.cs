@@ -9,6 +9,5 @@ namespace RGBA.Optio.Core.Repositories.UserRelate
         {
         }
 
-     
     }
 }

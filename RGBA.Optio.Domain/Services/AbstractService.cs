@@ -14,8 +14,7 @@ namespace RGBA.Optio.Domain.Services
         {
             this.mapper = map;
             this.work = work;
-            this.logger = log;
-                
+            this.logger = log; 
         }
     }
 }

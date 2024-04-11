@@ -2,7 +2,7 @@
 
 namespace RGBA.Optio.Domain.Interfaces
 {
-    public interface ICustomerService
+    public interface IAdminPanelService
     {
         Task<bool> RegisterUserAsync(UserModel User, string Password);
         Task<bool> SignInAsync(string Username, string Password);

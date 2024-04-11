@@ -2,7 +2,7 @@
 
 namespace Optio.Core.Interfaces
 {
-    public interface IMerchantRepo:ICrudRepo<Merchant>
+    public interface IMerchantRepo:ICrudRepo<Merchant, Guid>
     {
         Task<IEnumerable<Merchant>> GetAllActiveMerchantAsync();
     }

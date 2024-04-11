@@ -1,9 +1,10 @@
-﻿using RGBA.Optio.Domain.Models;
+﻿using RGBA.Optio.Domain.Interfaces.InterfacesForTransaction;
+using RGBA.Optio.Domain.Models;
 
 namespace RGBA.Optio.Domain.Interfaces
 {
-    public interface ITransactionService:Icrud<TransactionModel>
+    public interface ITransactionService:IAddInfo<TransactionModel>, IUpdateInfo<TransactionModel>,IGetInfo<TransactionModel,Guid>,IRemoveInfo<TransactionModel,Guid>
     {
-        Task<IEnumerable<TransactionModel>> GetActiveTransactionsAsync();
+      
     }
 }

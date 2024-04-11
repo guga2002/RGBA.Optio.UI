@@ -17,5 +17,10 @@ namespace RGBA.Optio.Core.Repositories.UserRelate
         public CustomSignInManager(UserManager<User> userManager, IHttpContextAccessor contextAccessor, IUserClaimsPrincipalFactory<User> claimsFactory, IOptions<IdentityOptions> optionsAccessor, ILogger<SignInManager<User>> logger, IAuthenticationSchemeProvider schemes) : base(userManager, contextAccessor, claimsFactory, optionsAccessor, logger, schemes)
         {
         }
+
+        public override async Task RefreshSignInAsync(User user)
+        {
+           await base.RefreshSignInAsync(user);
+        }
     }
 }

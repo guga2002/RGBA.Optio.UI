@@ -11,7 +11,6 @@ namespace RGBA.Optio.Core.Repositories.UserRelate
         {
         }
 
-
         public override async Task<IdentityResult> CreateAsync(User user, string password)
         {
             try

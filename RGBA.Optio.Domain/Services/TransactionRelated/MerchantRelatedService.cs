@@ -64,14 +64,42 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
-        public Task<IEnumerable<locationModel>> GetAllActiveAsync(locationModel Identify)
+        public async Task<IEnumerable<locationModel>> GetAllActiveAsync(locationModel Identify)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var res =await work.LocationRepository.GetAllActiveLocationAsync();
+                if(res is not null)
+                {
+                    var mapp=mapper.Map<IEnumerable<locationModel>>(res);
+                    return mapp;
+                }
+                return Enumerable.Empty<locationModel>();
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex.Message, ex.StackTrace, DateTime.Now.ToShortTimeString());
+                throw;
+            }
         }
 
-        public Task<IEnumerable<MerchantModel>> GetAllActiveAsync(MerchantModel Identify)
+        public async Task<IEnumerable<MerchantModel>> GetAllActiveAsync(MerchantModel Identify)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var res = await work.MerchantRepository.GetAllActiveMerchantAsync();
+                if (res is not null)
+                {
+                    var mapp = mapper.Map<IEnumerable<MerchantModel>>(res);
+                    return mapp;
+                }
+                return Enumerable.Empty<MerchantModel>();
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex.Message, ex.StackTrace, DateTime.Now.ToShortTimeString());
+                throw;
+            }
         }
 
         public async Task<IEnumerable<locationModel>> GetAllAsync(locationModel Identify)
@@ -114,44 +142,174 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
         }
 
 
-        public Task<locationModel> GetByIdAsync(Guid id, locationModel Identify)
+        public async Task<locationModel> GetByIdAsync(Guid id, locationModel Identify)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var res =await work.LocationRepository.GetByIdAsync(id);
+                if(res is not null)
+                {
+                    var mapp=mapper.Map<locationModel>(res);
+                    return mapp;
+                }
+                else
+                {
+                    throw new ItemNotFoundException($"Location with id: {id} not found");
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex.Message, ex.StackTrace, DateTime.Now.ToShortTimeString());
+                throw;
+            }
         }
 
-        public Task<MerchantModel> GetByIdAsync(Guid id, MerchantModel Identify)
+        public async Task<MerchantModel> GetByIdAsync(Guid id, MerchantModel Identify)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var res = await work.MerchantRepository.GetByIdAsync(id);
+                if (res is not null)
+                {
+                    var mapp = mapper.Map<MerchantModel>(res);
+                    return mapp;
+                }
+                else
+                {
+                    throw new ItemNotFoundException($"Merchant with id: {id} not found");
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex.Message, ex.StackTrace, DateTime.Now.ToShortTimeString());
+                throw;
+            }
         }
 
-        public Task<bool> RemoveAsync(locationModel entity)
+        public async Task<bool> RemoveAsync(locationModel entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (entity is null || string.IsNullOrWhiteSpace(entity?.LocationName))
+                {
+                    throw new OptioGeneralException("Entity can not be null");
+                }
+                var mapp = mapper.Map<Location>(entity);
+                if(mapp is not null)
+                {
+                    var res=await work.LocationRepository.RemoveAsync(mapp);
+                    return res;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex.Message, ex.StackTrace, DateTime.Now.ToShortTimeString());
+                throw;
+            }
         }
 
-        public Task<bool> RemoveAsync(MerchantModel entity)
+        public async Task<bool> RemoveAsync(MerchantModel entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (entity is null || string.IsNullOrWhiteSpace(entity?.Name))
+                {
+                    throw new OptioGeneralException("Entity can not be null");
+                }
+                var mapp = mapper.Map<Merchant>(entity);
+                if (mapp is not null)
+                {
+                    var res = await work.MerchantRepository.RemoveAsync(mapp);
+                    return res;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex.Message, ex.StackTrace, DateTime.Now.ToShortTimeString());
+                throw;
+            }
         }
 
-        public Task<bool> SoftDeleteAsync(Guid id, locationModel Identify)
+        public async Task<bool> SoftDeleteAsync(Guid id, locationModel Identify)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var res =await work.LocationRepository.SoftDeleteAsync(id);
+                return res;
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex.Message, ex.StackTrace, DateTime.Now.ToShortTimeString());
+                throw;
+            }
         }
 
-        public Task<bool> SoftDeleteAsync(Guid id, MerchantModel Identify)
+        public async Task<bool> SoftDeleteAsync(Guid id, MerchantModel Identify)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var res = await work.MerchantRepository.SoftDeleteAsync(id);
+                return res;
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex.Message, ex.StackTrace, DateTime.Now.ToShortTimeString());
+                throw;
+            }
         }
 
-        public Task<bool> UpdateAsync(locationModel entity)
+        public async Task<bool> UpdateAsync(locationModel entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if(entity is null || string.IsNullOrWhiteSpace(entity.LocationName))
+                {
+                    throw new OptioGeneralException("Entity can not be null");
+                }
+                var mapp=mapper.Map<Location>(entity);
+                if(mapp is not null)
+                {
+                    var res=await work.LocationRepository.UpdateAsync(mapp);
+                    return res;
+                }
+                else
+                {
+                    throw new ItemNotFoundException($"{entity.LocationName} not found");
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex.Message, ex.StackTrace, DateTime.Now.ToShortTimeString());
+                throw;
+            }
         }
 
-        public Task<bool> UpdateAsync(MerchantModel entity)
+        public async Task<bool> UpdateAsync(MerchantModel entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (entity is null || string.IsNullOrWhiteSpace(entity.Name))
+                {
+                    throw new OptioGeneralException("Entity can not be null");
+                }
+                var mapp = mapper.Map<Merchant>(entity);
+                if (mapp is not null)
+                {
+                    var res = await work.MerchantRepository.UpdateAsync(mapp);
+                    return res;
+                }
+                else
+                {
+                    throw new ItemNotFoundException($"{entity.Name} not found");
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex.Message, ex.StackTrace, DateTime.Now.ToShortTimeString());
+                throw;
+            }
         }
     }
 }

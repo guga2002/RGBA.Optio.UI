@@ -9,6 +9,7 @@ using RGBA.Optio.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -90,10 +91,23 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
-
-        public Task<IEnumerable<ValuteModel>> GetAllActiveAsync(ValuteModel Identify)
+        public async Task<IEnumerable<ValuteModel>> GetAllActiveAsync(ValuteModel Identify)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var res = await work.ValuteCourse.GetAllActiveValuteAsync();
+                if(res is not null)
+                {
+                    var mapp=mapper.Map<IEnumerable<ValuteModel>>(res);
+                    return mapp;
+                }
+                return Enumerable.Empty<ValuteModel>();
+            }
+            catch (Exception ex)
+            {
+                logger.LogCritical(ex.Message,ex.StackTrace,DateTime.Now.ToShortTimeString());
+                throw;
+            }
         }
 
         public async Task<IEnumerable<CurrencyModel>> GetAllAsync(CurrencyModel Identify)
@@ -115,10 +129,27 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
-
-        public Task<IEnumerable<ValuteModel>> GetAllAsync(ValuteModel Identify)
+        public async Task<IEnumerable<ValuteModel>> GetAllAsync(ValuteModel Identify)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var res = await work.ValuteCourse.GetAllAsync();
+                if(res is not null)
+                {
+                    var mapp = mapper.Map<IEnumerable<ValuteModel>>(res);
+                    return mapp;
+                }
+                else
+                {
+                    return Enumerable.Empty<ValuteModel>();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                logger.LogCritical(ex.Message, ex.StackTrace, DateTime.Now.ToShortTimeString());
+                throw;
+            }
         }
 
         public async Task<CurrencyModel> GetByIdAsync(int id, CurrencyModel Identify)
@@ -143,39 +174,157 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
-        public Task<ValuteModel> GetByIdAsync(Guid id, ValuteModel Identify)
+        public async Task<ValuteModel> GetByIdAsync(Guid id, ValuteModel Identify)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var res =await work.ValuteCourse.GetByIdAsync(id);
+                if (res is not null)
+                {
+                    var mapp=mapper.Map<ValuteModel>(res);
+                    return mapp;
+                }
+                else
+                {
+                    throw new ItemNotFoundException($"Valute with ID {id} not found.");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                logger.LogCritical(ex.Message,ex.StackTrace, DateTime.Now.ToShortTimeString());
+                throw;
+            }
         }
 
-        public Task<bool> RemoveAsync(CurrencyModel entity)
+        public async Task<bool> RemoveAsync(CurrencyModel entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (entity == null || string.IsNullOrWhiteSpace(entity.NameOfValute) || string.IsNullOrWhiteSpace(entity.CurrencyCode))
+                {
+                    throw new OptioGeneralException("Entity can not be null");
+                }
+                var mapp = mapper.Map<Currency>(entity);
+                if(mapp is not null)
+                {
+                    var res= await work.CurrencyRepository.RemoveAsync(mapp);
+                    return res;
+                }
+                return false;
+                    
+            }
+            catch (Exception ex)
+            {
+                logger.LogCritical(ex.Message,ex.StackTrace,DateTime.Now.ToShortTimeString());  
+                throw;
+            }
         }
 
-        public Task<bool> RemoveAsync(ValuteModel entity)
+        public async Task<bool> RemoveAsync(ValuteModel entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (entity == null || string.IsNullOrWhiteSpace(entity.DateOfValuteCourse.ToString()) || entity.ExchangeRate<0 ||entity.CurrencyID<0)
+                {
+                    throw new OptioGeneralException("Entity can not be null");
+                }
+                var mapp = mapper.Map<ValuteCourse>(entity);
+                if (mapp is not null)
+                {
+                    var res = await work.ValuteCourse.RemoveAsync(mapp);
+                    return res;
+                }
+                return false;
+
+            }
+            catch (Exception ex)
+            {
+                logger.LogCritical(ex.Message, ex.StackTrace, DateTime.Now.ToShortTimeString());
+                throw;
+            }
         }
 
-        public Task<bool> SoftDeleteAsync(int id, CurrencyModel Identify)
+        public async Task<bool> SoftDeleteAsync(int id, CurrencyModel Identify)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var res = await work.CurrencyRepository.SoftDeleteAsync(id);
+                return res;
+            }
+            catch (Exception ex)
+            {
+                logger.LogCritical(ex.Message, ex.StackTrace, DateTime.Now.ToShortTimeString());
+                throw;
+            }
         }
 
-        public Task<bool> SoftDeleteAsync(Guid id, ValuteModel Identify)
+        public async Task<bool> SoftDeleteAsync(Guid id, ValuteModel Identify)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var res = await work.ValuteCourse.SoftDeleteAsync(id);
+                return res;
+            }
+            catch (Exception ex)
+            {
+                logger.LogCritical(ex.Message, ex.StackTrace, DateTime.Now.ToShortTimeString());
+                throw;
+            }
         }
 
         public Task<bool> UpdateAsync(CurrencyModel entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if(entity == null || string.IsNullOrWhiteSpace(entity.NameOfValute) || string.IsNullOrWhiteSpace(entity.CurrencyCode))
+                {
+                    throw new OptioGeneralException("Entity can not be null");
+                }
+                var mapp=mapper.Map<Currency> (entity);
+                if (mapp != null)
+                {
+                    var res=work.CurrencyRepository.UpdateAsync(mapp);
+                    return res;
+                }
+                else
+                {
+                    throw new ItemNotFoundException($"Currency {entity.NameOfValute} not found");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex.Message, ex.StackTrace, DateTime.Now.ToShortTimeString());
+                throw;
+            }
         }
 
         public Task<bool> UpdateAsync(ValuteModel entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (entity == null || string.IsNullOrWhiteSpace(entity.DateOfValuteCourse.ToString()) || entity.CurrencyID<0||entity.ExchangeRate<0)
+                {
+                    throw new OptioGeneralException("Entity can not be null and currency id must be > 0 and  exchange rate must be > 0");
+                }
+                var mapp = mapper.Map<ValuteCourse>(entity);
+                if (mapp != null)
+                {
+                    var res = work.ValuteCourse.UpdateAsync(mapp);
+                    return res;
+                }
+                else
+                {
+                    throw new ItemNotFoundException($"Valute with currecny id {entity.CurrencyID} not found");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex.Message, ex.StackTrace, DateTime.Now.ToShortTimeString());
+                throw;
+            }
         }
     }
 }

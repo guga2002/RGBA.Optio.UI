@@ -1,5 +1,5 @@
-﻿
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using RGBA.Optio.Domain.Interfaces;
 using RGBA.Optio.Domain.Models;
 
@@ -11,24 +11,35 @@ namespace RGBA.Optio.UI.Controllers
     {
         private readonly IMerchantRelatedService ser;
         private readonly ILogger<MerchantController> log;
-        public MerchantController(IMerchantRelatedService se, ILogger<MerchantController> log)
+        private readonly IMemoryCache cache;
+        public MerchantController(IMerchantRelatedService se, ILogger<MerchantController> log,IMemoryCache _cache)
         {
             this.ser = se;
             this.log = log;
+            this.cache= _cache;
         }
         [HttpGet]
         public async Task<IActionResult> Get()
         {
             try
             {
+                string cacheKey = "GetAllMerchantsKey";
                 if (ModelState.IsValid)
                 {
-                    var res = await ser.GetAllAsync(new MerchantModel());
-                    if (!res.Any())
+                    if (cache.TryGetValue(cacheKey, out IEnumerable<MerchantModel>? cachedData))
                     {
-                        return NotFound();
+                        return Ok(cachedData);
                     }
-                    return Ok(res);
+                    else
+                    {
+                        var res = await ser.GetAllAsync(new MerchantModel());
+                        if (!res.Any())
+                        {
+                            return NotFound();
+                        }
+                        cache.Set(cacheKey, res, TimeSpan.FromMinutes(20));
+                        return Ok(res);
+                    }
                 }
                 return BadRequest();
             }
@@ -47,12 +58,22 @@ namespace RGBA.Optio.UI.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var res = await ser.GetAllActiveAsync(new MerchantModel());
-                    if (!res.Any())
+                    string cacheKey = "GetAllActiveMerchantsKey";
+
+                    if (cache.TryGetValue(cacheKey, out IEnumerable<MerchantModel>? cachedData))
                     {
-                        return NotFound();
+                        return Ok(cachedData);
                     }
-                    return Ok(res);
+                    else
+                    {
+                        var res = await ser.GetAllActiveAsync(new MerchantModel());
+                        if (!res.Any())
+                        {
+                            return NotFound();
+                        }
+                        cache.Set(cacheKey, res, TimeSpan.FromMinutes(20));
+                        return Ok(res);
+                    }
                 }
                 return BadRequest();
             }
@@ -71,12 +92,23 @@ namespace RGBA.Optio.UI.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var res = await ser.GetByIdAsync(id, new MerchantModel());
-                    if (res is not null)
+                    string cashedkey = $"GetValueById{id}";
+
+                    if(cache.TryGetValue(cashedkey,out MerchantModel? Value))
                     {
-                        return NotFound();
+                        return Ok(Value);
                     }
-                    return Ok(res);
+                    else
+                    {
+                        var res = await ser.GetByIdAsync(id, new MerchantModel());
+                        if (res is null)
+                        {
+                            return NotFound();
+                        }
+                        cache.Set(cashedkey, res, TimeSpan.FromMinutes(20));
+                        return Ok(res);
+                    }
+                   
                 }
                 return BadRequest(id);
             }
@@ -167,12 +199,21 @@ namespace RGBA.Optio.UI.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var res = await ser.GetAllAsync(new locationModel() { LocationName = "Undefined" });
-                    if (!res.Any())
+                    string cashedkey = "GetLocation";
+                    if (cache.TryGetValue(cashedkey, out IEnumerable<locationModel>? mod))
                     {
-                        return NotFound();
+                        return Ok(mod);
                     }
-                    return Ok(res);
+                    else
+                    {
+                        var res = await ser.GetAllAsync(new locationModel() { LocationName = "Undefined" });
+                        if (!res.Any())
+                        {
+                            return NotFound();
+                        }
+                        cache.Set(cashedkey, res, TimeSpan.FromMinutes(15));
+                        return Ok(res);
+                    }
                 }
                 return BadRequest();
             }
@@ -191,12 +232,22 @@ namespace RGBA.Optio.UI.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var res = await ser.GetAllActiveAsync(new locationModel() { LocationName = "Undefined" });
-                    if (!res.Any())
+                    var cashed = "GetAllActiveLocation";
+
+                    if (cache.TryGetValue(cashed, out IEnumerable<locationModel>? loc))
                     {
-                        return NotFound();
+                        return Ok(loc);
                     }
-                    return Ok(res);
+                    else
+                    {
+                        var res = await ser.GetAllActiveAsync(new locationModel() { LocationName = "Undefined" });
+                        if (!res.Any())
+                        {
+                            return NotFound();
+                        }
+                        cache.Set(cashed, res, TimeSpan.FromMinutes(15));
+                        return Ok(res);
+                    }
                 }
                 return BadRequest();
             }
@@ -215,12 +266,21 @@ namespace RGBA.Optio.UI.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var res = await ser.GetByIdAsync(id, new locationModel() { LocationName = "Undefined" });
-                    if (res is not null)
+                    var cashedkey = $"getalllocationbyid{id}";
+                    if (cache.TryGetValue(cashedkey, out locationModel? mod))
                     {
-                        return NotFound();
+                        return Ok(mod);
                     }
-                    return Ok(res);
+                    else
+                    {
+                        var res = await ser.GetByIdAsync(id, new locationModel() { LocationName = "Undefined" });
+                        if (res is not null)
+                        {
+                            return NotFound();
+                        }
+                        cache.Set(cashedkey, res, TimeSpan.FromMinutes(15));
+                        return Ok(res);
+                    }
                 }
                 return BadRequest(id);
             }

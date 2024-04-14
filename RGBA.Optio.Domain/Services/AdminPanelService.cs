@@ -9,15 +9,15 @@ namespace RGBA.Optio.Domain.Services
 {
     public class AdminPanelService : IAdminPanelService
     {
-        private readonly CustomRoleManager role;
-        private readonly CustomSignInManager signin;
-        private readonly CustomUserManager userManager;
-        public AdminPanelService(CustomSignInManager signin, CustomUserManager userManager,CustomRoleManager rol)
-        {
-            this.signin = signin;
-            this.userManager = userManager;
-            role = rol;
-        }
+        //private readonly CustomRoleManager role;
+        //private readonly CustomSignInManager signin;
+        //private readonly CustomUserManager userManager;
+        ////public AdminPanelService(CustomSignInManager signin, CustomUserManager userManager,CustomRoleManager rol)
+        //{
+        //    this.signin = signin;
+        //    this.userManager = userManager;
+        //    role = rol;
+        //}
 
         public Task<bool> AddRolesAsync(string RoleName)
         {

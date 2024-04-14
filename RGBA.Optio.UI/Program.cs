@@ -18,12 +18,38 @@ using RGBA.Optio.Domain.Services;
 using RGBA.Optio.Domain.Services.TransactionRelated;
 using System.Text;
 using RGBA.Optio.UI.Controllers;
+using Microsoft.Extensions.Options;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(opt =>
+{
+    opt.SwaggerDoc("v1", new OpenApiInfo { Title = "OptioManagmentSolution", Version = "v1" });
+    opt.AddSecurityDefinition("auth", new OpenApiSecurityScheme
+    {
+        Type = SecuritySchemeType.ApiKey,
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Description = "Enter  YOu token there, 'Bearer {token}'"
+    });
+    opt.AddSecurityRequirement(new OpenApiSecurityRequirement
+{
+    {
+        new OpenApiSecurityScheme
+        {
+            Reference = new OpenApiReference
+            {
+                Type = ReferenceType.SecurityScheme,
+                Id = "Auth"
+            }
+        },
+        new string[] { }
+    }
+});
+});
 
 builder.Services.AddScoped<RoleManager<IdentityRole>>();
 builder.Services.AddScoped<UserManager<User>>();
@@ -63,9 +89,9 @@ builder.Services.AddDbContext<OptioDB>(opt =>
 
 builder.Services.AddIdentityApiEndpoints<User>()
     .AddRoles<IdentityRole>()
-    .AddRoleManager<CustomRoleManager>()
-    .AddSignInManager<CustomSignInManager>()
-    .AddUserManager<CustomUserManager>()
+    .AddRoleManager<RoleManager<IdentityRole>>()
+    .AddSignInManager<SignInManager<User>>()
+    .AddUserManager<UserManager<User>>()
     .AddEntityFrameworkStores<OptioDB>()
     .AddDefaultTokenProviders();
 
@@ -93,7 +119,10 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(io=>
+    {
+        io.SwaggerEndpoint("/swagger/v1/swagger.json", "OptioManagmentSolution");
+    });
 }
 app.MapIdentityApi<User>();
 app.UseHttpsRedirection();

@@ -11,7 +11,7 @@ namespace RGBA.Optio.Domain.Models
         public required DateTime Date { get; set; }
 
         [Required(ErrorMessage = "Currency ID is required.")]
-        public required Guid CurencyNameId { get; set; }
+        public required int CurencyNameId { get; set; }
 
         [Required(ErrorMessage = "Amount is required.")]
         [Range(0.01, double.MaxValue, ErrorMessage = "Amount must be greater than 0.")]

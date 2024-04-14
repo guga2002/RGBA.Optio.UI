@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.Logging;
+using Optio.Core.Entities;
 using RGBA.Optio.Core.Interfaces;
+using RGBA.Optio.Domain.Custom_Exceptions;
 using RGBA.Optio.Domain.Interfaces;
 using RGBA.Optio.Domain.Models;
 
@@ -12,39 +14,181 @@ namespace RGBA.Optio.Domain.Services
         {
         }
 
-        public Task<bool> AddAsync(TransactionModel entity)
+        public async  Task<bool> AddAsync(TransactionModel entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (entity is null || entity.Date >= DateTime.Now)
+                {
+                    throw new OptioGeneralException("Exception while adding  Transaction");
+                }
+                if (await work.CategoryOfTransactionRepository.GetByIdAsync(entity.CategoryId) is null)
+                {
+                    throw new OptioGeneralException("Such Category no exist");
+                }
+                if (await work.ChanellRepository.GetByIdAsync(entity.ChannelId) is null)
+                {
+                    throw new OptioGeneralException("CHanell  no exist while adding Transaction");
+                }
+                if (await work.MerchantRepository.GetByIdAsync(entity.MerchantId) is null)
+                {
+                    throw new OptioGeneralException("Merchant  no exist while adding Transaction");
+                }
+                if (await work.LocationRepository.GetByIdAsync(entity.LocationId) is null)
+                {
+                    throw new OptioGeneralException("Such location  no exist while adding Transaction");
+                }
+                if (await work.TypeOfTransactionRepository.GetByIdAsync(entity.TypeId) is null)
+                {
+                    throw new OptioGeneralException("Such Transaction Type  no exist while adding Transaction");
+                }
+                if (await work.CurrencyRepository.GetByIdAsync(entity.CurencyNameId) is null)
+                {
+                    throw new OptioGeneralException("Such Currency no exist while adding Transaction");
+                }
+                var mapped = mapper.Map<Transaction>(entity);
+                if (mapped is not null)
+                {
+                    await work.TransactionRepository.AddAsync(mapped);
+                    await work.CheckAndCommitAsync();
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception exp)
+            {
+                logger.LogCritical(exp.Message,exp.StackTrace);
+                throw;
+            }
         }
 
-        public Task<IEnumerable<TransactionModel>> GetAllActiveAsync(TransactionModel Identify)
+        public async Task<IEnumerable<TransactionModel>> GetAllActiveAsync(TransactionModel Identify)
         {
-            throw new NotImplementedException();
+            try
+            {
+            var res = await work.TransactionRepository.GetAllActiveAsync();
+
+                if(res is  not null)
+                {
+                    var mapped = mapper.Map<IEnumerable<TransactionModel>>(res);
+                    if(mapped is not null)
+                    {
+                        return mapped;
+                    }
+                }
+                return new List<TransactionModel>();
+            }
+            catch (Exception exp)
+            {
+                logger.LogCritical(exp.Message, exp.StackTrace);
+                throw;
+            }
         }
 
-        public Task<IEnumerable<TransactionModel>> GetAllAsync(TransactionModel Identify)
+        public async Task<IEnumerable<TransactionModel>> GetAllAsync(TransactionModel Identify)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var res = await work.TransactionRepository.GetAllWithDetailsAsync();
+
+                if (res is not null)
+                {
+                    var mapped = mapper.Map<IEnumerable<TransactionModel>>(res);
+                    if (mapped is not null)
+                    {
+                        return mapped;
+                    }
+                }
+                return new List<TransactionModel>();
+            }
+            catch (Exception exp)
+            {
+                logger.LogCritical(exp.Message, exp.StackTrace);
+                throw;
+            }
         }
 
-        public Task<TransactionModel> GetByIdAsync(Guid id, TransactionModel Identify)
+        public async Task<TransactionModel> GetByIdAsync(Guid id, TransactionModel Identify)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var res = await work.TransactionRepository.GetByIdAsync(id);
+                if(res is not null)
+                {
+                    var mapped = mapper.Map<TransactionModel>(res);
+                    if(mapped is not null)
+                    {
+                        return mapped;
+                    }
+                }
+                throw new OptioGeneralException(" No transavtion Exist");
+            }
+            catch (Exception exp)
+            {
+                logger.LogCritical(exp.Message, exp.StackTrace);
+                throw;
+            }
         }
 
-        public Task<bool> RemoveAsync(TransactionModel entity)
+        public  async Task<bool> RemoveAsync(TransactionModel entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (entity is not null)
+                {
+                    var mapped = mapper.Map<Transaction>(entity);
+                    if (mapped is not null)
+                    {
+                        var res = await work.TransactionRepository.RemoveAsync(mapped);
+                        await work.CheckAndCommitAsync();
+                        return res;
+                    }
+                }
+                throw new ResourceNotFoundException("No data exist  on this transaction in DB");
+            }
+            catch (Exception exp)
+            {
+                logger.LogCritical(exp.Message, exp.StackTrace);
+                throw;
+            }
         }
 
-        public Task<bool> SoftDeleteAsync(Guid id, TransactionModel Identify)
+        public async Task<bool> SoftDeleteAsync(Guid id, TransactionModel Identify)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var res = await work.TransactionRepository.SoftDeleteAsync(id);
+                await work.CheckAndCommitAsync();
+                return res;
+            }
+            catch (Exception exp)
+            {
+                logger.LogCritical(exp.Message, exp.StackTrace);
+                throw;
+            }
         }
 
-        public Task<bool> UpdateAsync(TransactionModel entity)
+        public async Task<bool> UpdateAsync(TransactionModel entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (entity is not null)
+                {
+                    var mapped = mapper.Map<Transaction>(entity);
+                    if (mapped is not null)
+                    {
+                        var res = await work.TransactionRepository.UpdateAsync(mapped);
+                        await work.CheckAndCommitAsync();
+                        return res;
+                    }
+                }
+                throw new ResourceNotFoundException("No data exist  on this transaction in DB");
+            }
+            catch (Exception exp)
+            {
+                logger.LogCritical(exp.Message, exp.StackTrace);
+                throw;
+            }
         }
     }
 }

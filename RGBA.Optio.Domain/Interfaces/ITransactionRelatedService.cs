@@ -12,7 +12,7 @@ namespace RGBA.Optio.Domain.Interfaces
     public interface ITransactionRelatedService:IAddInfo<ChanellModel>, IAddInfo<CategoryModel>, IAddInfo<TransactionTypeModel>,
         IGetInfo<ChanellModel,Guid>, IGetInfo<CategoryModel, Guid>, IGetInfo<TransactionTypeModel, Guid>,
         IRemoveInfo<ChanellModel,Guid>, IRemoveInfo<CategoryModel, Guid>, IRemoveInfo<TransactionTypeModel, Guid>,
-        IUpdateInfo<ChanellModel>, IUpdateInfo<CategoryModel>, IUpdateInfo<TransactionTypeModel>
+        IUpdateInfo<ChanellModel,Guid>, IUpdateInfo<CategoryModel,Guid>, IUpdateInfo<TransactionTypeModel,Guid>
     {
     }
 }

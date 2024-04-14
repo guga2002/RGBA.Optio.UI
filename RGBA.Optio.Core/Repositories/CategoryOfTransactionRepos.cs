@@ -172,11 +172,11 @@ namespace Optio.Core.Repositories
         }
 
 
-        public async Task<bool> UpdateAsync(Category entity)
+        public async Task<bool> UpdateAsync(Guid id,Category entity)
         {
             try
             {
-                var category = await categoriesOfTransactionRepos.SingleOrDefaultAsync(i => i.Id == entity.Id);
+                var category = await categoriesOfTransactionRepos.SingleOrDefaultAsync(i => i.Id == id);
                 if (category == null)
                 {
                     throw new InvalidOperationException("There is no such category");

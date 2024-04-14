@@ -4,7 +4,7 @@
     {
         Task<bool>AddAsync(T entity);   
         Task<bool> RemoveAsync(T entity);
-        Task<bool> UpdateAsync(T entity);
+        Task<bool> UpdateAsync(K id,T entity);
         Task<bool> SoftDeleteAsync(K id);
         Task<IEnumerable<T>> GetAllAsync();
         Task<T> GetByIdAsync(K id);

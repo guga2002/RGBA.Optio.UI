@@ -155,11 +155,11 @@ namespace Optio.Core.Repositories
             }
         }
 
-        public async Task<bool> UpdateAsync(Location entity)
+        public async Task<bool> UpdateAsync(Guid id, Location entity)
         {
             try
             {
-                var city = await locations.SingleOrDefaultAsync(i => i.Id == entity.Id);
+                var city = await locations.SingleOrDefaultAsync(i => i.Id == id);
                 if (city == null)
                 {
                     throw new InvalidOperationException("No such city was found");

@@ -153,11 +153,11 @@ namespace Optio.Core.Repositories
             }
         }
 
-        public async Task<bool> UpdateAsync(Merchant entity)
+        public async Task<bool> UpdateAsync(Guid id, Merchant entity)
         {
             try
             {
-                var store = await merchant.SingleOrDefaultAsync(i => i.Id == entity.Id);
+                var store = await merchant.SingleOrDefaultAsync(i => i.Id == id);
                 if (store == null)
                 {
                     throw new InvalidOperationException("No merchant found");

@@ -121,7 +121,7 @@ namespace RGBA.Optio.Domain.Services
                         return mapped;
                     }
                 }
-                throw new OptioGeneralException(" No transavtion Exist");
+                throw new ItemNotFoundException(" No transavtion Exist");
             }
             catch (Exception exp)
             {
@@ -168,7 +168,7 @@ namespace RGBA.Optio.Domain.Services
             }
         }
 
-        public async Task<bool> UpdateAsync(TransactionModel entity)
+        public async Task<bool> UpdateAsync(Guid id, TransactionModel entity)
         {
             try
             {
@@ -177,7 +177,7 @@ namespace RGBA.Optio.Domain.Services
                     var mapped = mapper.Map<Transaction>(entity);
                     if (mapped is not null)
                     {
-                        var res = await work.TransactionRepository.UpdateAsync(mapped);
+                        var res = await work.TransactionRepository.UpdateAsync(id,mapped);
                         await work.CheckAndCommitAsync();
                         return res;
                     }

@@ -379,7 +379,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
-        public  async Task<bool> UpdateAsync(ChanellModel entity)
+        public  async Task<bool> UpdateAsync(Guid id, ChanellModel entity)
         {
             try
             {
@@ -390,7 +390,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
                 var map = mapper.Map<Channels>(entity);
                 if (map is not null)
                 {
-                    return await work.ChanellRepository.UpdateAsync(map);
+                    return await work.ChanellRepository.UpdateAsync(id,map);
                 }
                 return false;
             }
@@ -401,7 +401,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
-        public  async Task<bool> UpdateAsync(CategoryModel entity)
+        public  async Task<bool> UpdateAsync(Guid id, CategoryModel entity)
         {
             try
             {
@@ -412,7 +412,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
                 var map = mapper.Map<Category>(entity);
                 if (map is not null)
                 {
-                    return await work.CategoryOfTransactionRepository.UpdateAsync(map);
+                    return await work.CategoryOfTransactionRepository.UpdateAsync(id,map);
                 }
                 return false;
             }
@@ -423,7 +423,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
-        public async Task<bool> UpdateAsync(TransactionTypeModel entity)
+        public async Task<bool> UpdateAsync(Guid id,TransactionTypeModel entity)
         {
 
             try
@@ -435,7 +435,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
                 var map = mapper.Map<TypeOfTransaction>(entity);
                 if (map is not null)
                 {
-                    return await work.TypeOfTransactionRepository.UpdateAsync(map);
+                    return await work.TypeOfTransactionRepository.UpdateAsync(id,map);
                 }
                 return false;
             }

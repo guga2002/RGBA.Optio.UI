@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -17,6 +17,7 @@ using RGBA.Optio.Domain.Mapper;
 using RGBA.Optio.Domain.Services;
 using RGBA.Optio.Domain.Services.TransactionRelated;
 using System.Text;
+using RGBA.Optio.UI.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -101,5 +102,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
 
 app.Run();

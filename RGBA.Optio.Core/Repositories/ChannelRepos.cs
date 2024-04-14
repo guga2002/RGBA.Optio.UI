@@ -173,11 +173,11 @@ namespace Optio.Core.Repositories
         }
 
 
-        public async Task<bool> UpdateAsync(Channels entity)
+        public async Task<bool> UpdateAsync(Guid id, Channels entity)
         {
             try
             {
-                var channel = await channels.SingleOrDefaultAsync(i => i.ChannelType == entity.ChannelType);
+                var channel = await channels.SingleOrDefaultAsync(i => i.Id == id);
                 if (channel != null)
                 {
                     context.Entry(channel).CurrentValues.SetValues(entity);

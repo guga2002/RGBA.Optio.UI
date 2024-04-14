@@ -191,11 +191,11 @@ namespace Optio.Core.Repositories
             }
         }
 
-        public async Task<bool> UpdateAsync(Transaction entity)
+        public async Task<bool> UpdateAsync(Guid id,Transaction entity)
         {
             try
             {
-                var tran = await transactions.SingleOrDefaultAsync(io => io.Id == entity.Id);
+                var tran = await transactions.SingleOrDefaultAsync(io => io.Id == id);
                 if (tran is not null)
                 {
                     context.Entry(tran).CurrentValues.SetValues(entity);

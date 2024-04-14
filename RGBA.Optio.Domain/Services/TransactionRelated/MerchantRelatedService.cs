@@ -4,7 +4,6 @@ using Optio.Core.Entities;
 using RGBA.Optio.Core.Interfaces;
 using RGBA.Optio.Domain.Custom_Exceptions;
 using RGBA.Optio.Domain.Interfaces;
-using RGBA.Optio.Domain.Interfaces.InterfacesForTransaction;
 using RGBA.Optio.Domain.Models;
 
 namespace RGBA.Optio.Domain.Services.TransactionRelated
@@ -260,7 +259,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
-        public async Task<bool> UpdateAsync(locationModel entity)
+        public async Task<bool> UpdateAsync(Guid id, locationModel entity)
         {
             try
             {
@@ -271,7 +270,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
                 var mapp=mapper.Map<Location>(entity);
                 if(mapp is not null)
                 {
-                    var res=await work.LocationRepository.UpdateAsync(mapp);
+                    var res=await work.LocationRepository.UpdateAsync(id,mapp);
                     return res;
                 }
                 else
@@ -286,7 +285,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
-        public async Task<bool> UpdateAsync(MerchantModel entity)
+        public async Task<bool> UpdateAsync( Guid id,MerchantModel entity)
         {
             try
             {
@@ -297,7 +296,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
                 var mapp = mapper.Map<Merchant>(entity);
                 if (mapp is not null)
                 {
-                    var res = await work.MerchantRepository.UpdateAsync(mapp);
+                    var res = await work.MerchantRepository.UpdateAsync(id,mapp);
                     return res;
                 }
                 else

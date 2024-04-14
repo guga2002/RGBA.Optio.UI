@@ -11,7 +11,7 @@ namespace RGBA.Optio.Domain.Interfaces
     public interface IMerchantRelatedService:IAddInfo<MerchantModel>,IAddInfo<locationModel>,
         IGetInfo<locationModel,Guid>,IGetInfo<MerchantModel,Guid>,
         IRemoveInfo<locationModel,Guid>,IRemoveInfo<MerchantModel,Guid>,
-        IUpdateInfo<locationModel>,IUpdateInfo<MerchantModel>
+        IUpdateInfo<locationModel, Guid>,IUpdateInfo<MerchantModel,Guid>
     {
 
     }

@@ -101,11 +101,11 @@ namespace RGBA.Optio.Core.Repositories
             }
         }
 
-        public async Task<bool> UpdateAsync(Currency entity)
+        public async Task<bool> UpdateAsync(int id, Currency entity)
         {
             try
             {
-                var res = await currencies.AsNoTracking().FirstOrDefaultAsync(io => io.Id == entity.Id);
+                var res = await currencies.AsNoTracking().FirstOrDefaultAsync(io => io.Id == id);
                 if (res is not null)
                 {
                     context.Entry(res).CurrentValues.SetValues(entity);

@@ -273,7 +273,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
-        public Task<bool> UpdateAsync(CurrencyModel entity)
+        public Task<bool> UpdateAsync(int id, CurrencyModel entity)
         {
             try
             {
@@ -284,7 +284,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
                 var mapp=mapper.Map<Currency> (entity);
                 if (mapp != null)
                 {
-                    var res=work.CurrencyRepository.UpdateAsync(mapp);
+                    var res=work.CurrencyRepository.UpdateAsync(id,mapp);
                     return res;
                 }
                 else
@@ -300,7 +300,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
-        public Task<bool> UpdateAsync(ValuteModel entity)
+        public Task<bool> UpdateAsync(Guid id, ValuteModel entity)
         {
             try
             {
@@ -311,7 +311,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
                 var mapp = mapper.Map<ValuteCourse>(entity);
                 if (mapp != null)
                 {
-                    var res = work.ValuteCourse.UpdateAsync(mapp);
+                    var res = work.ValuteCourse.UpdateAsync(id,mapp);
                     return res;
                 }
                 else

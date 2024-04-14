@@ -126,11 +126,11 @@ namespace RGBA.Optio.Core.Repositories
             }
         }
 
-        public async Task<bool> UpdateAsync(ValuteCourse entity)
+        public async Task<bool> UpdateAsync(Guid id, ValuteCourse entity)
         {
             try
             {
-                var course = await courses.AsNoTracking().FirstOrDefaultAsync(io => io.Id == entity.Id);
+                var course = await courses.AsNoTracking().FirstOrDefaultAsync(io => io.Id == id);
                 if (course is not null)
                 {
                     context.Entry(course).CurrentValues.SetValues(entity);

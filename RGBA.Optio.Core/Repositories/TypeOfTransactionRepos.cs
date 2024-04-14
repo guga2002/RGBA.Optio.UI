@@ -113,11 +113,11 @@ namespace Optio.Core.Repositories
             }
         }
 
-        public async Task<bool> UpdateAsync(TypeOfTransaction entity)
+        public async Task<bool> UpdateAsync(Guid id, TypeOfTransaction entity)
         {
             try
             {
-                var existingEntity = await TypeOfTransaction.AsNoTracking().FirstOrDefaultAsync(io => io.Id == entity.Id);
+                var existingEntity = await TypeOfTransaction.AsNoTracking().FirstOrDefaultAsync(io => io.Id == id);
                 if (existingEntity != null)
                 {
                     context.Entry(existingEntity).CurrentValues.SetValues(entity);

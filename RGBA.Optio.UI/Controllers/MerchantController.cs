@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
+using RGBA.Optio.Domain.Custom_Exceptions;
 using RGBA.Optio.Domain.Interfaces;
 using RGBA.Optio.Domain.Models;
 
@@ -190,7 +191,47 @@ namespace RGBA.Optio.UI.Controllers
                 return BadRequest(exp.Message);
             }
         }
+
+        [HttpDelete]
+        [Route("merchant")]
+        public async Task<IActionResult> Deletemerchant([FromBody]MerchantModel mod)
+        {
+            try
+            {
+                if(!ModelState.IsValid)
+                {
+                    throw new OptioGeneralException(mod.Name);
+                }
+                var res =await ser.RemoveAsync(mod);
+                return res == true ? Ok(mod) : BadRequest(mod);
+            }
+            catch (Exception exp)
+            {
+                log.LogCritical(exp.Message, exp.StackTrace);
+                return BadRequest(exp.Message);
+            }
+        }
         //locationEndpoints
+        [HttpDelete]
+        [Route("location")]
+        public async Task<IActionResult> DeleteLocation([FromBody]locationModel mod)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new OptioGeneralException(mod.LocationName);
+                }
+                var res = await ser.RemoveAsync(mod);
+                return res == true ? Ok(mod) : BadRequest(mod);
+            }
+            catch (Exception exp)
+            {
+                log.LogCritical(exp.Message, exp.StackTrace);
+                return BadRequest(exp.Message);
+            }
+        }
+
         [HttpGet]
         [Route("[action]")]
         public async Task<IActionResult> GetLocation()

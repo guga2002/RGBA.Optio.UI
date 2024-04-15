@@ -68,27 +68,12 @@ namespace Optio.Core.Repositories
         }
 
 
-        Func<OptioDB, IEnumerable<Channels>?> CompiledQueryGetAllActiveChannel =
-            EF.CompileQuery(
-                (OptioDB db) =>
-                db.Channels
-                .Where(i=>i.IsActive==true)
-                .ToList()
-                );
-
         public async Task<IEnumerable<Channels>> GetAllActiveChannelAsync()
         {
             try
             {
-                string cacheKey = "All Channels";
-                await Task.Delay(1);
-               IEnumerable<Channels> ch = cacheService.GetOrCreate(cacheKey, () =>
-                {
-                    return CompiledQueryGetAllActiveChannel.Invoke(context) ??
-                    throw new ArgumentException("No active channel found");
-                }, TimeSpan.FromMinutes(30)
-                    );
-                return ch ?? throw new ArgumentException("No active channel found");
+              return await channels.Where(io => io.IsActive)
+                    .ToListAsync();
             }
             catch (Exception)
             {

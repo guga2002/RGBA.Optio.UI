@@ -21,7 +21,7 @@ namespace Optio.Core.Repositories
         {
             try
             {
-                var obj = merchant.SingleOrDefaultAsync(i => i.Name.ToLower() == entity.Name.ToLower());
+                var obj = await merchant.SingleOrDefaultAsync(i => i.Name == entity.Name);
                 if (obj == null)
                 {
                     await merchant.AddAsync(entity);

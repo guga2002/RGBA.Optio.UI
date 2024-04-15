@@ -16,5 +16,10 @@ namespace Optio.Core.Entities
 
         public virtual IEnumerable<Transaction> Transactions { get; set;}
 
+        public Channels()
+        {
+            IsActive = true;
+        }
+
     }
 }

@@ -9,7 +9,6 @@ using RGBA.Optio.Core.Entities;
 using RGBA.Optio.Core.Interfaces;
 using RGBA.Optio.Core.PerformanceImprovmentServices;
 using RGBA.Optio.Core.Repositories;
-using RGBA.Optio.Core.Repositories.UserRelate;
 using RGBA.Optio.Domain;
 using RGBA.Optio.Domain.Interfaces;
 using RGBA.Optio.Domain.LoggerFiles;
@@ -71,13 +70,12 @@ builder.Services.AddScoped<ICurrencyRelatedService,CurrencyRelatedService>();
 builder.Services.AddScoped<IMerchantRelatedService, MerchantRelatedService>();
 builder.Services.AddScoped<ITransactionRelatedService, TransactionRelatedService>();
 
-builder.Services.AddScoped<UserManager<User>, CustomUserManager>();
-builder.Services.AddScoped<SignInManager<User>, CustomSignInManager>();
-builder.Services.AddScoped<RoleManager<IdentityRole>, CustomRoleManager>();
 
 builder.Services.AddSingleton<CacheService>();
 
 builder.Services.AddMemoryCache();
+
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
@@ -86,14 +84,10 @@ builder.Services.AddDbContext<OptioDB>(opt =>
     opt.UseSqlServer(builder.Configuration.GetConnectionString("OptiosString"));
 });
 
-
-builder.Services.AddIdentityApiEndpoints<User>()
-    .AddRoles<IdentityRole>()
-    .AddRoleManager<RoleManager<IdentityRole>>()
-    .AddSignInManager<SignInManager<User>>()
-    .AddUserManager<UserManager<User>>()
+builder.Services.AddIdentity<User, IdentityRole>()
     .AddEntityFrameworkStores<OptioDB>()
     .AddDefaultTokenProviders();
+
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -124,13 +118,17 @@ if (app.Environment.IsDevelopment())
         io.SwaggerEndpoint("/swagger/v1/swagger.json", "OptioManagmentSolution");
     });
 }
-app.MapIdentityApi<User>();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+};
 app.UseHttpsRedirection();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-
 
 app.Run();

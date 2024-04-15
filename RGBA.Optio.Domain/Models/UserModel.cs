@@ -1,6 +1,7 @@
 ﻿using RGBA.Optio.Domain.Validation.VallidationAttributes;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace RGBA.Optio.Domain.Models
 {
@@ -43,6 +44,6 @@ namespace RGBA.Optio.Domain.Models
         [Required(ErrorMessage = "Password is required.")]
         [StringLength(100, MinimumLength = 6, ErrorMessage = "Password must be between 6 and 100 characters.")]
         [NotMapped]
-        public required string Password { get; set; }
+        public  required string Password { get; set; }
     }
 }

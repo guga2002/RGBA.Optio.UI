@@ -167,7 +167,7 @@ namespace RGBA.Optio.UI.Controllers
         }
 
         [HttpPost]
-        [Route("{id}")]
+        [Route("[action]/{id}")]
         public async Task<IActionResult>  Delete(Guid id)
         {
 

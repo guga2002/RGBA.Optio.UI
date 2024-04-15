@@ -11,11 +11,8 @@ namespace RGBA.Optio.Domain.Validation.VallidationAttributes
     {
         public override bool IsValid(object? value)
         {
-            if (value is DateTimeOffset dateTime)
-            {
-                return dateTime <= DateTime.Now && dateTime >= new DateTime(1900, 01, 01);
-            }
-            return false;
+            var dateTime = value as DateTime? ?? new DateTime(2030, 01, 01);
+            return dateTime <= DateTime.Now && dateTime >= new DateTime(1900, 01, 01);
         }
     }
 }

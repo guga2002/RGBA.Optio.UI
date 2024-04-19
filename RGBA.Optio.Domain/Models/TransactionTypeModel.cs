@@ -9,5 +9,6 @@ namespace RGBA.Optio.Domain.Models
         [Display(Name ="Transaction Type")]
         [RegularExpression(@"^[a-zA-Z\s]*$", ErrorMessage = "Transaction Type should contain only letters and spaces.")]
         public required string TransactionName { get; set; }
+   
     }
 }

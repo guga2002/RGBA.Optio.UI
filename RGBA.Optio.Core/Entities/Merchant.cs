@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MongoDB.Bson.IO;
+using RGBA.Optio.Core.Entities;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -15,6 +16,6 @@ namespace Optio.Core.Entities
 
         public bool IsActive { get; set; } = true;
 
-        public virtual IEnumerable<Transaction> Transactions { get; set; }
+        public virtual IEnumerable<LocationToMerchant> Locations { get; set; }
     }
 }

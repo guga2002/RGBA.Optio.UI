@@ -15,7 +15,6 @@ namespace Optio.Core.Entities
         [Column("Status_Of_Transaction_Type")]
         public bool IsActive { get; set; } = true;
 
-        public virtual IEnumerable<Transaction> Transactions { get; set; }
-
+        public virtual IEnumerable<Category> Category { get; set; }
     }
 }

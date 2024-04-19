@@ -24,12 +24,16 @@ namespace Optio.Core.Repositories
         {
             try
             {
+
                 var category = await categoriesOfTransactionRepos.SingleOrDefaultAsync(i=>i.TransactionCategory == entity.TransactionCategory);
                 if (category == null)
                 {
-                    await categoriesOfTransactionRepos.AddAsync(entity);
-                    await context.SaveChangesAsync();
-                    return true;
+                    if (await context.Types.AnyAsync(io => io.Id == entity.TransactionTypeID))
+                    {
+                        await categoriesOfTransactionRepos.AddAsync(entity);
+                        await context.SaveChangesAsync();
+                        return true;
+                    }
                 }
                 throw new ArgumentException("There is a similar category");
                 
@@ -59,7 +63,7 @@ namespace Optio.Core.Repositories
                 IEnumerable<Category> category = cacheService.GetOrCreate(
                     cash, () =>
                     {
-                        return categoriesOfTransactionRepos.AsNoTracking().ToList() ??
+                        return categoriesOfTransactionRepos.Include(io=>io.typeOfTransaction).AsNoTracking().ToList() ??
                         throw new ArgumentException("No category found");
                     }, TimeSpan.FromMinutes(30)
                     ) ;
@@ -89,7 +93,7 @@ namespace Optio.Core.Repositories
                 await Task.Delay(1);
                 Category category = cacheService.GetOrCreate(
                     cashkey,() => {
-                     return   context.CategoryOfTransactions
+                     return   context.CategoryOfTransactions.Include(io=>io.typeOfTransaction)
                     .Single(i => i.Id == id);
                     }
                     ,TimeSpan.FromMinutes(30)
@@ -109,7 +113,7 @@ namespace Optio.Core.Repositories
         {
             try
             {
-                var cat = await categoriesOfTransactionRepos.AsNoTracking().Where(i => i.IsActive == true).ToListAsync();
+                var cat = await categoriesOfTransactionRepos.Include(io=>io.typeOfTransaction).AsNoTracking().Where(i => i.IsActive == true).ToListAsync();
                 if (cat != null)
                 {
                     return cat;

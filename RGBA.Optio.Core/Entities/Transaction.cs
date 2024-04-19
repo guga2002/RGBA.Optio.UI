@@ -24,35 +24,22 @@ namespace Optio.Core.Entities
 
         [ForeignKey("Currency")]
         public int CurrencyId { get; set; }
-
         public virtual Currency Currency { get; set; }
-
-
-        [ForeignKey("TypeOfTransaction")]
-        public Guid TypeId { get; set; }
-
-        public virtual TypeOfTransaction TypeOfTransaction { get; set; }
 
 
         [ForeignKey("Category")]
         public Guid CategoryId { get; set; }
-
         public virtual Category Category { get; set; }
+
 
         [ForeignKey("Merchant")]
         public Guid MerchantId { get; set; }
-
         public virtual Merchant Merchant {  get; set; }
+
 
         [ForeignKey("Channel")]
         public Guid ChannelId { get; set; }
-
         public virtual Channels Channel { get; set; }
-
-        [ForeignKey("Location")]
-        public Guid LocationId { get; set; }
-
-        public virtual Location Location { get; set; }
 
     }
 }

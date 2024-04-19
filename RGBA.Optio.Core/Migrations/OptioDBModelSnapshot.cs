@@ -170,11 +170,16 @@ namespace RGBA.Optio.Core.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasColumnName("Transaction_Category");
 
+                    b.Property<Guid>("TransactionTypeID")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
                     b.HasIndex("TransactionCategory")
                         .IsUnique()
                         .IsDescending();
+
+                    b.HasIndex("TransactionTypeID");
 
                     b.ToTable("CategoryOfTransactions");
                 });
@@ -282,13 +287,7 @@ namespace RGBA.Optio.Core.Migrations
                         .HasColumnType("bit")
                         .HasColumnName("Transaction_Status");
 
-                    b.Property<Guid>("LocationId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("MerchantId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("TypeId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -308,11 +307,7 @@ namespace RGBA.Optio.Core.Migrations
                     b.HasIndex("Date")
                         .IsDescending();
 
-                    b.HasIndex("LocationId");
-
                     b.HasIndex("MerchantId");
-
-                    b.HasIndex("TypeId");
 
                     b.ToTable("Transactions");
                 });
@@ -378,6 +373,27 @@ namespace RGBA.Optio.Core.Migrations
                         .IsDescending();
 
                     b.ToTable("Curencies");
+                });
+
+            modelBuilder.Entity("RGBA.Optio.Core.Entities.LocationToMerchant", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("LocatrionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("merchantId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LocatrionId");
+
+                    b.HasIndex("merchantId");
+
+                    b.ToTable("LocationToMerchants");
                 });
 
             modelBuilder.Entity("RGBA.Optio.Core.Entities.User", b =>
@@ -556,6 +572,17 @@ namespace RGBA.Optio.Core.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Optio.Core.Entities.Category", b =>
+                {
+                    b.HasOne("Optio.Core.Entities.TypeOfTransaction", "typeOfTransaction")
+                        .WithMany("Category")
+                        .HasForeignKey("TransactionTypeID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("typeOfTransaction");
+                });
+
             modelBuilder.Entity("Optio.Core.Entities.Transaction", b =>
                 {
                     b.HasOne("Optio.Core.Entities.Category", "Category")
@@ -576,21 +603,9 @@ namespace RGBA.Optio.Core.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Optio.Core.Entities.Location", "Location")
-                        .WithMany("Transactions")
-                        .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Optio.Core.Entities.Merchant", "Merchant")
-                        .WithMany("Transactions")
+                        .WithMany()
                         .HasForeignKey("MerchantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Optio.Core.Entities.TypeOfTransaction", "TypeOfTransaction")
-                        .WithMany("Transactions")
-                        .HasForeignKey("TypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -600,11 +615,26 @@ namespace RGBA.Optio.Core.Migrations
 
                     b.Navigation("Currency");
 
-                    b.Navigation("Location");
-
                     b.Navigation("Merchant");
+                });
 
-                    b.Navigation("TypeOfTransaction");
+            modelBuilder.Entity("RGBA.Optio.Core.Entities.LocationToMerchant", b =>
+                {
+                    b.HasOne("Optio.Core.Entities.Location", "location")
+                        .WithMany("Merchants")
+                        .HasForeignKey("LocatrionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Optio.Core.Entities.Merchant", "merchant")
+                        .WithMany("Locations")
+                        .HasForeignKey("merchantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("location");
+
+                    b.Navigation("merchant");
                 });
 
             modelBuilder.Entity("RGBA.Optio.Core.Entities.ValuteCourse", b =>
@@ -630,17 +660,17 @@ namespace RGBA.Optio.Core.Migrations
 
             modelBuilder.Entity("Optio.Core.Entities.Location", b =>
                 {
-                    b.Navigation("Transactions");
+                    b.Navigation("Merchants");
                 });
 
             modelBuilder.Entity("Optio.Core.Entities.Merchant", b =>
                 {
-                    b.Navigation("Transactions");
+                    b.Navigation("Locations");
                 });
 
             modelBuilder.Entity("Optio.Core.Entities.TypeOfTransaction", b =>
                 {
-                    b.Navigation("Transactions");
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("RGBA.Optio.Core.Entities.Currency", b =>

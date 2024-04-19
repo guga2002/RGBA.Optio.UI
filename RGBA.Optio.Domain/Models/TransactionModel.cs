@@ -23,9 +23,6 @@ namespace RGBA.Optio.Domain.Models
         [Display(Name = "Equvalent in GEL")]
         public required double EquivalentInGel { get; set; }
 
-        [Required(ErrorMessage = "Type ID is required.")]
-        public required Guid TypeId { get; set; }
-
         [Required(ErrorMessage = "Category ID is required.")]
         public required Guid CategoryId { get; set; }
 
@@ -34,8 +31,5 @@ namespace RGBA.Optio.Domain.Models
 
         [Required(ErrorMessage = "Channel ID is required.")]
         public required Guid ChannelId { get; set; }
-
-        [Required(ErrorMessage = "Location ID is required.")]
-        public required Guid LocationId { get; set; }
     }
 }

@@ -51,6 +51,26 @@ namespace RGBA.Optio.UI.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("Merchant/{Merchantid}/Location/{Locationid}")]
+        public async Task<IActionResult> AssignLocationtoMerchant(Guid Merchantid, Guid Locationid)
+        {
+            try
+            {
+                var res = await ser.AssignLocationtoMerchant(Merchantid, Locationid);
+                if(res)
+                {
+                    return Ok(res);
+                }
+                return StatusCode(404);
+            }
+            catch (Exception exp)
+            {
+                log.LogCritical(exp.Message);
+                return BadRequest(exp.Message);
+            }
+        }
+
         [HttpGet]
         [Route("[action]")]
         public async Task<IActionResult> AllActive()

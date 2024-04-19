@@ -63,6 +63,20 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
+        public async Task<bool> AssignLocationtoMerchant(Guid Merchantid, Guid Locationid)
+        {
+            try
+            {
+              var res= await  work.MerchantRepository.AssignLocationtoMerchant(Merchantid, Locationid);
+              return res;
+            }
+            catch (Exception ex)
+            {
+                logger.LogCritical(ex.Message, ex.StackTrace, DateTime.Now.ToShortTimeString());
+                throw;
+            }
+        }
+
         public async Task<IEnumerable<locationModel>> GetAllActiveAsync(locationModel Identify)
         {
             try

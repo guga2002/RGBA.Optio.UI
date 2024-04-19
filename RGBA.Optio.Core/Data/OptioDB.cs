@@ -9,6 +9,7 @@ namespace Optio.Core.Data
     { 
         public OptioDB(DbContextOptions<OptioDB> bs) : base(bs) { }
 
+        public virtual DbSet<LocationToMerchant> LoactionTomerchant { get; set; }
         public virtual DbSet<Category> CategoryOfTransactions { get; set; }
         public virtual DbSet<Channels>Channels { get; set; }
         public virtual DbSet<Location> Locations { get; set; }

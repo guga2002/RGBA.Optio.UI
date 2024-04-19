@@ -13,6 +13,6 @@ namespace RGBA.Optio.Domain.Interfaces
         IRemoveInfo<locationModel,Guid>,IRemoveInfo<MerchantModel,Guid>,
         IUpdateInfo<locationModel, Guid>,IUpdateInfo<MerchantModel,Guid>
     {
-
+        Task<bool> AssignLocationtoMerchant(Guid Merchantid, Guid Locationid);
     }
 }

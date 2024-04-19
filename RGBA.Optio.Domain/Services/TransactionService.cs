@@ -34,14 +34,6 @@ namespace RGBA.Optio.Domain.Services
                 {
                     throw new OptioGeneralException("Merchant  no exist while adding Transaction");
                 }
-                if (await work.LocationRepository.GetByIdAsync(entity.LocationId) is null)
-                {
-                    throw new OptioGeneralException("Such location  no exist while adding Transaction");
-                }
-                if (await work.TypeOfTransactionRepository.GetByIdAsync(entity.TypeId) is null)
-                {
-                    throw new OptioGeneralException("Such Transaction Type  no exist while adding Transaction");
-                }
                 if (await work.CurrencyRepository.GetByIdAsync(entity.CurencyNameId) is null)
                 {
                     throw new OptioGeneralException("Such Currency no exist while adding Transaction");

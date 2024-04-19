@@ -41,10 +41,8 @@ namespace RGBA.Optio.UI.Controllers
                         { Amount=0,
                           CategoryId=new Guid(),
                           ChannelId=new Guid(),
-                          LocationId=new Guid(),
                           MerchantId=new Guid(),
                           CurencyNameId=0,
-                          TypeId=new Guid(),
                           Date=new DateTime(),
                           EquivalentInGel=0 
                         });
@@ -86,10 +84,8 @@ namespace RGBA.Optio.UI.Controllers
                             Amount = 0,
                             CategoryId = new Guid(),
                             ChannelId = new Guid(),
-                            LocationId = new Guid(),
                             MerchantId = new Guid(),
                             CurencyNameId = 0,
-                            TypeId = new Guid(),
                             Date = new DateTime(),
                             EquivalentInGel = 0
                         });
@@ -130,10 +126,8 @@ namespace RGBA.Optio.UI.Controllers
                             Amount = 0,
                             CategoryId = new Guid(),
                             ChannelId = new Guid(),
-                            LocationId = new Guid(),
                             MerchantId = new Guid(),
                             CurencyNameId = 0,
-                            TypeId = new Guid(),
                             Date = new DateTime(),
                             EquivalentInGel = 0
                         });
@@ -210,10 +204,8 @@ namespace RGBA.Optio.UI.Controllers
                         Amount = 0,
                         CategoryId = new Guid(),
                         ChannelId = new Guid(),
-                        LocationId = new Guid(),
                         MerchantId = new Guid(),
                         CurencyNameId = 0,
-                        TypeId = new Guid(),
                         Date = new DateTime(),
                         EquivalentInGel = 0
                     });

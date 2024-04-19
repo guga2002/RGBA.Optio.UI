@@ -12,8 +12,8 @@ using Optio.Core.Data;
 namespace RGBA.Optio.Core.Migrations
 {
     [DbContext(typeof(OptioDB))]
-    [Migration("20240407104219_UpdateTables")]
-    partial class UpdateTables
+    [Migration("20240419121301_migrate_updates")]
+    partial class migrate_updates
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -164,14 +164,25 @@ namespace RGBA.Optio.Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<string>("TransactionCategory")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("Transaction_Category");
+
+                    b.Property<Guid>("TransactionTypeID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
                     b.HasIndex("TransactionCategory")
-                        .IsUnique();
+                        .IsUnique()
+                        .IsDescending();
+
+                    b.HasIndex("TransactionTypeID");
 
                     b.ToTable("CategoryOfTransactions");
                 });
@@ -184,12 +195,18 @@ namespace RGBA.Optio.Core.Migrations
 
                     b.Property<string>("ChannelType")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("Channel_Type");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ChannelType")
-                        .IsUnique();
+                        .IsUnique()
+                        .IsDescending();
 
                     b.ToTable("Channels");
                 });
@@ -200,14 +217,20 @@ namespace RGBA.Optio.Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<string>("LocationName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("Location_Name");
 
                     b.HasKey("Id");
 
                     b.HasIndex("LocationName")
-                        .IsUnique();
+                        .IsUnique()
+                        .IsDescending();
 
                     b.ToTable("Locations");
                 });
@@ -218,14 +241,20 @@ namespace RGBA.Optio.Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("Name");
 
                     b.HasKey("Id");
 
                     b.HasIndex("Name")
-                        .IsUnique();
+                        .IsUnique()
+                        .IsDescending();
 
                     b.ToTable("Merchants");
                 });
@@ -236,11 +265,13 @@ namespace RGBA.Optio.Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<float>("Amount")
-                        .HasColumnType("real");
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("Amount");
 
                     b.Property<decimal>("AmountEquivalent")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("Amount_Equivalent");
 
                     b.Property<Guid>("CategoryId")
                         .HasColumnType("uniqueidentifier");
@@ -248,35 +279,38 @@ namespace RGBA.Optio.Core.Migrations
                     b.Property<Guid>("ChannelId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("CurencyId")
+                    b.Property<int>("CurrencyId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2")
                         .HasColumnName("Date_Of_Transaction");
 
-                    b.Property<Guid>("LocationId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit")
+                        .HasColumnName("Transaction_Status");
 
                     b.Property<Guid>("MerchantId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("TypeId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("Amount")
+                        .IsDescending();
+
+                    b.HasIndex("AmountEquivalent")
+                        .IsDescending();
 
                     b.HasIndex("CategoryId");
 
                     b.HasIndex("ChannelId");
 
-                    b.HasIndex("CurencyId");
+                    b.HasIndex("CurrencyId");
 
-                    b.HasIndex("LocationId");
+                    b.HasIndex("Date")
+                        .IsDescending();
 
                     b.HasIndex("MerchantId");
-
-                    b.HasIndex("TypeId");
 
                     b.ToTable("Transactions");
                 });
@@ -287,14 +321,21 @@ namespace RGBA.Optio.Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit")
+                        .HasColumnName("Status_Of_Transaction_Type");
+
                     b.Property<string>("TransactionName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("Transaction_Name");
 
                     b.HasKey("Id");
 
                     b.HasIndex("TransactionName")
-                        .IsUnique();
+                        .IsUnique()
+                        .IsDescending();
 
                     b.ToTable("TypeOfTransactions");
                 });
@@ -307,13 +348,55 @@ namespace RGBA.Optio.Core.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("CurrencyCode")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(30)")
+                        .HasColumnName("Currency_Code");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit")
+                        .HasColumnName("Status_Of_Currency");
+
                     b.Property<string>("NameOfValute")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(30)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(30)")
+                        .HasColumnName("Name_Of_Valute");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CurrencyCode")
+                        .IsUnique()
+                        .IsDescending();
+
+                    b.HasIndex("NameOfValute")
+                        .IsDescending();
+
                     b.ToTable("Curencies");
+                });
+
+            modelBuilder.Entity("RGBA.Optio.Core.Entities.LocationToMerchant", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("LocatrionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("merchantId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LocatrionId");
+
+                    b.HasIndex("merchantId");
+
+                    b.ToTable("LocationToMerchants");
                 });
 
             modelBuilder.Entity("RGBA.Optio.Core.Entities.User", b =>
@@ -347,7 +430,8 @@ namespace RGBA.Optio.Core.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
                         .HasColumnName("User_Name");
 
                     b.Property<string>("NormalizedEmail")
@@ -361,6 +445,12 @@ namespace RGBA.Optio.Core.Migrations
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("PersonalNumber")
+                        .IsRequired()
+                        .HasMaxLength(11)
+                        .HasColumnType("nvarchar(11)")
+                        .HasColumnName("Personal_Number");
+
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
@@ -372,7 +462,8 @@ namespace RGBA.Optio.Core.Migrations
 
                     b.Property<string>("Surname")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
                         .HasColumnName("User_Surname");
 
                     b.Property<bool>("TwoFactorEnabled")
@@ -392,6 +483,10 @@ namespace RGBA.Optio.Core.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
+                    b.HasIndex("PersonalNumber")
+                        .IsUnique()
+                        .IsDescending();
+
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
@@ -401,18 +496,30 @@ namespace RGBA.Optio.Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<float>("Amount")
-                        .HasColumnType("real");
-
                     b.Property<int>("CurrencyID")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DateOfValuteCourse")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasColumnName("Last_Updated");
+
+                    b.Property<decimal>("ExchangeRate")
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("Exchange_Rate");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit")
+                        .HasColumnName("Status_Of_Valute");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CurrencyID");
+
+                    b.HasIndex("DateOfValuteCourse")
+                        .IsDescending();
+
+                    b.HasIndex("ExchangeRate")
+                        .IsDescending();
 
                     b.ToTable("ValutesCourses");
                 });
@@ -468,6 +575,17 @@ namespace RGBA.Optio.Core.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Optio.Core.Entities.Category", b =>
+                {
+                    b.HasOne("Optio.Core.Entities.TypeOfTransaction", "typeOfTransaction")
+                        .WithMany("Category")
+                        .HasForeignKey("TransactionTypeID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("typeOfTransaction");
+                });
+
             modelBuilder.Entity("Optio.Core.Entities.Transaction", b =>
                 {
                     b.HasOne("Optio.Core.Entities.Category", "Category")
@@ -484,25 +602,13 @@ namespace RGBA.Optio.Core.Migrations
 
                     b.HasOne("RGBA.Optio.Core.Entities.Currency", "Currency")
                         .WithMany("Transactions")
-                        .HasForeignKey("CurencyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Optio.Core.Entities.Location", "Location")
-                        .WithMany("Transactions")
-                        .HasForeignKey("LocationId")
+                        .HasForeignKey("CurrencyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Optio.Core.Entities.Merchant", "Merchant")
-                        .WithMany("Transactions")
+                        .WithMany()
                         .HasForeignKey("MerchantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Optio.Core.Entities.TypeOfTransaction", "TypeOfTransaction")
-                        .WithMany("Transactions")
-                        .HasForeignKey("TypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -512,11 +618,26 @@ namespace RGBA.Optio.Core.Migrations
 
                     b.Navigation("Currency");
 
-                    b.Navigation("Location");
-
                     b.Navigation("Merchant");
+                });
 
-                    b.Navigation("TypeOfTransaction");
+            modelBuilder.Entity("RGBA.Optio.Core.Entities.LocationToMerchant", b =>
+                {
+                    b.HasOne("Optio.Core.Entities.Location", "location")
+                        .WithMany("Merchants")
+                        .HasForeignKey("LocatrionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Optio.Core.Entities.Merchant", "merchant")
+                        .WithMany("Locations")
+                        .HasForeignKey("merchantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("location");
+
+                    b.Navigation("merchant");
                 });
 
             modelBuilder.Entity("RGBA.Optio.Core.Entities.ValuteCourse", b =>
@@ -542,17 +663,17 @@ namespace RGBA.Optio.Core.Migrations
 
             modelBuilder.Entity("Optio.Core.Entities.Location", b =>
                 {
-                    b.Navigation("Transactions");
+                    b.Navigation("Merchants");
                 });
 
             modelBuilder.Entity("Optio.Core.Entities.Merchant", b =>
                 {
-                    b.Navigation("Transactions");
+                    b.Navigation("Locations");
                 });
 
             modelBuilder.Entity("Optio.Core.Entities.TypeOfTransaction", b =>
                 {
-                    b.Navigation("Transactions");
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("RGBA.Optio.Core.Entities.Currency", b =>

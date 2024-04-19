@@ -148,7 +148,7 @@ namespace RGBA.Optio.UI.Controllers
         {
             try
             {
-                var res = await ser.GetAllAsync(new CategoryModel() { TransactionCategory="undefined" });
+                var res = await ser.GetAllAsync(new CategoryModel() { TransactionCategory="undefined",TransactionTypeID=Guid.NewGuid() });
                 return Ok(res);
             }
             catch (Exception exp)
@@ -196,7 +196,7 @@ namespace RGBA.Optio.UI.Controllers
         {
             try
             {
-                var res = await ser.GetByIdAsync(id, new CategoryModel() { TransactionCategory = "UNDEFINED" });
+                var res = await ser.GetByIdAsync(id, new CategoryModel() { TransactionCategory = "UNDEFINED",TransactionTypeID=Guid.NewGuid() });
                 return Ok(res);
             }
             catch (Exception exp)
@@ -312,7 +312,7 @@ namespace RGBA.Optio.UI.Controllers
                 {
                     throw new OptioGeneralException("shecdoma gvaqvs");
                 }
-                var res = await ser.SoftDeleteAsync(id, new CategoryModel() { TransactionCategory = "UNDEFINED" });
+                var res = await ser.SoftDeleteAsync(id, new CategoryModel() { TransactionTypeID=Guid.NewGuid(),TransactionCategory = "UNDEFINED" });
                 return res == true ? Ok(res) : BadRequest("No  data exist on this Id");
             }
             catch (Exception exp)

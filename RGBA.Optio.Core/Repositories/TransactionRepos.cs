@@ -23,9 +23,8 @@ namespace Optio.Core.Repositories
             {
                 if (!await context.CategoryOfTransactions.AnyAsync(io => io.Id == entity.CategoryId) ||
                     !await context.Currencies.AnyAsync(io => io.Id == entity.CurrencyId) ||
-                     !await context.Locations.AnyAsync(io => io.Id == entity.LocationId) ||
-                      !await context.Merchants.AnyAsync(io => io.Id == entity.MerchantId) ||
-                       !await context.Types.AnyAsync(io => io.Id == entity.TypeId))
+                     !await context.Locations.AnyAsync(io => io.Id == entity.ChannelId) ||
+                      !await context.Merchants.AnyAsync(io => io.Id == entity.MerchantId))
                 {
                     throw new ArgumentException("No related Table exist, Please   Recorect your data");
                 }
@@ -78,7 +77,7 @@ namespace Optio.Core.Repositories
               .Include(io=>io.Currency)
               .ThenInclude(io=>io.Courses)
               .Include(io=>io.Merchant)
-               .Include(io=>io.Location)
+              .ThenInclude(io=>io.Locations)
                 .ToList());
 
         public async Task<IEnumerable<Transaction>> GetAllWithDetailsAsync()
@@ -120,17 +119,17 @@ namespace Optio.Core.Repositories
             }
         }
 
-        Func<OptioDB,Guid, Transaction?> CompiledQueryGetBtIdDetails =
+        Func<OptioDB, Guid, Transaction?> CompiledQueryGetBtIdDetails =
         EF.CompileQuery(
-        (OptioDB database,Guid id)
+        (OptioDB database, Guid id)
          => database.Transactions
           .Include(io => io.Category)
            .Include(io => io.Channel)
             .Include(io => io.Currency)
             .ThenInclude(io => io.Courses)
             .Include(io => io.Merchant)
-             .Include(io => io.Location)
-              .SingleOrDefault(io=>io.Id==id));
+             .ThenInclude(io => io.Locations)
+              .SingleOrDefault(io => io.Id == id));
 
         public async Task<Transaction> GetByIdWithDetailsAsync(Guid ID)
         {

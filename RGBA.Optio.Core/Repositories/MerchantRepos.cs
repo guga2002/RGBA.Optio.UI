@@ -1,8 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.IdentityModel.Tokens;
 using Optio.Core.Data;
 using Optio.Core.Entities;
 using Optio.Core.Interfaces;
+using RGBA.Optio.Core.Entities;
 
 
 namespace Optio.Core.Repositories
@@ -16,6 +18,28 @@ namespace Optio.Core.Repositories
             merchant = context.Set<Merchant>(); 
         }
       
+        public async Task<bool> AssignLocationtoMerchant(Guid Merchantid,Guid Locationid)
+        {
+            try
+            {
+                if(await merchant.AnyAsync(io=>io.Id==Merchantid)&&await context.Locations.AnyAsync(io=>io.Id==Locationid))
+                {
+                    await context.LoactionTomerchant.AddAsync(new LocationToMerchant()
+                    {
+                        LocatrionId = Locationid,
+                        merchantId = Merchantid,
+                    });
+                    await context.SaveChangesAsync();
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
 
         public async Task<bool> AddAsync(Merchant entity)
         {

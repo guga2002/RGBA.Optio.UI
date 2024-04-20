@@ -5,6 +5,7 @@ using RGBA.Optio.Core.Interfaces;
 using RGBA.Optio.Domain.Custom_Exceptions;
 using RGBA.Optio.Domain.Interfaces;
 using RGBA.Optio.Domain.Models;
+using System.Numerics;
 
 namespace RGBA.Optio.Domain.Services.TransactionRelated
 {
@@ -63,7 +64,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
-        public async Task<bool> AssignLocationtoMerchant(Guid Merchantid, Guid Locationid)
+        public async Task<bool> AssignLocationtoMerchant(BigInteger Merchantid, BigInteger Locationid)
         {
             try
             {
@@ -155,7 +156,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
         }
 
 
-        public async Task<locationModel> GetByIdAsync(Guid id, locationModel Identify)
+        public async Task<locationModel> GetByIdAsync(BigInteger id, locationModel Identify)
         {
             try
             {
@@ -177,7 +178,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
-        public async Task<MerchantModel> GetByIdAsync(Guid id, MerchantModel Identify)
+        public async Task<MerchantModel> GetByIdAsync(BigInteger id, MerchantModel Identify)
         {
             try
             {
@@ -245,7 +246,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
-        public async Task<bool> SoftDeleteAsync(Guid id, locationModel Identify)
+        public async Task<bool> SoftDeleteAsync(BigInteger id, locationModel Identify)
         {
             try
             {
@@ -259,7 +260,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
-        public async Task<bool> SoftDeleteAsync(Guid id, MerchantModel Identify)
+        public async Task<bool> SoftDeleteAsync(BigInteger id, MerchantModel Identify)
         {
             try
             {
@@ -273,7 +274,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
-        public async Task<bool> UpdateAsync(Guid id, locationModel entity)
+        public async Task<bool> UpdateAsync(BigInteger id, locationModel entity)
         {
             try
             {
@@ -299,7 +300,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
-        public async Task<bool> UpdateAsync( Guid id,MerchantModel entity)
+        public async Task<bool> UpdateAsync(BigInteger id,MerchantModel entity)
         {
             try
             {

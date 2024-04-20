@@ -4,6 +4,7 @@ using Microsoft.Extensions.Caching.Memory;
 using RGBA.Optio.Domain.Interfaces;
 using RGBA.Optio.Domain.Models;
 using RGBA.Optio.Domain.Services;
+using System.Numerics;
 using ZstdSharp.Unsafe;
 
 namespace RGBA.Optio.UI.Controllers
@@ -37,14 +38,15 @@ namespace RGBA.Optio.UI.Controllers
                     }
                     else
                     {
-                        var res = await transactionService.GetAllAsync(new TransactionModel 
-                        { Amount=0,
-                          CategoryId=new Guid(),
-                          ChannelId=new Guid(),
-                          MerchantId=new Guid(),
-                          CurencyNameId=0,
-                          Date=new DateTime(),
-                          EquivalentInGel=0 
+                        var res = await transactionService.GetAllAsync(new TransactionModel
+                        {
+                            Amount = 0,
+                            CategoryId = 0,
+                            ChannelId = 0,
+                            MerchantId = 0,
+                            CurencyNameId = 0,
+                            Date = new DateTime(),
+                            EquivalentInGel = 0
                         });
 
                         if (!res.Any())
@@ -82,9 +84,9 @@ namespace RGBA.Optio.UI.Controllers
                         var res=await transactionService.GetAllActiveAsync(new TransactionModel
                         {
                             Amount = 0,
-                            CategoryId = new Guid(),
-                            ChannelId = new Guid(),
-                            MerchantId = new Guid(),
+                            CategoryId = 0,
+                            ChannelId = 0,
+                            MerchantId = 0,
                             CurencyNameId = 0,
                             Date = new DateTime(),
                             EquivalentInGel = 0
@@ -108,7 +110,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public async Task<IActionResult>Get(Guid id)
+        public async Task<IActionResult>Get(BigInteger id)
         {
             try
             {
@@ -124,9 +126,9 @@ namespace RGBA.Optio.UI.Controllers
                         var res = await transactionService.GetByIdAsync(id, new TransactionModel
                         {
                             Amount = 0,
-                            CategoryId = new Guid(),
-                            ChannelId = new Guid(),
-                            MerchantId = new Guid(),
+                            CategoryId = 0,
+                            ChannelId = 0,
+                            MerchantId = 0,
                             CurencyNameId = 0,
                             Date = new DateTime(),
                             EquivalentInGel = 0
@@ -193,7 +195,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpPost]
         [Route("[action]/{id}")]
-        public async Task<IActionResult> Delete([FromBody]Guid id)
+        public async Task<IActionResult> Delete([FromBody]BigInteger id)
         {
             try
             {
@@ -202,9 +204,9 @@ namespace RGBA.Optio.UI.Controllers
                     var res =await transactionService.SoftDeleteAsync(id, new TransactionModel
                     {
                         Amount = 0,
-                        CategoryId = new Guid(),
-                        ChannelId = new Guid(),
-                        MerchantId = new Guid(),
+                        CategoryId = 0,
+                        ChannelId = 0,
+                        MerchantId = 0,
                         CurencyNameId = 0,
                         Date = new DateTime(),
                         EquivalentInGel = 0
@@ -226,7 +228,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpPut]
         [Route("Transaction/{id}")]
-        public async Task<IActionResult> Update(Guid id, [FromBody]TransactionModel transactionModel)
+        public async Task<IActionResult> Update(BigInteger id, [FromBody]TransactionModel transactionModel)
         {
             try
             {

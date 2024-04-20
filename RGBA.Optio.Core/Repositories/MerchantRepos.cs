@@ -5,6 +5,7 @@ using Optio.Core.Data;
 using Optio.Core.Entities;
 using Optio.Core.Interfaces;
 using RGBA.Optio.Core.Entities;
+using System.Numerics;
 
 
 namespace Optio.Core.Repositories
@@ -18,7 +19,7 @@ namespace Optio.Core.Repositories
             merchant = context.Set<Merchant>(); 
         }
       
-        public async Task<bool> AssignLocationtoMerchant(Guid Merchantid,Guid Locationid)
+        public async Task<bool> AssignLocationtoMerchant(BigInteger Merchantid,BigInteger Locationid)
         {
             try
             {
@@ -109,7 +110,7 @@ namespace Optio.Core.Repositories
             }
         }
 
-        public async Task<Merchant> GetByIdAsync(Guid id)
+        public async Task<Merchant> GetByIdAsync(BigInteger id)
         {
             try
             {
@@ -154,7 +155,7 @@ namespace Optio.Core.Repositories
             }
         }
 
-        public async Task<bool> SoftDeleteAsync(Guid id)
+        public async Task<bool> SoftDeleteAsync(BigInteger id)
         {
             try
             {
@@ -177,7 +178,7 @@ namespace Optio.Core.Repositories
             }
         }
 
-        public async Task<bool> UpdateAsync(Guid id, Merchant entity)
+        public async Task<bool> UpdateAsync(BigInteger id, Merchant entity)
         {
             try
             {

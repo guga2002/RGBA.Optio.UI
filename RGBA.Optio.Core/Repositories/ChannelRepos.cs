@@ -3,6 +3,7 @@ using Optio.Core.Data;
 using Optio.Core.Entities;
 using Optio.Core.Interfaces;
 using RGBA.Optio.Core.PerformanceImprovmentServices;
+using System.Numerics;
 
 namespace Optio.Core.Repositories
 {
@@ -82,12 +83,12 @@ namespace Optio.Core.Repositories
         }
 
 
-        Func<OptioDB, Guid, Channels?> CompiledQueryGetBtId =
+        Func<OptioDB, BigInteger, Channels?> CompiledQueryGetBtId =
             EF.CompileQuery(
-                (OptioDB db, Guid id) =>
+                (OptioDB db, BigInteger id) =>
                 db.Channels.SingleOrDefault(i=>i.Id==id)
                 );
-        public async Task<Channels> GetByIdAsync(Guid id)
+        public async Task<Channels> GetByIdAsync(BigInteger id)
         {
             try
             {
@@ -134,7 +135,7 @@ namespace Optio.Core.Repositories
         }
 
 
-        public async Task<bool> SoftDeleteAsync(Guid id)
+        public async Task<bool> SoftDeleteAsync(BigInteger id)
         {
             try
             {
@@ -158,7 +159,7 @@ namespace Optio.Core.Repositories
         }
 
 
-        public async Task<bool> UpdateAsync(Guid id, Channels entity)
+        public async Task<bool> UpdateAsync(BigInteger id, Channels entity)
         {
             try
             {

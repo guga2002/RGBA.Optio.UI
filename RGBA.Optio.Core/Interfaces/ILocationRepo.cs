@@ -2,12 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Optio.Core.Interfaces
 {
-    public interface ILocationRepo:ICrudRepo<Location, Guid>
+    public interface ILocationRepo:ICrudRepo<Location, BigInteger>
     {
         Task<IEnumerable<Location>> GetAllActiveLocationAsync();
     }

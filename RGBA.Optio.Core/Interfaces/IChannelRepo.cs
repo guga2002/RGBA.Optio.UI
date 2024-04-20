@@ -2,13 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 
 namespace Optio.Core.Interfaces
 {
-    public interface IChannelRepo : ICrudRepo<Channels,Guid>
+    public interface IChannelRepo : ICrudRepo<Channels,BigInteger>
     {
         Task<IEnumerable<Channels>> GetAllActiveChannelAsync();
     }

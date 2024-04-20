@@ -5,6 +5,7 @@ using RGBA.Optio.Core.Interfaces;
 using RGBA.Optio.Domain.Custom_Exceptions;
 using RGBA.Optio.Domain.Interfaces;
 using RGBA.Optio.Domain.Models;
+using System.Numerics;
 
 namespace RGBA.Optio.Domain.Services
 {
@@ -100,7 +101,7 @@ namespace RGBA.Optio.Domain.Services
             }
         }
 
-        public async Task<TransactionModel> GetByIdAsync(Guid id, TransactionModel Identify)
+        public async Task<TransactionModel> GetByIdAsync(BigInteger id, TransactionModel Identify)
         {
             try
             {
@@ -145,7 +146,7 @@ namespace RGBA.Optio.Domain.Services
             }
         }
 
-        public async Task<bool> SoftDeleteAsync(Guid id, TransactionModel Identify)
+        public async Task<bool> SoftDeleteAsync(BigInteger id, TransactionModel Identify)
         {
             try
             {
@@ -160,7 +161,7 @@ namespace RGBA.Optio.Domain.Services
             }
         }
 
-        public async Task<bool> UpdateAsync(Guid id, TransactionModel entity)
+        public async Task<bool> UpdateAsync(BigInteger id, TransactionModel entity)
         {
             try
             {

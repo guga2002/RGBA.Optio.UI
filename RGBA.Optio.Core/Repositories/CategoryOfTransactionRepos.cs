@@ -5,6 +5,7 @@ using Optio.Core.Entities;
 using DnsClient.Protocol;
 using DnsClient.Protocol.Options;
 using RGBA.Optio.Core.PerformanceImprovmentServices;
+using System.Numerics;
 
 namespace Optio.Core.Repositories
 {
@@ -85,7 +86,7 @@ namespace Optio.Core.Repositories
              .SingleOrDefault(i=>i.Id==id)
             );*/
 
-        public async Task<Category> GetByIdAsync(Guid id)
+        public async Task<Category> GetByIdAsync(BigInteger id)
         {
             try
             {
@@ -154,7 +155,7 @@ namespace Optio.Core.Repositories
         }
 
 
-        public async Task<bool> SoftDeleteAsync(Guid id)
+        public async Task<bool> SoftDeleteAsync(BigInteger id)
         {
             try
             {
@@ -176,7 +177,7 @@ namespace Optio.Core.Repositories
         }
 
 
-        public async Task<bool> UpdateAsync(Guid id,Category entity)
+        public async Task<bool> UpdateAsync(BigInteger id,Category entity)
         {
             try
             {

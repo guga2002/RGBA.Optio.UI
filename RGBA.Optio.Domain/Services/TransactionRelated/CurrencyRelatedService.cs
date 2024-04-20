@@ -9,6 +9,7 @@ using RGBA.Optio.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
@@ -174,7 +175,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
-        public async Task<ValuteModel> GetByIdAsync(Guid id, ValuteModel Identify)
+        public async Task<ValuteModel> GetByIdAsync(BigInteger id, ValuteModel Identify)
         {
             try
             {
@@ -259,7 +260,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
-        public async Task<bool> SoftDeleteAsync(Guid id, ValuteModel Identify)
+        public async Task<bool> SoftDeleteAsync(BigInteger id, ValuteModel Identify)
         {
             try
             {
@@ -300,7 +301,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
-        public Task<bool> UpdateAsync(Guid id, ValuteModel entity)
+        public Task<bool> UpdateAsync(BigInteger id, ValuteModel entity)
         {
             try
             {

@@ -3,6 +3,7 @@ using Optio.Core.Data;
 using Optio.Core.Repositories;
 using RGBA.Optio.Core.Entities;
 using RGBA.Optio.Core.Interfaces;
+using System.Numerics;
 
 namespace RGBA.Optio.Core.Repositories
 {
@@ -68,7 +69,7 @@ namespace RGBA.Optio.Core.Repositories
             }
         }
 
-        public async Task<ValuteCourse> GetByIdAsync(Guid id)
+        public async Task<ValuteCourse> GetByIdAsync(BigInteger id)
         {
             try
             {
@@ -106,7 +107,7 @@ namespace RGBA.Optio.Core.Repositories
             }
         }
 
-        public async Task<bool> SoftDeleteAsync(Guid id)
+        public async Task<bool> SoftDeleteAsync(BigInteger id)
         {
             try
             {
@@ -126,7 +127,7 @@ namespace RGBA.Optio.Core.Repositories
             }
         }
 
-        public async Task<bool> UpdateAsync(Guid id, ValuteCourse entity)
+        public async Task<bool> UpdateAsync(BigInteger id, ValuteCourse entity)
         {
             try
             {

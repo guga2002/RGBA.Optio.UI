@@ -2,6 +2,7 @@
 using RGBA.Optio.Domain.Custom_Exceptions;
 using RGBA.Optio.Domain.Interfaces;
 using RGBA.Optio.Domain.Models;
+using System.Numerics;
 
 namespace RGBA.Optio.UI.Controllers
 {
@@ -79,6 +80,7 @@ namespace RGBA.Optio.UI.Controllers
                 return BadRequest(exp.Message);
             }
         }
+
         [HttpGet]
         [Route("chanell/active")]
         public async Task<IActionResult> GetAllActivecChanellAsync()
@@ -94,6 +96,7 @@ namespace RGBA.Optio.UI.Controllers
                 return BadRequest(exp.Message);
             }
         }
+
         [HttpGet]
         [Route("category/active")]
         public  async Task<IActionResult> GetAllActiveCategorryAsync()
@@ -148,7 +151,7 @@ namespace RGBA.Optio.UI.Controllers
         {
             try
             {
-                var res = await ser.GetAllAsync(new CategoryModel() { TransactionCategory="undefined",TransactionTypeID=Guid.NewGuid() });
+                var res = await ser.GetAllAsync(new CategoryModel() { TransactionCategory="undefined",TransactionTypeID=0 });
                 return Ok(res);
             }
             catch (Exception exp)
@@ -176,7 +179,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpGet]
         [Route("chanell/{id}")]
-        public async  Task<IActionResult> GetChanellByIdAsync(Guid id)
+        public async  Task<IActionResult> GetChanellByIdAsync(BigInteger id)
         {
             try
             {
@@ -192,11 +195,11 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpGet]
         [Route("category/{id}")]
-        public async Task<IActionResult> GetcategoryByIdAsync(Guid id)
+        public async Task<IActionResult> GetcategoryByIdAsync(BigInteger id)
         {
             try
             {
-                var res = await ser.GetByIdAsync(id, new CategoryModel() { TransactionCategory = "UNDEFINED",TransactionTypeID=Guid.NewGuid() });
+                var res = await ser.GetByIdAsync(id, new CategoryModel() { TransactionCategory = "UNDEFINED",TransactionTypeID=0 });
                 return Ok(res);
             }
             catch (Exception exp)
@@ -208,7 +211,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpGet]
         [Route("transactiontype/{id}")]
-        public async Task<IActionResult> GetTransactionTypeByIdAsync(Guid id)
+        public async Task<IActionResult> GetTransactionTypeByIdAsync(BigInteger id)
         {
             try
             {
@@ -284,7 +287,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpPost]
         [Route("chanell/{id}/softdelete")]
-        public async Task<IActionResult> ChanellSoftDeleteAsync(Guid id)
+        public async Task<IActionResult> ChanellSoftDeleteAsync(BigInteger id)
         {
             try
             {
@@ -304,7 +307,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpPost]
         [Route("category/{id}/softdelete")]
-        public async Task<IActionResult> CategorySoftDeleteAsync(Guid id)
+        public async Task<IActionResult> CategorySoftDeleteAsync(BigInteger id)
         {
             try
             {
@@ -312,7 +315,7 @@ namespace RGBA.Optio.UI.Controllers
                 {
                     throw new OptioGeneralException("shecdoma gvaqvs");
                 }
-                var res = await ser.SoftDeleteAsync(id, new CategoryModel() { TransactionTypeID=Guid.NewGuid(),TransactionCategory = "UNDEFINED" });
+                var res = await ser.SoftDeleteAsync(id, new CategoryModel() { TransactionTypeID=0,TransactionCategory = "UNDEFINED" });
                 return res == true ? Ok(res) : BadRequest("No  data exist on this Id");
             }
             catch (Exception exp)
@@ -324,7 +327,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpPost]
         [Route("transactiontype/{id}/softdelete")]
-        public async Task<IActionResult> TransactionTypeSoftDeleteAsync(Guid id)
+        public async Task<IActionResult> TransactionTypeSoftDeleteAsync(BigInteger id)
         {
             try
             {
@@ -344,7 +347,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpPut]
         [Route("chanell/{id}/update")]
-        public async Task<IActionResult> UpdateAsync(Guid id, [FromBody] ChanellModel entity)
+        public async Task<IActionResult> UpdateAsync(BigInteger id, [FromBody] ChanellModel entity)
         {
             try
             {
@@ -364,7 +367,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpPut]
         [Route("category/{id}/update")]
-        public async  Task<IActionResult> UpdateAsync(Guid id, [FromBody]CategoryModel entity)
+        public async  Task<IActionResult> UpdateAsync(BigInteger id, [FromBody]CategoryModel entity)
         {
             try
             {
@@ -384,7 +387,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpPut]
         [Route("transactiontype/{id}/update")]
-        public async Task<IActionResult> UpdateAsync(Guid id, [FromBody]TransactionTypeModel entity)
+        public async Task<IActionResult> UpdateAsync(BigInteger id, [FromBody]TransactionTypeModel entity)
         {
             try
             {

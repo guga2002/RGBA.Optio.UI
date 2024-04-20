@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RGBA.Optio.Core.Entities;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Numerics;
 
 namespace Optio.Core.Entities
 {
@@ -28,17 +29,17 @@ namespace Optio.Core.Entities
 
 
         [ForeignKey("Category")]
-        public Guid CategoryId { get; set; }
+        public BigInteger CategoryId { get; set; }
         public virtual Category Category { get; set; }
 
 
         [ForeignKey("Merchant")]
-        public Guid MerchantId { get; set; }
+        public BigInteger MerchantId { get; set; }
         public virtual Merchant Merchant {  get; set; }
 
 
         [ForeignKey("Channel")]
-        public Guid ChannelId { get; set; }
+        public BigInteger ChannelId { get; set; }
         public virtual Channels Channel { get; set; }
 
     }

@@ -1,5 +1,6 @@
 ﻿using RGBA.Optio.Domain.Validation.VallidationAttributes;
 using System.ComponentModel.DataAnnotations;
+using System.Numerics;
 
 namespace RGBA.Optio.Domain.Models
 {
@@ -24,12 +25,12 @@ namespace RGBA.Optio.Domain.Models
         public required double EquivalentInGel { get; set; }
 
         [Required(ErrorMessage = "Category ID is required.")]
-        public required Guid CategoryId { get; set; }
+        public required BigInteger CategoryId { get; set; }
 
         [Required(ErrorMessage = "Merchant ID is required.")]
-        public required Guid MerchantId { get; set; }
+        public required BigInteger MerchantId { get; set; }
 
         [Required(ErrorMessage = "Channel ID is required.")]
-        public required Guid ChannelId { get; set; }
+        public required BigInteger ChannelId { get; set; }
     }
 }

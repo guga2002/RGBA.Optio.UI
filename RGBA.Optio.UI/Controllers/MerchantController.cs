@@ -3,6 +3,7 @@ using Microsoft.Extensions.Caching.Memory;
 using RGBA.Optio.Domain.Custom_Exceptions;
 using RGBA.Optio.Domain.Interfaces;
 using RGBA.Optio.Domain.Models;
+using System.Numerics;
 
 namespace RGBA.Optio.UI.Controllers
 {
@@ -53,7 +54,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpPost]
         [Route("Merchant/{Merchantid}/Location/{Locationid}")]
-        public async Task<IActionResult> AssignLocationtoMerchant(Guid Merchantid, Guid Locationid)
+        public async Task<IActionResult> AssignLocationtoMerchant(BigInteger Merchantid, BigInteger Locationid)
         {
             try
             {
@@ -107,7 +108,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public async Task<IActionResult> Get(Guid id)
+        public async Task<IActionResult> Get(BigInteger id)
         {
             try
             {
@@ -165,7 +166,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpPut]
         [Route("{id}")]
-        public async Task<IActionResult> Update(Guid id, [FromBody] MerchantModel value)
+        public async Task<IActionResult> Update(BigInteger id, [FromBody] MerchantModel value)
         {
             try
             {
@@ -189,7 +190,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpPost]
         [Route("[action]/{id}")]
-        public async Task<IActionResult>  Delete(Guid id)
+        public async Task<IActionResult>  Delete(BigInteger id)
         {
 
             try
@@ -321,7 +322,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpGet]
         [Route("Location/{id}")]
-        public async Task<IActionResult> GetLocation(Guid id)
+        public async Task<IActionResult> GetLocation(BigInteger id)
         {
             try
             {
@@ -378,7 +379,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpPut]
         [Route("Location/{id}")]
-        public async Task<IActionResult> Update(Guid id, [FromBody] locationModel value)
+        public async Task<IActionResult> Update(BigInteger id, [FromBody] locationModel value)
         {
             try
             {
@@ -402,7 +403,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpPost]
         [Route("[action]/{id}")]
-        public async Task<IActionResult> DeleteLocation(Guid id)
+        public async Task<IActionResult> DeleteLocation(BigInteger id)
         {
 
             try

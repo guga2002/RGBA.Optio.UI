@@ -5,6 +5,7 @@ using Optio.Core.Entities;
 using Optio.Core.Interfaces;
 using RGBA.Optio.Core.PerformanceImprovmentServices;
 using SharpCompress.Common;
+using System.Numerics;
 
 namespace Optio.Core.Repositories
 {
@@ -81,7 +82,7 @@ namespace Optio.Core.Repositories
             }
         }
 
-        public async Task<Location> GetByIdAsync(Guid id)
+        public async Task<Location> GetByIdAsync(BigInteger id)
         {
             try
             {
@@ -131,7 +132,7 @@ namespace Optio.Core.Repositories
             }
         }
 
-        public async Task<bool> SoftDeleteAsync(Guid id)
+        public async Task<bool> SoftDeleteAsync(BigInteger id)
         {
             try
             {
@@ -155,7 +156,7 @@ namespace Optio.Core.Repositories
             }
         }
 
-        public async Task<bool> UpdateAsync(Guid id, Location entity)
+        public async Task<bool> UpdateAsync(BigInteger id, Location entity)
         {
             try
             {

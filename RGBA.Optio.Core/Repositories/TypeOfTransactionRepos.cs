@@ -2,6 +2,7 @@
 using Optio.Core.Data;
 using Optio.Core.Entities;
 using Optio.Core.Interfaces;
+using System.Numerics;
 
 namespace Optio.Core.Repositories
 {
@@ -63,7 +64,7 @@ namespace Optio.Core.Repositories
             }
         }
 
-        public async Task<TypeOfTransaction> GetByIdAsync(Guid id)
+        public async Task<TypeOfTransaction> GetByIdAsync(BigInteger id)
         {
             return await (from typ in TypeOfTransaction
                     where typ.Id == id && typ.IsActive
@@ -91,7 +92,7 @@ namespace Optio.Core.Repositories
             }
         }
 
-        public async Task<bool> SoftDeleteAsync(Guid id)
+        public async Task<bool> SoftDeleteAsync(BigInteger id)
         {
             try
             {
@@ -113,7 +114,7 @@ namespace Optio.Core.Repositories
             }
         }
 
-        public async Task<bool> UpdateAsync(Guid id, TypeOfTransaction entity)
+        public async Task<bool> UpdateAsync(BigInteger id, TypeOfTransaction entity)
         {
             try
             {

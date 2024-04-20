@@ -2,6 +2,7 @@
 using RGBA.Optio.Domain.Custom_Exceptions;
 using RGBA.Optio.Domain.Interfaces;
 using RGBA.Optio.Domain.Models;
+using System.Numerics;
 
 namespace RGBA.Optio.UI.Controllers
 {
@@ -146,7 +147,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpGet]
         [Route("valute/{id}")]
-        public async Task<IActionResult> GetByIdAsync(Guid id)
+        public async Task<IActionResult> GetByIdAsync(BigInteger id)
         {
             try
             {
@@ -210,7 +211,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpPost]
         [Route("valute/{id}/[action]")]
-        public async Task<IActionResult> SoftDelete(Guid id)
+        public async Task<IActionResult> SoftDelete(BigInteger id)
         {
             try
             {
@@ -241,7 +242,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpPut]
         [Route("valute/{id}")]
-        public async Task<IActionResult> UpdateAsync(Guid id,[FromBody]ValuteModel mod)
+        public async Task<IActionResult> UpdateAsync(BigInteger id,[FromBody]ValuteModel mod)
         {
             try
             {

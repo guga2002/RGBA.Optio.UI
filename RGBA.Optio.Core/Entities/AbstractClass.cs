@@ -1,13 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Numerics;
 namespace Optio.Core.Entities
 {
     public abstract class AbstractClass
     {
         [Key]
-        public Guid Id { get; set; }
-        protected AbstractClass()
-        {  
-            Id = Guid.NewGuid();
-        }
+        public BigInteger Id { get; set; }
+     
     }
 }

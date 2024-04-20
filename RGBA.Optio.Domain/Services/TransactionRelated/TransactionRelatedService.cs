@@ -5,6 +5,7 @@ using RGBA.Optio.Core.Interfaces;
 using RGBA.Optio.Domain.Custom_Exceptions;
 using RGBA.Optio.Domain.Interfaces;
 using RGBA.Optio.Domain.Models;
+using System.Numerics;
 
 namespace RGBA.Optio.Domain.Services.TransactionRelated
 {
@@ -202,7 +203,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
-        public async Task<ChanellModel> GetByIdAsync(Guid id, ChanellModel Identify)
+        public async Task<ChanellModel> GetByIdAsync(BigInteger id, ChanellModel Identify)
         {
             try
             {
@@ -224,7 +225,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
-        public async Task<CategoryModel> GetByIdAsync(Guid id, CategoryModel Identify)
+        public async Task<CategoryModel> GetByIdAsync(BigInteger id, CategoryModel Identify)
         {
             try
             {
@@ -246,7 +247,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
-        public  async Task<TransactionTypeModel> GetByIdAsync(Guid id, TransactionTypeModel Identify)
+        public  async Task<TransactionTypeModel> GetByIdAsync(BigInteger id, TransactionTypeModel Identify)
         {
             try
             {
@@ -337,7 +338,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
-        public async Task<bool> SoftDeleteAsync(Guid id, ChanellModel Identify)
+        public async Task<bool> SoftDeleteAsync(BigInteger id, ChanellModel Identify)
         {
             try
             {
@@ -351,7 +352,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
-        public async  Task<bool> SoftDeleteAsync(Guid id, CategoryModel Identify)
+        public async  Task<bool> SoftDeleteAsync(BigInteger id, CategoryModel Identify)
         {
             try
             {
@@ -365,7 +366,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
-        public async  Task<bool> SoftDeleteAsync(Guid id, TransactionTypeModel Identify)
+        public async  Task<bool> SoftDeleteAsync(BigInteger id, TransactionTypeModel Identify)
         {
             try
             {
@@ -379,7 +380,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
-        public  async Task<bool> UpdateAsync(Guid id, ChanellModel entity)
+        public  async Task<bool> UpdateAsync(BigInteger id, ChanellModel entity)
         {
             try
             {
@@ -401,7 +402,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
-        public  async Task<bool> UpdateAsync(Guid id, CategoryModel entity)
+        public  async Task<bool> UpdateAsync(BigInteger id, CategoryModel entity)
         {
             try
             {
@@ -423,7 +424,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
-        public async Task<bool> UpdateAsync(Guid id,TransactionTypeModel entity)
+        public async Task<bool> UpdateAsync(BigInteger id,TransactionTypeModel entity)
         {
 
             try

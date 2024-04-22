@@ -31,7 +31,7 @@ namespace RGBA.Optio.UI.Controllers
                 var res = await ser.AddAsync(entity);
                 if(res)
                 {
-                    return Ok(entity.NameOfValute);
+                    return Ok(entity);
                 }
                 return BadRequest("bad request");
             }
@@ -129,9 +129,9 @@ namespace RGBA.Optio.UI.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet()]
         [Route("currency/{id}")]
-        public async Task<IActionResult> GetByIdAsync(int id)
+        public async Task<IActionResult> GetByIdAsync([FromQuery]int id)
         {
             try
             {
@@ -147,7 +147,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpGet]
         [Route("valute/{id}")]
-        public async Task<IActionResult> GetByIdAsync(BigInteger id)
+        public async Task<IActionResult> GetByIdAsync([FromQuery]BigInteger id)
         {
             try
             {
@@ -195,7 +195,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpPost]
         [Route("currency/{id}/[action]")]
-        public async Task<IActionResult> SoftDelete(int id)
+        public async Task<IActionResult> SoftDelete([FromQuery] int id)
         {
             try
             {
@@ -211,7 +211,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpPost]
         [Route("valute/{id}/[action]")]
-        public async Task<IActionResult> SoftDelete(BigInteger id)
+        public async Task<IActionResult> SoftDelete([FromQuery] BigInteger id)
         {
             try
             {
@@ -226,7 +226,7 @@ namespace RGBA.Optio.UI.Controllers
         }
         [HttpPut]
         [Route("currency/{id}")]
-        public async Task<IActionResult> UpdateAsync(int id,[FromBody]CurrencyModel entity)
+        public async Task<IActionResult> UpdateAsync([FromQuery] int id,[FromBody]CurrencyModel entity)
         {
             try
             {
@@ -242,7 +242,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpPut]
         [Route("valute/{id}")]
-        public async Task<IActionResult> UpdateAsync(BigInteger id,[FromBody]ValuteModel mod)
+        public async Task<IActionResult> UpdateAsync([FromQuery] BigInteger id,[FromBody]ValuteModel mod)
         {
             try
             {

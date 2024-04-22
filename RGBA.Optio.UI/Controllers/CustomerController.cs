@@ -70,7 +70,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpPost]
         [Route("[action]/{token}")]
-        public async Task<IActionResult> RefreshToken(string token)
+        public async Task<IActionResult> RefreshToken([FromQuery] string token)
         {
             try
             {
@@ -98,7 +98,7 @@ namespace RGBA.Optio.UI.Controllers
         [HttpPost]
         [Route("[action]/{Email}")]
         [AllowAnonymous]
-        public async Task<IActionResult> ForgetPassword(string Email)
+        public async Task<IActionResult> ForgetPassword([FromQuery] string Email)
         {
             try
             {
@@ -166,7 +166,7 @@ namespace RGBA.Optio.UI.Controllers
         }
         [HttpPost]
         [Route("[action]/{Email}")]
-        public  async Task<IActionResult> ConfirmEmail(string Email)
+        public  async Task<IActionResult> ConfirmEmail([FromQuery] string Email)
         {
             try
             {

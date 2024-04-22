@@ -110,7 +110,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public async Task<IActionResult>Get(BigInteger id)
+        public async Task<IActionResult>Get([FromQuery] BigInteger id)
         {
             try
             {
@@ -195,7 +195,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpPost]
         [Route("[action]/{id}")]
-        public async Task<IActionResult> Delete([FromBody]BigInteger id)
+        public async Task<IActionResult> Delete([FromQuery]BigInteger id)
         {
             try
             {
@@ -228,7 +228,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpPut]
         [Route("Transaction/{id}")]
-        public async Task<IActionResult> Update(BigInteger id, [FromBody]TransactionModel transactionModel)
+        public async Task<IActionResult> Update([FromQuery]BigInteger id, [FromBody]TransactionModel transactionModel)
         {
             try
             {

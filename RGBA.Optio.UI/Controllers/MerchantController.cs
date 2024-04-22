@@ -54,7 +54,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpPost]
         [Route("Merchant/{Merchantid}/Location/{Locationid}")]
-        public async Task<IActionResult> AssignLocationtoMerchant(BigInteger Merchantid, BigInteger Locationid)
+        public async Task<IActionResult> AssignLocationtoMerchant([FromQuery] BigInteger Merchantid,[FromQuery] BigInteger Locationid)
         {
             try
             {
@@ -108,7 +108,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public async Task<IActionResult> Get(BigInteger id)
+        public async Task<IActionResult> Get([FromQuery] BigInteger id)
         {
             try
             {
@@ -166,7 +166,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpPut]
         [Route("{id}")]
-        public async Task<IActionResult> Update(BigInteger id, [FromBody] MerchantModel value)
+        public async Task<IActionResult> Update([FromQuery] BigInteger id, [FromBody] MerchantModel value)
         {
             try
             {
@@ -190,7 +190,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpPost]
         [Route("[action]/{id}")]
-        public async Task<IActionResult>  Delete(BigInteger id)
+        public async Task<IActionResult>  Delete([FromQuery] BigInteger id)
         {
 
             try
@@ -322,7 +322,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpGet]
         [Route("Location/{id}")]
-        public async Task<IActionResult> GetLocation(BigInteger id)
+        public async Task<IActionResult> GetLocation([FromQuery] BigInteger id)
         {
             try
             {
@@ -379,7 +379,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpPut]
         [Route("Location/{id}")]
-        public async Task<IActionResult> Update(BigInteger id, [FromBody] locationModel value)
+        public async Task<IActionResult> Update([FromQuery] BigInteger id, [FromBody] locationModel value)
         {
             try
             {
@@ -403,7 +403,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpPost]
         [Route("[action]/{id}")]
-        public async Task<IActionResult> DeleteLocation(BigInteger id)
+        public async Task<IActionResult> DeleteLocation([FromQuery] BigInteger id)
         {
 
             try

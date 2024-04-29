@@ -34,7 +34,7 @@ namespace RGBA.Optio.UI.Controllers
                     }
                     else
                     {
-                        var res = await ser.GetAllAsync(new MerchantModel());
+                        var res = await ser.GetAllAsync(new MerchantModel() { Name="Undefined",});
                         if (!res.Any())
                         {
                             return NotFound();
@@ -54,7 +54,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpPost]
         [Route("Merchant/{Merchantid}/Location/{Locationid}")]
-        public async Task<IActionResult> AssignLocationtoMerchant([FromQuery] BigInteger Merchantid,[FromQuery] BigInteger Locationid)
+        public async Task<IActionResult> AssignLocationtoMerchant([FromQuery] long Merchantid,[FromQuery] long Locationid)
         {
             try
             {
@@ -88,7 +88,7 @@ namespace RGBA.Optio.UI.Controllers
                     }
                     else
                     {
-                        var res = await ser.GetAllActiveAsync(new MerchantModel());
+                        var res = await ser.GetAllActiveAsync(new MerchantModel() { Name = "Undefined" });
                         if (!res.Any())
                         {
                             return NotFound();
@@ -108,7 +108,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public async Task<IActionResult> Get([FromQuery] BigInteger id)
+        public async Task<IActionResult> Get([FromQuery] long id)
         {
             try
             {
@@ -122,7 +122,7 @@ namespace RGBA.Optio.UI.Controllers
                     }
                     else
                     {
-                        var res = await ser.GetByIdAsync(id, new MerchantModel());
+                        var res = await ser.GetByIdAsync(id, new MerchantModel() { Name = "Undefined" });
                         if (res is null)
                         {
                             return NotFound();
@@ -166,7 +166,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpPut]
         [Route("{id}")]
-        public async Task<IActionResult> Update([FromQuery] BigInteger id, [FromBody] MerchantModel value)
+        public async Task<IActionResult> Update([FromQuery] long id, [FromBody] MerchantModel value)
         {
             try
             {
@@ -190,14 +190,14 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpPost]
         [Route("[action]/{id}")]
-        public async Task<IActionResult>  Delete([FromQuery] BigInteger id)
+        public async Task<IActionResult>  Delete([FromQuery] long id)
         {
 
             try
             {
                 if (ModelState.IsValid )
                 {
-                    var res = await ser.SoftDeleteAsync(id,new MerchantModel());
+                    var res = await ser.SoftDeleteAsync(id,new MerchantModel() { Name = "Undefined" });
                     if (res)
                     {
                         return Ok(res);
@@ -322,7 +322,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpGet]
         [Route("Location/{id}")]
-        public async Task<IActionResult> GetLocation([FromQuery] BigInteger id)
+        public async Task<IActionResult> GetLocation([FromQuery] long id)
         {
             try
             {
@@ -379,7 +379,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpPut]
         [Route("Location/{id}")]
-        public async Task<IActionResult> Update([FromQuery] BigInteger id, [FromBody] locationModel value)
+        public async Task<IActionResult> Update([FromQuery] long id, [FromBody] locationModel value)
         {
             try
             {
@@ -403,7 +403,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpPost]
         [Route("[action]/{id}")]
-        public async Task<IActionResult> DeleteLocation([FromQuery] BigInteger id)
+        public async Task<IActionResult> DeleteLocation([FromQuery] long id)
         {
 
             try

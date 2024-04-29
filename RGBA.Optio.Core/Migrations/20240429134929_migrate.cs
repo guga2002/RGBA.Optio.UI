@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace RGBA.Optio.Core.Migrations
 {
     /// <inheritdoc />
-    public partial class migrate_updates : Migration
+    public partial class migrate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -58,7 +58,8 @@ namespace RGBA.Optio.Core.Migrations
                 name: "Channels",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Channel_Type = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -86,7 +87,8 @@ namespace RGBA.Optio.Core.Migrations
                 name: "Locations",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Location_Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -99,7 +101,8 @@ namespace RGBA.Optio.Core.Migrations
                 name: "Merchants",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -112,7 +115,8 @@ namespace RGBA.Optio.Core.Migrations
                 name: "TypeOfTransactions",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Transaction_Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Status_Of_Transaction_Type = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -231,7 +235,8 @@ namespace RGBA.Optio.Core.Migrations
                 name: "ValutesCourses",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Exchange_Rate = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Last_Updated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CurrencyID = table.Column<int>(type: "int", nullable: false),
@@ -252,9 +257,10 @@ namespace RGBA.Optio.Core.Migrations
                 name: "LocationToMerchants",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    LocatrionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    merchantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    LocatrionId = table.Column<long>(type: "bigint", nullable: false),
+                    merchantId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -277,10 +283,11 @@ namespace RGBA.Optio.Core.Migrations
                 name: "CategoryOfTransactions",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Transaction_Category = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    TransactionTypeID = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    TransactionTypeID = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -297,15 +304,16 @@ namespace RGBA.Optio.Core.Migrations
                 name: "Transactions",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Date_Of_Transaction = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Amount_Equivalent = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Transaction_Status = table.Column<bool>(type: "bit", nullable: false),
                     CurrencyId = table.Column<int>(type: "int", nullable: false),
-                    CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    MerchantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ChannelId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    CategoryId = table.Column<long>(type: "bigint", nullable: false),
+                    MerchantId = table.Column<long>(type: "bigint", nullable: false),
+                    ChannelId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {

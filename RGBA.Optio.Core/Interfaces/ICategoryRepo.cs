@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Optio.Core.Interfaces
 {
-    public interface ICategoryRepo:ICrudRepo<Category,BigInteger>
+    public interface ICategoryRepo:ICrudRepo<Category,long>
     {
         Task<IEnumerable<Category>> GetAllActiveAsync();
     }

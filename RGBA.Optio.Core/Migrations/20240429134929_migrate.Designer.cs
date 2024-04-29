@@ -12,8 +12,8 @@ using Optio.Core.Data;
 namespace RGBA.Optio.Core.Migrations
 {
     [DbContext(typeof(OptioDB))]
-    [Migration("20240419121301_migrate_updates")]
-    partial class migrate_updates
+    [Migration("20240429134929_migrate")]
+    partial class migrate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -160,9 +160,11 @@ namespace RGBA.Optio.Core.Migrations
 
             modelBuilder.Entity("Optio.Core.Entities.Category", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -173,8 +175,8 @@ namespace RGBA.Optio.Core.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasColumnName("Transaction_Category");
 
-                    b.Property<Guid>("TransactionTypeID")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<long>("TransactionTypeID")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
@@ -189,9 +191,11 @@ namespace RGBA.Optio.Core.Migrations
 
             modelBuilder.Entity("Optio.Core.Entities.Channels", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("ChannelType")
                         .IsRequired()
@@ -213,9 +217,11 @@ namespace RGBA.Optio.Core.Migrations
 
             modelBuilder.Entity("Optio.Core.Entities.Location", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -237,9 +243,11 @@ namespace RGBA.Optio.Core.Migrations
 
             modelBuilder.Entity("Optio.Core.Entities.Merchant", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -261,9 +269,11 @@ namespace RGBA.Optio.Core.Migrations
 
             modelBuilder.Entity("Optio.Core.Entities.Transaction", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)")
@@ -273,11 +283,11 @@ namespace RGBA.Optio.Core.Migrations
                         .HasColumnType("decimal(18,2)")
                         .HasColumnName("Amount_Equivalent");
 
-                    b.Property<Guid>("CategoryId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<long>("CategoryId")
+                        .HasColumnType("bigint");
 
-                    b.Property<Guid>("ChannelId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<long>("ChannelId")
+                        .HasColumnType("bigint");
 
                     b.Property<int>("CurrencyId")
                         .HasColumnType("int");
@@ -290,8 +300,8 @@ namespace RGBA.Optio.Core.Migrations
                         .HasColumnType("bit")
                         .HasColumnName("Transaction_Status");
 
-                    b.Property<Guid>("MerchantId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<long>("MerchantId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
@@ -317,9 +327,11 @@ namespace RGBA.Optio.Core.Migrations
 
             modelBuilder.Entity("Optio.Core.Entities.TypeOfTransaction", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit")
@@ -380,15 +392,17 @@ namespace RGBA.Optio.Core.Migrations
 
             modelBuilder.Entity("RGBA.Optio.Core.Entities.LocationToMerchant", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("bigint");
 
-                    b.Property<Guid>("LocatrionId")
-                        .HasColumnType("uniqueidentifier");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<Guid>("merchantId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<long>("LocatrionId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("merchantId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
@@ -492,9 +506,11 @@ namespace RGBA.Optio.Core.Migrations
 
             modelBuilder.Entity("RGBA.Optio.Core.Entities.ValuteCourse", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<int>("CurrencyID")
                         .HasColumnType("int");

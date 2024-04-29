@@ -175,7 +175,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
-        public async Task<ValuteModel> GetByIdAsync(BigInteger id, ValuteModel Identify)
+        public async Task<ValuteModel> GetByIdAsync(long id, ValuteModel Identify)
         {
             try
             {
@@ -260,7 +260,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
-        public async Task<bool> SoftDeleteAsync(BigInteger id, ValuteModel Identify)
+        public async Task<bool> SoftDeleteAsync(long id, ValuteModel Identify)
         {
             try
             {
@@ -301,7 +301,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
-        public Task<bool> UpdateAsync(BigInteger id, ValuteModel entity)
+        public Task<bool> UpdateAsync(long id, ValuteModel entity)
         {
             try
             {

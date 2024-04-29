@@ -9,15 +9,12 @@ using RGBA.Optio.Core.Entities;
 using RGBA.Optio.Core.Interfaces;
 using RGBA.Optio.Core.PerformanceImprovmentServices;
 using RGBA.Optio.Core.Repositories;
-using RGBA.Optio.Domain;
 using RGBA.Optio.Domain.Interfaces;
 using RGBA.Optio.Domain.LoggerFiles;
 using RGBA.Optio.Domain.Mapper;
 using RGBA.Optio.Domain.Services;
 using RGBA.Optio.Domain.Services.TransactionRelated;
 using System.Text;
-using RGBA.Optio.UI.Controllers;
-using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);

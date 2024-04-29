@@ -203,7 +203,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
-        public async Task<ChanellModel> GetByIdAsync(BigInteger id, ChanellModel Identify)
+        public async Task<ChanellModel> GetByIdAsync(long id, ChanellModel Identify)
         {
             try
             {
@@ -225,7 +225,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
-        public async Task<CategoryModel> GetByIdAsync(BigInteger id, CategoryModel Identify)
+        public async Task<CategoryModel> GetByIdAsync(long id, CategoryModel Identify)
         {
             try
             {
@@ -247,7 +247,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
-        public  async Task<TransactionTypeModel> GetByIdAsync(BigInteger id, TransactionTypeModel Identify)
+        public  async Task<TransactionTypeModel> GetByIdAsync(long id, TransactionTypeModel Identify)
         {
             try
             {
@@ -338,7 +338,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
-        public async Task<bool> SoftDeleteAsync(BigInteger id, ChanellModel Identify)
+        public async Task<bool> SoftDeleteAsync(long id, ChanellModel Identify)
         {
             try
             {
@@ -352,7 +352,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
-        public async  Task<bool> SoftDeleteAsync(BigInteger id, CategoryModel Identify)
+        public async  Task<bool> SoftDeleteAsync(long id, CategoryModel Identify)
         {
             try
             {
@@ -366,7 +366,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
-        public async  Task<bool> SoftDeleteAsync(BigInteger id, TransactionTypeModel Identify)
+        public async  Task<bool> SoftDeleteAsync(long id, TransactionTypeModel Identify)
         {
             try
             {
@@ -380,7 +380,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
-        public  async Task<bool> UpdateAsync(BigInteger id, ChanellModel entity)
+        public  async Task<bool> UpdateAsync(long id, ChanellModel entity)
         {
             try
             {
@@ -402,7 +402,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
-        public  async Task<bool> UpdateAsync(BigInteger id, CategoryModel entity)
+        public  async Task<bool> UpdateAsync(long id, CategoryModel entity)
         {
             try
             {
@@ -424,7 +424,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
-        public async Task<bool> UpdateAsync(BigInteger id,TransactionTypeModel entity)
+        public async Task<bool> UpdateAsync(long id,TransactionTypeModel entity)
         {
 
             try

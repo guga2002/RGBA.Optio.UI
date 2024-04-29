@@ -19,7 +19,7 @@ namespace Optio.Core.Repositories
             merchant = context.Set<Merchant>(); 
         }
       
-        public async Task<bool> AssignLocationtoMerchant(BigInteger Merchantid,BigInteger Locationid)
+        public async Task<bool> AssignLocationtoMerchant(long Merchantid,long Locationid)
         {
             try
             {
@@ -110,7 +110,7 @@ namespace Optio.Core.Repositories
             }
         }
 
-        public async Task<Merchant> GetByIdAsync(BigInteger id)
+        public async Task<Merchant> GetByIdAsync(long id)
         {
             try
             {
@@ -155,7 +155,7 @@ namespace Optio.Core.Repositories
             }
         }
 
-        public async Task<bool> SoftDeleteAsync(BigInteger id)
+        public async Task<bool> SoftDeleteAsync(long id)
         {
             try
             {
@@ -178,7 +178,7 @@ namespace Optio.Core.Repositories
             }
         }
 
-        public async Task<bool> UpdateAsync(BigInteger id, Merchant entity)
+        public async Task<bool> UpdateAsync(long id, Merchant entity)
         {
             try
             {

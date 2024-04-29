@@ -5,9 +5,9 @@ using System.Numerics;
 namespace RGBA.Optio.Domain.Interfaces
 {
     public interface ICurrencyRelatedService:IAddInfo<CurrencyModel>,IAddInfo<ValuteModel>,
-        IGetInfo<CurrencyModel, int>,IGetInfo<ValuteModel, BigInteger>,
-        IRemoveInfo<CurrencyModel,int>,IRemoveInfo<ValuteModel, BigInteger>,
-        IUpdateInfo<CurrencyModel,int>,IUpdateInfo<ValuteModel, BigInteger>
+        IGetInfo<CurrencyModel, int>,IGetInfo<ValuteModel, long>,
+        IRemoveInfo<CurrencyModel,int>,IRemoveInfo<ValuteModel, long>,
+        IUpdateInfo<CurrencyModel,int>,IUpdateInfo<ValuteModel, long>
     {
 
     }

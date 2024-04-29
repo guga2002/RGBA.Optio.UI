@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Optio.Core.Interfaces
 {
-    public interface ITypeOfTransactionRepo:ICrudRepo<TypeOfTransaction, BigInteger>
+    public interface ITypeOfTransactionRepo:ICrudRepo<TypeOfTransaction, long>
     {
         Task<IEnumerable<TypeOfTransaction>> GetAllActiveTypeOfTransactionAsync();
     }

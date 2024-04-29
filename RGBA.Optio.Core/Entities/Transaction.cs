@@ -29,17 +29,17 @@ namespace Optio.Core.Entities
 
 
         [ForeignKey("Category")]
-        public BigInteger CategoryId { get; set; }
+        public long CategoryId { get; set; }
         public virtual Category Category { get; set; }
 
 
         [ForeignKey("Merchant")]
-        public BigInteger MerchantId { get; set; }
+        public long MerchantId { get; set; }
         public virtual Merchant Merchant {  get; set; }
 
 
         [ForeignKey("Channel")]
-        public BigInteger ChannelId { get; set; }
+        public long ChannelId { get; set; }
         public virtual Channels Channel { get; set; }
 
     }

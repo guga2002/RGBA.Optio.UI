@@ -82,7 +82,7 @@ namespace Optio.Core.Repositories
             }
         }
 
-        public async Task<Location> GetByIdAsync(BigInteger id)
+        public async Task<Location> GetByIdAsync(long id)
         {
             try
             {
@@ -132,7 +132,7 @@ namespace Optio.Core.Repositories
             }
         }
 
-        public async Task<bool> SoftDeleteAsync(BigInteger id)
+        public async Task<bool> SoftDeleteAsync(long id)
         {
             try
             {
@@ -156,7 +156,7 @@ namespace Optio.Core.Repositories
             }
         }
 
-        public async Task<bool> UpdateAsync(BigInteger id, Location entity)
+        public async Task<bool> UpdateAsync(long id, Location entity)
         {
             try
             {

@@ -69,7 +69,7 @@ namespace RGBA.Optio.Core.Repositories
             }
         }
 
-        public async Task<ValuteCourse> GetByIdAsync(BigInteger id)
+        public async Task<ValuteCourse> GetByIdAsync(long id)
         {
             try
             {
@@ -107,7 +107,7 @@ namespace RGBA.Optio.Core.Repositories
             }
         }
 
-        public async Task<bool> SoftDeleteAsync(BigInteger id)
+        public async Task<bool> SoftDeleteAsync(long id)
         {
             try
             {
@@ -127,7 +127,7 @@ namespace RGBA.Optio.Core.Repositories
             }
         }
 
-        public async Task<bool> UpdateAsync(BigInteger id, ValuteCourse entity)
+        public async Task<bool> UpdateAsync(long id, ValuteCourse entity)
         {
             try
             {

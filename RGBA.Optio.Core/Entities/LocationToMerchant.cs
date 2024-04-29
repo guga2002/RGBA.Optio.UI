@@ -8,10 +8,10 @@ namespace RGBA.Optio.Core.Entities
     public class LocationToMerchant:AbstractClass
     {
         [ForeignKey("location")]
-        public BigInteger LocatrionId { get; set; }
+        public long LocatrionId { get; set; }
 
         [ForeignKey("merchant")]
-        public BigInteger merchantId { get; set; }
+        public long merchantId { get; set; }
         public Location location { get; set; }
 
         public Merchant merchant { get; set; }

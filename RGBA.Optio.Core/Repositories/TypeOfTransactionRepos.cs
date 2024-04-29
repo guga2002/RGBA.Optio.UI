@@ -64,7 +64,7 @@ namespace Optio.Core.Repositories
             }
         }
 
-        public async Task<TypeOfTransaction> GetByIdAsync(BigInteger id)
+        public async Task<TypeOfTransaction> GetByIdAsync(long id)
         {
             return await (from typ in TypeOfTransaction
                     where typ.Id == id && typ.IsActive
@@ -92,7 +92,7 @@ namespace Optio.Core.Repositories
             }
         }
 
-        public async Task<bool> SoftDeleteAsync(BigInteger id)
+        public async Task<bool> SoftDeleteAsync(long id)
         {
             try
             {
@@ -114,7 +114,7 @@ namespace Optio.Core.Repositories
             }
         }
 
-        public async Task<bool> UpdateAsync(BigInteger id, TypeOfTransaction entity)
+        public async Task<bool> UpdateAsync(long id, TypeOfTransaction entity)
         {
             try
             {

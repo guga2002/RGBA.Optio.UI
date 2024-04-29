@@ -1,11 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using RGBA.Optio.Domain.Interfaces;
 using RGBA.Optio.Domain.Models;
-using RGBA.Optio.Domain.Services;
-using System.Numerics;
-using ZstdSharp.Unsafe;
 
 namespace RGBA.Optio.UI.Controllers
 {
@@ -45,7 +41,7 @@ namespace RGBA.Optio.UI.Controllers
                             ChannelId = 0,
                             MerchantId = 0,
                             CurencyNameId = 0,
-                            Date = new DateTime(),
+                            Date = DateTime.Now,
                             EquivalentInGel = 0
                         });
 
@@ -88,7 +84,7 @@ namespace RGBA.Optio.UI.Controllers
                             ChannelId = 0,
                             MerchantId = 0,
                             CurencyNameId = 0,
-                            Date = new DateTime(),
+                            Date = DateTime.Now,
                             EquivalentInGel = 0
                         });
                         if(res is null)
@@ -110,7 +106,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public async Task<IActionResult>Get([FromQuery] BigInteger id)
+        public async Task<IActionResult>Get([FromQuery] long id)
         {
             try
             {
@@ -130,7 +126,7 @@ namespace RGBA.Optio.UI.Controllers
                             ChannelId = 0,
                             MerchantId = 0,
                             CurencyNameId = 0,
-                            Date = new DateTime(),
+                            Date = DateTime.Now,
                             EquivalentInGel = 0
                         });
                         if(res is null)
@@ -195,7 +191,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpPost]
         [Route("[action]/{id}")]
-        public async Task<IActionResult> Delete([FromQuery]BigInteger id)
+        public async Task<IActionResult> Delete([FromQuery]long id)
         {
             try
             {
@@ -208,7 +204,7 @@ namespace RGBA.Optio.UI.Controllers
                         ChannelId = 0,
                         MerchantId = 0,
                         CurencyNameId = 0,
-                        Date = new DateTime(),
+                        Date = DateTime.Now,
                         EquivalentInGel = 0
                     });
                     if (res)
@@ -228,7 +224,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpPut]
         [Route("Transaction/{id}")]
-        public async Task<IActionResult> Update([FromQuery]BigInteger id, [FromBody]TransactionModel transactionModel)
+        public async Task<IActionResult> Update([FromQuery]long id, [FromBody]TransactionModel transactionModel)
         {
             try
             {

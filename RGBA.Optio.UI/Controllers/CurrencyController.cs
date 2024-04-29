@@ -147,7 +147,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpGet]
         [Route("valute/{id}")]
-        public async Task<IActionResult> GetByIdAsync([FromQuery]BigInteger id)
+        public async Task<IActionResult> GetByIdAsync([FromQuery]long id)
         {
             try
             {
@@ -211,7 +211,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpPost]
         [Route("valute/{id}/[action]")]
-        public async Task<IActionResult> SoftDelete([FromQuery] BigInteger id)
+        public async Task<IActionResult> SoftDelete([FromQuery] long id)
         {
             try
             {
@@ -242,7 +242,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpPut]
         [Route("valute/{id}")]
-        public async Task<IActionResult> UpdateAsync([FromQuery] BigInteger id,[FromBody]ValuteModel mod)
+        public async Task<IActionResult> UpdateAsync([FromQuery] long id,[FromBody]ValuteModel mod)
         {
             try
             {

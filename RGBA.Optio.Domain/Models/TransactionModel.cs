@@ -25,12 +25,12 @@ namespace RGBA.Optio.Domain.Models
         public required double EquivalentInGel { get; set; }
 
         [Required(ErrorMessage = "Category ID is required.")]
-        public required BigInteger CategoryId { get; set; }
+        public required long CategoryId { get; set; }
 
         [Required(ErrorMessage = "Merchant ID is required.")]
-        public required BigInteger MerchantId { get; set; }
+        public required long MerchantId { get; set; }
 
         [Required(ErrorMessage = "Channel ID is required.")]
-        public required BigInteger ChannelId { get; set; }
+        public required long ChannelId { get; set; }
     }
 }

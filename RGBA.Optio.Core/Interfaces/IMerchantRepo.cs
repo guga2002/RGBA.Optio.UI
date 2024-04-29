@@ -3,9 +3,9 @@ using System.Numerics;
 
 namespace Optio.Core.Interfaces
 {
-    public interface IMerchantRepo:ICrudRepo<Merchant, BigInteger>
+    public interface IMerchantRepo:ICrudRepo<Merchant, long>
     {
         Task<IEnumerable<Merchant>> GetAllActiveMerchantAsync();
-        Task<bool> AssignLocationtoMerchant(BigInteger Merchantid, BigInteger Locationid);
+        Task<bool> AssignLocationtoMerchant(long Merchantid, long Locationid);
     }
 }

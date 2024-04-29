@@ -4,7 +4,7 @@ using System.Numerics;
 
 namespace RGBA.Optio.Core.Interfaces
 {
-    public interface IValuteCourse:ICrudRepo<ValuteCourse, BigInteger>
+    public interface IValuteCourse:ICrudRepo<ValuteCourse, long>
     {
         Task<IEnumerable<ValuteCourse>> GetAllActiveValuteAsync();
     }

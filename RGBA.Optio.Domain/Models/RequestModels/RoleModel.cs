@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace RGBA.Optio.Domain.Models.RequestModels
 {
     public class RoleModel
     {
-        public string Name { get; set; }
-        public string NormalizedName { get; set; }
+        [Required(ErrorMessage = "the field is required")]
+        public required string Name { get; set; }
+
+
+        [Required(ErrorMessage ="the field is required")]
+        public required string NormalizedName { get; set; }
     }
 }

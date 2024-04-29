@@ -64,7 +64,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
-        public async Task<bool> AssignLocationtoMerchant(BigInteger Merchantid, BigInteger Locationid)
+        public async Task<bool> AssignLocationtoMerchant(long Merchantid, long Locationid)
         {
             try
             {
@@ -156,7 +156,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
         }
 
 
-        public async Task<locationModel> GetByIdAsync(BigInteger id, locationModel Identify)
+        public async Task<locationModel> GetByIdAsync(long id, locationModel Identify)
         {
             try
             {
@@ -178,7 +178,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
-        public async Task<MerchantModel> GetByIdAsync(BigInteger id, MerchantModel Identify)
+        public async Task<MerchantModel> GetByIdAsync(long id, MerchantModel Identify)
         {
             try
             {
@@ -246,7 +246,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
-        public async Task<bool> SoftDeleteAsync(BigInteger id, locationModel Identify)
+        public async Task<bool> SoftDeleteAsync(long id, locationModel Identify)
         {
             try
             {
@@ -260,7 +260,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
-        public async Task<bool> SoftDeleteAsync(BigInteger id, MerchantModel Identify)
+        public async Task<bool> SoftDeleteAsync(long id, MerchantModel Identify)
         {
             try
             {
@@ -274,7 +274,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
-        public async Task<bool> UpdateAsync(BigInteger id, locationModel entity)
+        public async Task<bool> UpdateAsync(long id, locationModel entity)
         {
             try
             {
@@ -300,7 +300,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
-        public async Task<bool> UpdateAsync(BigInteger id,MerchantModel entity)
+        public async Task<bool> UpdateAsync(long id,MerchantModel entity)
         {
             try
             {

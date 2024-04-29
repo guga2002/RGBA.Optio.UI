@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace RGBA.Optio.Domain.Models.RequestModels
 {
     public class PasswordResetModel
     {
-        public string oldPassword { get; set; }
-        public string newPassword { get; set; }
+        [Required(ErrorMessage = "Old Password is required")]
+        public required string oldPassword { get; set; }
+
+        [Required(ErrorMessage ="Password is required")]
+        public required string newPassword { get; set; }
     }
 }

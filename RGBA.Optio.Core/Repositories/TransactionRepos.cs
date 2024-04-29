@@ -100,7 +100,7 @@ namespace Optio.Core.Repositories
             }
         }
 
-        public async Task<Transaction> GetByIdAsync(BigInteger id)
+        public async Task<Transaction> GetByIdAsync(long id)
         {
             try
             {
@@ -120,9 +120,9 @@ namespace Optio.Core.Repositories
             }
         }
 
-        Func<OptioDB, BigInteger, Transaction?> CompiledQueryGetBtIdDetails =
+        Func<OptioDB, long, Transaction?> CompiledQueryGetBtIdDetails =
         EF.CompileQuery(
-        (OptioDB database, BigInteger id)
+        (OptioDB database, long id)
          => database.Transactions
           .Include(io => io.Category)
            .Include(io => io.Channel)
@@ -132,7 +132,7 @@ namespace Optio.Core.Repositories
              .ThenInclude(io => io.Locations)
               .SingleOrDefault(io => io.Id == id));
 
-        public async Task<Transaction> GetByIdWithDetailsAsync(BigInteger ID)
+        public async Task<Transaction> GetByIdWithDetailsAsync(long ID)
         {
             try
             {
@@ -172,7 +172,7 @@ namespace Optio.Core.Repositories
             }
         }
 
-        public async Task<bool> SoftDeleteAsync(BigInteger id)
+        public async Task<bool> SoftDeleteAsync(long id)
         {
             try
             {
@@ -191,7 +191,7 @@ namespace Optio.Core.Repositories
             }
         }
 
-        public async Task<bool> UpdateAsync(BigInteger id,Transaction entity)
+        public async Task<bool> UpdateAsync(long id,Transaction entity)
         {
             try
             {

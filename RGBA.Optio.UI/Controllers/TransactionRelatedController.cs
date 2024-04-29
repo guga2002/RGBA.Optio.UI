@@ -179,7 +179,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpGet]
         [Route("chanell/{id}")]
-        public async  Task<IActionResult> GetChanellByIdAsync([FromQuery] BigInteger id)
+        public async  Task<IActionResult> GetChanellByIdAsync([FromQuery] long id)
         {
             try
             {
@@ -195,7 +195,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpGet]
         [Route("category/{id}")]
-        public async Task<IActionResult> GetcategoryByIdAsync([FromQuery] BigInteger id)
+        public async Task<IActionResult> GetcategoryByIdAsync([FromQuery] long id)
         {
             try
             {
@@ -211,7 +211,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpGet]
         [Route("transactiontype/{id}")]
-        public async Task<IActionResult> GetTransactionTypeByIdAsync([FromQuery] BigInteger id)
+        public async Task<IActionResult> GetTransactionTypeByIdAsync([FromQuery] long id)
         {
             try
             {
@@ -287,7 +287,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpPost]
         [Route("chanell/{id}/softdelete")]
-        public async Task<IActionResult> ChanellSoftDeleteAsync([FromQuery] BigInteger id)
+        public async Task<IActionResult> ChanellSoftDeleteAsync([FromQuery] long id)
         {
             try
             {
@@ -307,7 +307,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpPost]
         [Route("category/{id}/softdelete")]
-        public async Task<IActionResult> CategorySoftDeleteAsync([FromQuery] BigInteger id)
+        public async Task<IActionResult> CategorySoftDeleteAsync([FromQuery] long id)
         {
             try
             {
@@ -327,7 +327,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpPost]
         [Route("transactiontype/{id}/softdelete")]
-        public async Task<IActionResult> TransactionTypeSoftDeleteAsync([FromQuery] BigInteger id)
+        public async Task<IActionResult> TransactionTypeSoftDeleteAsync([FromQuery] long id)
         {
             try
             {
@@ -347,7 +347,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpPut]
         [Route("chanell/{id}/update")]
-        public async Task<IActionResult> UpdateAsync([FromQuery] BigInteger id, [FromBody] ChanellModel entity)
+        public async Task<IActionResult> UpdateAsync([FromQuery] long id, [FromBody] ChanellModel entity)
         {
             try
             {
@@ -367,7 +367,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpPut]
         [Route("category/{id}/update")]
-        public async  Task<IActionResult> UpdateAsync([FromQuery] BigInteger id, [FromBody]CategoryModel entity)
+        public async  Task<IActionResult> UpdateAsync([FromQuery] long id, [FromBody]CategoryModel entity)
         {
             try
             {
@@ -387,7 +387,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpPut]
         [Route("transactiontype/{id}/update")]
-        public async Task<IActionResult> UpdateAsync([FromQuery] BigInteger id, [FromBody]TransactionTypeModel entity)
+        public async Task<IActionResult> UpdateAsync([FromQuery] long id, [FromBody]TransactionTypeModel entity)
         {
             try
             {

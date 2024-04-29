@@ -101,7 +101,7 @@ namespace RGBA.Optio.Domain.Services
             }
         }
 
-        public async Task<TransactionModel> GetByIdAsync(BigInteger id, TransactionModel Identify)
+        public async Task<TransactionModel> GetByIdAsync(long id, TransactionModel Identify)
         {
             try
             {
@@ -146,7 +146,7 @@ namespace RGBA.Optio.Domain.Services
             }
         }
 
-        public async Task<bool> SoftDeleteAsync(BigInteger id, TransactionModel Identify)
+        public async Task<bool> SoftDeleteAsync(long id, TransactionModel Identify)
         {
             try
             {
@@ -161,7 +161,7 @@ namespace RGBA.Optio.Domain.Services
             }
         }
 
-        public async Task<bool> UpdateAsync(BigInteger id, TransactionModel entity)
+        public async Task<bool> UpdateAsync(long id, TransactionModel entity)
         {
             try
             {

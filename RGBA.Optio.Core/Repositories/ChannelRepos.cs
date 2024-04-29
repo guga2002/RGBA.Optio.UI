@@ -83,12 +83,12 @@ namespace Optio.Core.Repositories
         }
 
 
-        Func<OptioDB, BigInteger, Channels?> CompiledQueryGetBtId =
+        Func<OptioDB, long, Channels?> CompiledQueryGetBtId =
             EF.CompileQuery(
-                (OptioDB db, BigInteger id) =>
+                (OptioDB db, long id) =>
                 db.Channels.SingleOrDefault(i=>i.Id==id)
                 );
-        public async Task<Channels> GetByIdAsync(BigInteger id)
+        public async Task<Channels> GetByIdAsync(long id)
         {
             try
             {
@@ -135,7 +135,7 @@ namespace Optio.Core.Repositories
         }
 
 
-        public async Task<bool> SoftDeleteAsync(BigInteger id)
+        public async Task<bool> SoftDeleteAsync(long id)
         {
             try
             {
@@ -159,7 +159,7 @@ namespace Optio.Core.Repositories
         }
 
 
-        public async Task<bool> UpdateAsync(BigInteger id, Channels entity)
+        public async Task<bool> UpdateAsync(long id, Channels entity)
         {
             try
             {

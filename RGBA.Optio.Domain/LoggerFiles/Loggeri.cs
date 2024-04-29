@@ -1,11 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using MongoDB.Bson;
 using RGBA.Optio.Core.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RGBA.Optio.Domain.LoggerFiles
 {

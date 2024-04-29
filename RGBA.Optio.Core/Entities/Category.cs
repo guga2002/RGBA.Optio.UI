@@ -16,7 +16,7 @@ namespace Optio.Core.Entities
         public bool IsActive { get; set; } = true;
 
         [ForeignKey("typeOfTransaction")]
-        public BigInteger TransactionTypeID { get; set; }
+        public long TransactionTypeID { get; set; }
         public TypeOfTransaction typeOfTransaction { get; set; }
         public virtual IEnumerable<Transaction> Transactions { get; set; }
     }

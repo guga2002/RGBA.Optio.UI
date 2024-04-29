@@ -1,13 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RGBA.Optio.Domain.Custom_Exceptions;
 using RGBA.Optio.Domain.Interfaces;
 using RGBA.Optio.Domain.Models;
-using System.Numerics;
 
 namespace RGBA.Optio.UI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CurrencyController : ControllerBase
     {
         private readonly ICurrencyRelatedService ser;
@@ -82,7 +83,7 @@ namespace RGBA.Optio.UI.Controllers
         }
 
         [HttpGet]
-        [Route("Valute/[action]")]
+        [Route("Valute/active")]
         public async Task<IActionResult> AllActiveValute()
         {
             try
@@ -103,7 +104,7 @@ namespace RGBA.Optio.UI.Controllers
         {
             try
             {
-                var res = await ser.GetAllActiveAsync(new CurrencyModel() {CurrencyCode="Undefined",NameOfValute="Undefined"});
+                var res = await ser.GetAllAsync(new CurrencyModel() {CurrencyCode="Undefined",NameOfValute="Undefined"});
                 return Ok(res);
             }
             catch (Exception exp)
@@ -119,7 +120,7 @@ namespace RGBA.Optio.UI.Controllers
         {
             try
             {
-                var res = await ser.GetAllActiveAsync(new ValuteModel() { CurrencyID = 0, ExchangeRate = 0, DateOfValuteCourse = DateTime.Now });
+                var res = await ser.GetAllAsync(new ValuteModel() { CurrencyID = 0, ExchangeRate = 0, DateOfValuteCourse = DateTime.Now });
                 return Ok(res);
             }
             catch (Exception exp)
@@ -131,7 +132,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpGet()]
         [Route("currency/{id}")]
-        public async Task<IActionResult> GetByIdAsync([FromQuery]int id)
+        public async Task<IActionResult> GetByIdAsync(int id)
         {
             try
             {
@@ -147,7 +148,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpGet]
         [Route("valute/{id}")]
-        public async Task<IActionResult> GetByIdAsync([FromQuery]long id)
+        public async Task<IActionResult> GetByIdAsync(long id)
         {
             try
             {
@@ -162,13 +163,22 @@ namespace RGBA.Optio.UI.Controllers
         }
 
         [HttpDelete]
-        [Route("currency")]
-        public async Task<IActionResult> RemoveAsync([FromBody] CurrencyModel entity)
+        [Route("currency/{id}")]
+        public async Task<IActionResult> RemoveAsync(int id )
         {
             try
             {
-                var res = await ser.RemoveAsync(entity);
-                return Ok(res);
+                var res = await ser.GetByIdAsync(id, new CurrencyModel() { CurrencyCode = "Undefined", NameOfValute = "Undefined" });
+                if (res is not null)
+                {
+                    var rek = await ser.RemoveAsync(res);
+                    if (rek)
+                    {
+                        return Ok(res);
+                    }
+                    return BadRequest(rek);
+                }
+                return NotFound();
             }
             catch (Exception exp)
             {
@@ -178,13 +188,22 @@ namespace RGBA.Optio.UI.Controllers
         }
 
         [HttpDelete]
-        [Route("valute")]
-        public  async Task<IActionResult> RemoveAsync([FromBody] ValuteModel entity)
+        [Route("valute/{id}")]
+        public  async Task<IActionResult> RemoveAsync(long id)
         {
             try
             {
-                var res = await ser.RemoveAsync(entity);
-                return Ok(res);
+                var rek = await ser.GetByIdAsync(id, new ValuteModel());
+                if (rek is not null)
+                {
+                    var res = await ser.RemoveAsync(rek);
+                    if (res)
+                    {
+                        return Ok(res);
+                    }
+                    return BadRequest(rek);
+                }
+                return NotFound(id);
             }
             catch (Exception exp)
             {
@@ -193,9 +212,9 @@ namespace RGBA.Optio.UI.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPatch]
         [Route("currency/{id}/[action]")]
-        public async Task<IActionResult> SoftDelete([FromQuery] int id)
+        public async Task<IActionResult> SoftDelete(int id)
         {
             try
             {
@@ -209,14 +228,19 @@ namespace RGBA.Optio.UI.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPatch]
         [Route("valute/{id}/[action]")]
-        public async Task<IActionResult> SoftDelete([FromQuery] long id)
+        public async Task<IActionResult> SoftDelete(long id)
         {
             try
             {
                 var res = await ser.SoftDeleteAsync(id, new ValuteModel() {CurrencyID=0,ExchangeRate=0,DateOfValuteCourse=DateTime.Now});
-                return Ok(res);
+                if (res)
+                {
+                    return Ok(res);
+                }
+
+                return BadRequest(res);
             }
             catch (Exception exp)
             {
@@ -226,11 +250,11 @@ namespace RGBA.Optio.UI.Controllers
         }
         [HttpPut]
         [Route("currency/{id}")]
-        public async Task<IActionResult> UpdateAsync([FromQuery] int id,[FromBody]CurrencyModel entity)
+        public async Task<IActionResult> UpdateAsync(int id,[FromBody]CurrencyModel entity)
         {
             try
             {
-                var res = await ser.UpdateAsync(id, new CurrencyModel() {CurrencyCode="Undefined",NameOfValute="Undefined" });
+                var res = await ser.UpdateAsync(id,entity);
                 return Ok(res);
             }
             catch (Exception exp)
@@ -242,7 +266,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpPut]
         [Route("valute/{id}")]
-        public async Task<IActionResult> UpdateAsync([FromQuery] long id,[FromBody]ValuteModel mod)
+        public async Task<IActionResult> UpdateAsync(long id,[FromBody]ValuteModel mod)
         {
             try
             {

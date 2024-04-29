@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Optio.Core.Data;
-using Optio.Core.Entities;
 using RGBA.Optio.Core.Entities;
 using RGBA.Optio.Core.Interfaces;
 using System.Data;
@@ -44,14 +43,14 @@ namespace RGBA.Optio.Core.Repositories
 
         public async Task<IEnumerable<Currency>> GetAllActiveAsync()
         {
-            return await currencies.AsNoTracking().Where(io=>io.IsActive).ToListAsync();
+            return await currencies.AsNoTracking().Where(io=>io.IsActive == true).ToListAsync();
         }
 
         public async Task<Currency> GetByIdAsync(int id)
         {
             try
             {
-                var result = await currencies.AsNoTracking().FirstOrDefaultAsync(io => io.Id == id && io.IsActive);
+                var result = await currencies.AsNoTracking().FirstOrDefaultAsync(io => io.Id == id && io.IsActive == true);
                 if (result is null) throw new ArgumentException("no entoty found!");
                 return result;
 
@@ -66,14 +65,14 @@ namespace RGBA.Optio.Core.Repositories
         {
             try
             {
-                var res = await currencies.AsNoTracking().FirstOrDefaultAsync(io => io.Id == entity.Id);
+                var res = await currencies.FirstOrDefaultAsync(io => io.NameOfValute == entity.NameOfValute&&io.CurrencyCode==entity.CurrencyCode);
                 if (res is not null)
                 {
                     currencies.Remove(res);
                     await context.SaveChangesAsync();
                     return true;
                 }
-                return false;
+                throw new ArgumentException("no such Currency exist");
             }
             catch (Exception)
             {
@@ -85,14 +84,14 @@ namespace RGBA.Optio.Core.Repositories
         {
             try
             {
-                var res = await currencies.AsNoTracking().FirstOrDefaultAsync(io => io.Id == id);
+                var res = await currencies.FirstOrDefaultAsync(io => io.Id == id&&io.IsActive == true);
                 if (res is not null)
                 {
                     res.IsActive = false;
                     await context.SaveChangesAsync();
                     return true;
                 }
-                return false;
+                throw new ArgumentException("weeoe,  already the data is  soft deleted or no exist");
             }
             catch (Exception)
             {
@@ -105,20 +104,19 @@ namespace RGBA.Optio.Core.Repositories
         {
             try
             {
-                var res = await currencies.AsNoTracking().FirstOrDefaultAsync(io => io.Id == id);
+                var res = await currencies.FirstOrDefaultAsync(io => io.Id == id);
                 if (res is not null)
                 {
-                    context.Entry(res).CurrentValues.SetValues(entity);
+                    res.CurrencyCode= entity.CurrencyCode;
+                    res.NameOfValute= entity.NameOfValute;
+                    res.IsActive = entity.IsActive;
                     await context.SaveChangesAsync();
                     return true;
                 }
-                return false;
+                throw new ArgumentException(" no such  currency exist");
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                var entry = ex.Entries.Single();
-                var databaseValues = (TypeOfTransaction)entry.GetDatabaseValues().ToObject();
-                entry.CurrentValues.SetValues(databaseValues);
                 throw;
             }
         }

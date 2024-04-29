@@ -60,7 +60,7 @@ namespace RGBA.Optio.Core.Repositories
             {
                 return await courses
                     .AsNoTracking()
-                    .Where(io=>io.IsActive)
+                    .Where(io=>io.IsActive==true)
                     .ToListAsync();
             }
             catch (Exception)
@@ -75,8 +75,8 @@ namespace RGBA.Optio.Core.Repositories
             {
                 return await courses.
                     AsNoTracking()
-                    .FirstOrDefaultAsync(io => io.Id == id && io.IsActive) 
-                    ?? throw new ArgumentException(" No user exist on this Id");
+                    .FirstOrDefaultAsync(io => io.Id == id && io.IsActive==true) 
+                    ?? throw new ArgumentException(" No  Valute COurse exist On this ID :(");
             }
             catch (Exception)
             {
@@ -89,17 +89,14 @@ namespace RGBA.Optio.Core.Repositories
             try
             {
                 var course = await courses
-                    .AsNoTracking()
-                    .FirstOrDefaultAsync(io => io.Id == entity.Id);
-
+                    .FirstOrDefaultAsync(io => io.CurrencyID == entity.CurrencyID&&io.ExchangeRate==io.ExchangeRate);
                 if (course is not null)
                 {
                     courses.Remove(course);
                     await context.SaveChangesAsync();
                     return true;
                 }
-                return false;
-
+                throw new ArgumentException("No such valute exist");
             }
             catch (Exception)
             {
@@ -111,15 +108,16 @@ namespace RGBA.Optio.Core.Repositories
         {
             try
             {
-                var course = await courses.AsNoTracking().FirstOrDefaultAsync(io => io.Id == id);
+                var course = await courses
+                    .FirstOrDefaultAsync(io => io.Id == id&&io.IsActive== true);
+
                 if (course is not null)
                 {
-                    course.IsActive = false;
+                    course.IsActive=false;
                     await context.SaveChangesAsync();
                     return true;
                 }
-
-                return false;
+                throw new ArgumentException(" no data exist or alrady soft deleted");
             }
             catch (Exception)
             {
@@ -131,20 +129,21 @@ namespace RGBA.Optio.Core.Repositories
         {
             try
             {
-                var course = await courses.AsNoTracking().FirstOrDefaultAsync(io => io.Id == id);
+                var course = await courses.FirstOrDefaultAsync(io => io.Id == id&&io.ExchangeRate==entity.ExchangeRate&&io.CurrencyID==entity.CurrencyID);
                 if (course is not null)
                 {
-                    context.Entry(course).CurrentValues.SetValues(entity);
+                   course.DateOfValuteCourse = entity.DateOfValuteCourse;
+                    course.IsActive=entity.IsActive;
+                    course.DateOfValuteCourse = entity.DateOfValuteCourse;
+                    course.CurrencyID = entity.CurrencyID;
+                    course.ExchangeRate = entity.ExchangeRate;
                     await context.SaveChangesAsync();
                     return true;
                 }
-                return false;
+                throw new ArgumentException("THe data is already up to data, or  such  a data no exist");
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                var ent=ex.Entries.Single();
-                var act =(ValuteCourse)ent.Entity;
-                ent.CurrentValues.SetValues(act);
                 throw;
             }
         }

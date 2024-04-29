@@ -212,7 +212,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
                     var res= await work.CurrencyRepository.RemoveAsync(mapp);
                     return res;
                 }
-                return false;
+                throw new ArgumentException("no such entity exist");
                     
             }
             catch (Exception ex)

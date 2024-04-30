@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using RGBA.Optio.Core.Entities;
@@ -52,6 +53,67 @@ namespace RGBA.Optio.Domain.Services
                 throw;
             }
         }
+        public async Task<bool> isEmailConfirmed(string email)
+        {
+            var res = await userManager.FindByNameAsync(email);
+            if(res is not null)
+            {
+                return await userManager.IsEmailConfirmedAsync(res);
+            }
+            return false;
+        }
+
+        public async Task<bool> IsUserExist(string email)
+        {
+            var res = await userManager.FindByEmailAsync(email);
+          
+            if(res is not null)
+            {
+                return true;
+            }
+            return false;
+        }
+        public async Task<bool> ConfirmMail(string mail)
+        {
+            if(await isEmailConfirmed(mail))
+            {
+                throw new ArgumentException(" email already confirmed");
+            }
+            var res=await  userManager.FindByNameAsync(mail);
+            if (res is not null)
+            {
+                var token = await userManager.GenerateEmailConfirmationTokenAsync(res);
+                if (token is not null)
+                {
+                    await userManager.ConfirmEmailAsync(res, token);
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public async Task<bool> sendlinktouser(string name, string link)
+        {
+            var res=await userManager.FindByNameAsync(name);
+            if(res != null&&res.Email is not null)
+            {
+                var body = $@"
+                  <div align='center' style='font-family: Arial, sans-serif;'>
+                  <p style='font-size: 16px;'>ძვირასო {res.Name},</p>
+                  <p style='font-size: 16px;'>გთხოვთ დაადასტუროთ თქვენი მეილი, ამ ლინკზე გადასვლით:</p>
+                 <p style='font-size: 16px;'>
+                 <a href='{link}' style='display: inline-block; padding: 10px 20px; background-color: #007bff; color: #ffffff; text-decoration: none; border-radius: 5px;'>დაადასტურე მეილი</a>
+                 </p>
+                 <p style='font-size: 16px;'>ლინკი ვალიდურია 24 საათის განავლობაში</p>
+                 <p style='font-size: 16px;'>ჩვენი ჯგუფი გიხდის მადლობას..</p>
+                  <h2 style='font-size: 16px;color:red;'>თუ თქვენ  არ გამოგიგზავნიათ მოთხოვნა, გთხოვთ დაგვიკავშირდეთ!</h2>
+                </div>";
+
+                smtp.SendMessage(res.Email, "დაადასტურე მეილი"+' '+DateTime.Now.Hour+':'+DateTime.Now.Minute, body);
+                return true;
+            }
+            return false;
+        }
 
         public async Task<IdentityResult> AssignRoleToUserAsync(string UserId, string Role)
         {
@@ -73,12 +135,6 @@ namespace RGBA.Optio.Domain.Services
             {
                 throw;
             }
-        }
-
-        public Task<bool> ConfirmEmail(string Email, string Username)
-        {
-            throw new NotImplementedException();
-            //will store  email confirmation logic
         }
 
         public async Task<IdentityResult> DeleteRole(string rol)
@@ -109,10 +165,31 @@ namespace RGBA.Optio.Domain.Services
             return new IdentityResult();
         }
 
-        public Task<bool> ForgetPassword(string Email)
+      
+
+        public async Task<bool> ForgetPassword(string Email,string NewPassword)
         {
-            throw new NotImplementedException();
-            //will send  link yo user to reset password if user exist
+            var user=await userManager.FindByEmailAsync(Email);
+          
+            if ((user is not null))
+            {
+                var rej =await  userManager.CheckPasswordAsync(user, NewPassword);
+                if(rej)
+                {
+                    return false;
+                }
+                var res = await userManager.GeneratePasswordResetTokenAsync(user);
+                if (res is not null)
+                {
+                   var rek=await userManager.ResetPasswordAsync(user,res, NewPassword);
+                   if(rek.Succeeded)
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+            throw new ArgumentException("Such User no exist");
         }
 
         public async Task<UserModel> Info(string Username)
@@ -169,11 +246,89 @@ namespace RGBA.Optio.Domain.Services
                 {
                     var maped = map.Map<User>(User);
                     var res = await userManager.CreateAsync(maped, Password);
-                    if(res.Succeeded)
-                    return res;
+                    if (res.Succeeded)
+                    {
+                        var body = @"
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Welcome to RGBASOLUTION!</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            margin-left:30%;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            color: #007bff;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .content {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        .list-item {
+            font-size: 16px;
+            color: #333;
+            margin-left: 20px;
+        }
+        .security-notice {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 20px;
+            text-align: center;
+            color: #555;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class='container'>
+        <div class='header'>
+            Welcome to RGBASOLUTION!
+        </div>
+        <div class='content'>
+            <p>Dear,</p>
+            <p>Congratulations on creating your account.</p>
+            <p>We are excited to have you on board!</p>
+            <p>Here are some next steps to get started:</p>
+            <ul>
+                <li class='list-item'>Explore our features and services.</li>
+                <li class='list-item'>Customize your profile settings.</li>
+                <li class='list-item'>Contact our support team if you need any assistance.</li>
+            </ul>
+            <p>Thank you for choosing RGBASOLUTION!</p>
+        </div>
+        <div class='security-notice'>
+            For security reasons, please do not share this email with anyone.
+        </div>
+    </div>
+</body>
+</html>
+";
+
+                        smtp.SendMessage(User.Email, "Welcome to RGBASOLUTION! Get Started Today", body);
+
+
+                        return res;
+                    }
 
                     throw new ArgumentException("somethings unucual");
-                  
+
                 }
                 throw new ArgumentException(" User already exist in db");
             }
@@ -181,7 +336,7 @@ namespace RGBA.Optio.Domain.Services
             {
                 throw;
             }
-}
+        }
 
         public async Task<IdentityResult> ResetPasswordAsync(PasswordResetModel arg, string username)
         {
@@ -194,7 +349,7 @@ namespace RGBA.Optio.Domain.Services
             return new IdentityResult();
         }
 
-        public async Task<(SignInResult, string)> SignInAsync(SignInModel mod)
+        public async Task<(Microsoft.AspNetCore.Identity.SignInResult, string)> SignInAsync(SignInModel mod)
         {
             if (string.IsNullOrEmpty(mod.Username) || string.IsNullOrEmpty(mod.Password))
             {

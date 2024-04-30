@@ -212,15 +212,16 @@ namespace RGBA.Optio.Domain.Services
         {
             var claims = new[]
             {
-             new Claim(ClaimTypes.Name, username),
-             };
+              new Claim(ClaimTypes.Name, username),
+            };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("65E255FF-F399-42D4-9C7F-D5D08B0EC285"));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("KkQl/Fp7eupD0YdLsK+ynGpEZ6g/Y0N6/J4I2V57E8E="));
+
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
-                issuer: "http://localhost:42130",
-                audience: "http://localhost:42130",
+                issuer: "https://localhost:44359/",
+                audience: "https://localhost:44359/",
                 claims: claims,
                 expires: DateTime.Now.AddHours(6),
                 signingCredentials: creds);

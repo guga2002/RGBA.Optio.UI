@@ -1,6 +1,5 @@
 @RGBA.Optio.UI_HostAddress = http://localhost:5187
 
-GET {{RGBA.Optio.UI_HostAddress}}/weatherforecast/
-Accept: application/json
 
-###
+
+GET https://localhost:7215/api/Statistic

@@ -9,7 +9,9 @@ using RGBA.Optio.Domain.Custom_Exceptions;
 using RGBA.Optio.Domain.Interfaces;
 using RGBA.Optio.Domain.Models;
 using RGBA.Optio.Domain.Models.RequestModels;
+using RGBA.Optio.Domain.Services.Outer_Services;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Text;
 
@@ -22,13 +24,15 @@ namespace RGBA.Optio.Domain.Services
         private readonly UserManager<User> userManager;
         private readonly IMapper map;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        public AdminPanelService(IHttpContextAccessor _httpContextAccessor, IMapper map, SignInManager<User> signin, UserManager<User> userManager,RoleManager<IdentityRole> rol)
+        private readonly SmtpService smtp;
+        public AdminPanelService(IHttpContextAccessor _httpContextAccessor, IMapper map, SignInManager<User> signin, UserManager<User> userManager,RoleManager<IdentityRole> rol, SmtpService smtp)
         {
             this.signin = signin;
             this.userManager = userManager;
             role = rol;
             this.map = map;
             this._httpContextAccessor = _httpContextAccessor;
+            this.smtp = smtp;
         }
 
         public async Task<IdentityResult> AddRolesAsync(string RoleName)
@@ -160,13 +164,18 @@ namespace RGBA.Optio.Domain.Services
         {
             try
             {
+
                 if (await userManager.FindByEmailAsync(User.Email) is null)
                 {
                     var maped = map.Map<User>(User);
                     var res = await userManager.CreateAsync(maped, Password);
+                    if(res.Succeeded)
                     return res;
+
+                    throw new ArgumentException("somethings unucual");
+                  
                 }
-                return new  IdentityResult();
+                throw new ArgumentException(" User already exist in db");
             }
             catch (Exception)
             {
@@ -199,6 +208,23 @@ namespace RGBA.Optio.Domain.Services
                 await SetPersistentCookieAsync(_httpContextAccessor.HttpContext.User);
                 var token = GenerateJwtToken(mod.Username);
                 await Console.Out.WriteLineAsync(token);
+                var usr = await userManager.FindByNameAsync(mod.Username);
+                if (usr != null)
+                {
+                    string recipientName = usr.Name+' '+usr.Surname;
+                    string emailContent = $@"
+                      <html>
+                     <body style='font-family: Arial, sans-serif;'>
+                     <p>Dear <span style='color: #3366cc;'>{recipientName}</span>,</p>
+                     <p>We noticed a new sign-in to your RGBASOLUTION account. If this was you, there's no need for further action. 
+                      However, if you didn't initiate this sign-in, please contact us immediately, and we will assist you in securing your account.</p>
+                     <p>Thank you for your attention to this matter.</p>
+                     <p style='color: #ff6600;'>Sincerely,<br/>Your RGBASOLUTION Team</p>
+                     </body>
+                     </html>";
+
+                    smtp.SendMessage(usr.Email, $"Security Alert: New Sign-in to Your RGBASOLUTION Account {DateTime.Now.ToShortTimeString()}", emailContent);
+                }
                 return (result, token);
             }
             else if (!result.Succeeded && !mod.SetCookie)

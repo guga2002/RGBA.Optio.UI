@@ -18,7 +18,7 @@ namespace Optio.Core.Repositories
             this._cache = cache;
         }
 
-        public async Task<bool> AddAsync(Transaction entity)
+        public async Task<long> AddAsync(Transaction entity)
         {
             try
             {
@@ -35,7 +35,8 @@ namespace Optio.Core.Repositories
                 }
                 await transactions.AddAsync(entity);
                 await context.SaveChangesAsync();
-                return true;
+                var max =await  transactions.MaxAsync(io => io.Id);
+                return max;
             }
             catch (Exception)
             {

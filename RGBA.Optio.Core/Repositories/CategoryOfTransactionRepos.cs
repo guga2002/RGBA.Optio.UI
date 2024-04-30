@@ -18,7 +18,7 @@ namespace Optio.Core.Repositories
         }
 
     
-        public async Task<bool> AddAsync(Category entity)
+        public async Task<long> AddAsync(Category entity)
         {
             try
             {
@@ -30,7 +30,8 @@ namespace Optio.Core.Repositories
                     {
                         await categoriesOfTransactionRepos.AddAsync(entity);
                         await context.SaveChangesAsync();
-                        return true;
+                        var  max=await categoriesOfTransactionRepos.MaxAsync(io => io.Id);
+                        return max;
                     }
                 }
                 throw new ArgumentException("There is a similar category");

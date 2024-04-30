@@ -30,7 +30,7 @@ namespace RGBA.Optio.UI.Controllers
                     throw new OptioGeneralException(entity.CurrencyCode);
                 }
                 var res = await ser.AddAsync(entity);
-                if(res)
+                if(res!=-1)
                 {
                     return Ok(entity);
                 }
@@ -53,7 +53,7 @@ namespace RGBA.Optio.UI.Controllers
                     throw new OptioGeneralException(entity.DateOfValuteCourse.ToShortDateString());
                 }
                 var res = await ser.AddAsync(entity);
-                if (res)
+                if (res != -1)
                 {
                     return Ok(entity.DateOfValuteCourse.ToShortTimeString());
                 }

@@ -154,7 +154,7 @@ namespace RGBA.Optio.UI.Controllers
                 if (ModelState.IsValid && model is not null)
                 {
                     var res=await transactionService.AddAsync(model);
-                    if (res)
+                    if (res != -1)
                     {
                         return Ok(res);
                     }

@@ -20,7 +20,7 @@ namespace Optio.Core.Repositories
         }
      
 
-        public async Task<bool> AddAsync(Channels entity)
+        public async Task<long> AddAsync(Channels entity)
         {
             try
             {
@@ -29,7 +29,8 @@ namespace Optio.Core.Repositories
                 {
                     await channels.AddAsync(entity);
                     await context.SaveChangesAsync();
-                    return true;
+                    var res= await channels.MaxAsync(io=>io.Id);
+                    return res;
                 }
                 else
                 {

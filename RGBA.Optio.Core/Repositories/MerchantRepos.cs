@@ -42,7 +42,7 @@ namespace Optio.Core.Repositories
             }
         }
 
-        public async Task<bool> AddAsync(Merchant entity)
+        public async Task<long> AddAsync(Merchant entity)
         {
             try
             {
@@ -51,7 +51,8 @@ namespace Optio.Core.Repositories
                 {
                     await merchant.AddAsync(entity);
                     await context.SaveChangesAsync();
-                    return true;
+                    var max = await merchant.MaxAsync(io => io.Id);
+                    return max;
                 }
                 else
                 {

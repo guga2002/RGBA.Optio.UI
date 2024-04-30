@@ -15,7 +15,7 @@ namespace RGBA.Optio.Core.Repositories
             courses = context.Set<ValuteCourse>();
         }
 
-        public async Task<bool> AddAsync(ValuteCourse entity)
+        public async Task<long> AddAsync(ValuteCourse entity)
         {
             try
             {
@@ -27,7 +27,8 @@ namespace RGBA.Optio.Core.Repositories
                 {
                     await courses.AddAsync(entity);
                     await context.SaveChangesAsync();
-                    return true;
+                    var res = await courses.MaxAsync(io => io.Id);
+                    return res;
                 }
                 else
                 {

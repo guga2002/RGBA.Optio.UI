@@ -1,24 +1,28 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using RGBA.Optio.Domain.Custom_Exceptions;
 using RGBA.Optio.Domain.Interfaces;
 using RGBA.Optio.Domain.Models;
 using RGBA.Optio.Domain.Models.RequestModels;
+using RGBA.Optio.Domain.Services.Outer_Services;
 using System.Net.Http.Headers;
 
 namespace RGBA.Optio.UI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class CustomerController : ControllerBase
     {
         private readonly IAdminPanelService ser;
         private readonly ILogger<CustomerController> log;
-        public CustomerController(IAdminPanelService se, ILogger<CustomerController> log)
+        private readonly SmtpService smtp;
+        public CustomerController(IAdminPanelService se, ILogger<CustomerController> log, SmtpService smtp)
         {
             this.ser = se;
             this.log = log;
+            this.smtp = smtp;
 
         }
         [HttpPost]
@@ -64,12 +68,12 @@ namespace RGBA.Optio.UI.Controllers
             catch (Exception exp)
             {
                 log.LogCritical(exp.Message);
-                return StatusCode(503, "Internal Server Error");
+                return BadRequest(exp.Message);
             }
         }
 
         [HttpPost]
-        [Route("[action]/{token}")]
+        [Route("[action]")]
         public async Task<IActionResult> RefreshToken([FromQuery] string token)
         {
             try
@@ -95,8 +99,10 @@ namespace RGBA.Optio.UI.Controllers
             }
         }
 
+
+
         [HttpPost]
-        [Route("[action]/{Email}")]
+        [Route("[action]")]
         [AllowAnonymous]
         public async Task<IActionResult> ForgetPassword([FromQuery] string Email)
         {

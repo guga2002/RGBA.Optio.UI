@@ -144,7 +144,17 @@ namespace RGBA.Optio.UI.Controllers
                 var link = Url.ActionLink("ForgetPassword", "Customer", new { Email = email, Password = NewPassword }, Request.Scheme);
                 if (link is not null)
                 {
-                    smtp.SendMessage(email, "Reset Your Password Now" + '_' + DateTime.Now.Hour + ':' + DateTime.Now.Minute, link);
+                    var body = $@"
+                  <div align='center' style='font-family: Arial, sans-serif;'>
+                  <p style='font-size: 16px;'>გადადი ლინკზე რათა შეცვალო პაროლი:</p>
+                 <p style='font-size: 16px;'>
+                 <a href='{link}' style='display: inline-block; padding: 10px 20px; background-color: #007bff; color: #ffffff; text-decoration: none; border-radius: 5px;'>შეცვალე პაროლი</a>
+                 </p>
+                 <p style='font-size: 16px;'>ლინკი ვალიდურია 24 საათის განავლობაში</p>
+                 <p style='font-size: 16px;'>ჩვენი ჯგუფი გიხდის მადლობას..</p>
+                  <h2 style='font-size: 16px;color:red;'>თუ თქვენ  არ გამოგიგზავნიათ მოთხოვნა, გთხოვთ დაგვიკავშირდეთ!</h2>
+                </div>";
+                    smtp.SendMessage(email, "პაროლის შეცვლის მოთხოვნა" + '_' + DateTime.Now.Hour + ':' + DateTime.Now.Minute, body);
                     return Ok("Reset link is sent to your email");
                 }
                 return BadRequest("bad request");

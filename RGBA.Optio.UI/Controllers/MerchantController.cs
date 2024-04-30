@@ -3,7 +3,6 @@ using Microsoft.Extensions.Caching.Memory;
 using RGBA.Optio.Domain.Custom_Exceptions;
 using RGBA.Optio.Domain.Interfaces;
 using RGBA.Optio.Domain.Models;
-using System.Numerics;
 
 namespace RGBA.Optio.UI.Controllers
 {
@@ -14,12 +13,14 @@ namespace RGBA.Optio.UI.Controllers
         private readonly IMerchantRelatedService ser;
         private readonly ILogger<MerchantController> log;
         private readonly IMemoryCache cache;
+
         public MerchantController(IMerchantRelatedService se, ILogger<MerchantController> log,IMemoryCache _cache)
         {
             this.ser = se;
             this.log = log;
             this.cache= _cache;
         }
+
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -52,9 +53,10 @@ namespace RGBA.Optio.UI.Controllers
             }
         }
 
+
         [HttpPost]
         [Route("Merchant/{Merchantid}/Location/{Locationid}")]
-        public async Task<IActionResult> AssignLocationtoMerchant([FromQuery] long Merchantid,[FromQuery] long Locationid)
+        public async Task<IActionResult> AssignLocationtoMerchant(long Merchantid, long Locationid)
         {
             try
             {
@@ -71,6 +73,7 @@ namespace RGBA.Optio.UI.Controllers
                 return BadRequest(exp.Message);
             }
         }
+
 
         [HttpGet]
         [Route("[action]")]
@@ -106,9 +109,10 @@ namespace RGBA.Optio.UI.Controllers
             }
         }
 
+
         [HttpGet]
         [Route("{id}")]
-        public async Task<IActionResult> Get([FromQuery] long id)
+        public async Task<IActionResult> Get(long id)
         {
             try
             {
@@ -141,6 +145,7 @@ namespace RGBA.Optio.UI.Controllers
             }
         }
 
+
         [HttpPost]
         public async Task<IActionResult> Insert([FromBody] MerchantModel value)
         {
@@ -164,9 +169,10 @@ namespace RGBA.Optio.UI.Controllers
             }
         }
 
+
         [HttpPut]
         [Route("{id}")]
-        public async Task<IActionResult> Update([FromQuery] long id, [FromBody] MerchantModel value)
+        public async Task<IActionResult> Update(long id, [FromBody] MerchantModel value)
         {
             try
             {
@@ -188,9 +194,10 @@ namespace RGBA.Optio.UI.Controllers
             }
         }
 
+
         [HttpPost]
         [Route("[action]/{id}")]
-        public async Task<IActionResult>  Delete([FromQuery] long id)
+        public async Task<IActionResult>  Delete(long id)
         {
 
             try
@@ -213,6 +220,7 @@ namespace RGBA.Optio.UI.Controllers
             }
         }
 
+
         [HttpDelete]
         [Route("merchant")]
         public async Task<IActionResult> Deletemerchant([FromBody]MerchantModel mod)
@@ -232,6 +240,8 @@ namespace RGBA.Optio.UI.Controllers
                 return BadRequest(exp.Message);
             }
         }
+
+
         //locationEndpoints
         [HttpDelete]
         [Route("location")]
@@ -252,6 +262,7 @@ namespace RGBA.Optio.UI.Controllers
                 return BadRequest(exp.Message);
             }
         }
+
 
         [HttpGet]
         [Route("[action]")]
@@ -285,6 +296,7 @@ namespace RGBA.Optio.UI.Controllers
                 return BadRequest(exp.Message);
             }
         }
+
 
         [HttpGet]
         [Route("[action]")]
@@ -320,9 +332,10 @@ namespace RGBA.Optio.UI.Controllers
             }
         }
 
+
         [HttpGet]
         [Route("Location/{id}")]
-        public async Task<IActionResult> GetLocation([FromQuery] long id)
+        public async Task<IActionResult> GetLocation(long id)
         {
             try
             {
@@ -353,6 +366,7 @@ namespace RGBA.Optio.UI.Controllers
             }
         }
 
+
         [HttpPost]
         [Route("Location")]
         public async Task<IActionResult> Insert([FromBody] locationModel value)
@@ -377,9 +391,10 @@ namespace RGBA.Optio.UI.Controllers
             }
         }
 
+
         [HttpPut]
         [Route("Location/{id}")]
-        public async Task<IActionResult> Update([FromQuery] long id, [FromBody] locationModel value)
+        public async Task<IActionResult> Update(long id, [FromBody] locationModel value)
         {
             try
             {
@@ -401,9 +416,10 @@ namespace RGBA.Optio.UI.Controllers
             }
         }
 
+
         [HttpPost]
         [Route("[action]/{id}")]
-        public async Task<IActionResult> DeleteLocation([FromQuery] long id)
+        public async Task<IActionResult> DeleteLocation(long id)
         {
 
             try

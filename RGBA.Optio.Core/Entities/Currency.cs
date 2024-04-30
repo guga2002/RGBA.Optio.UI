@@ -24,7 +24,8 @@ namespace RGBA.Optio.Core.Entities
         public required string CurrencyCode {  get; set; }
 
         [Column("Status_Of_Currency")]
-        public bool IsActive { get; set; }=true;
+        public bool IsActive { get; set; } = true;
+
         public virtual IEnumerable<Transaction> Transactions { get; set; }
 
         public virtual IEnumerable<ValuteCourse> Courses { get; set; }

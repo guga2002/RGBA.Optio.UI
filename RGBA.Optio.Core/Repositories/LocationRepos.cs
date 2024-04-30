@@ -4,8 +4,6 @@ using Optio.Core.Data;
 using Optio.Core.Entities;
 using Optio.Core.Interfaces;
 using RGBA.Optio.Core.PerformanceImprovmentServices;
-using SharpCompress.Common;
-using System.Numerics;
 
 namespace Optio.Core.Repositories
 {
@@ -112,14 +110,14 @@ namespace Optio.Core.Repositories
         {
             try
             {
-                var city = await locations.SingleOrDefaultAsync(i => i.LocationName.ToLower() == entity.LocationName.ToLower());
+                var city = await locations.SingleOrDefaultAsync(i => i.LocationName.ToLower()==entity.LocationName.ToLower());
                 if (city == null)
                 {
                     throw new InvalidOperationException("No such city was found");
                 }
                 else
                 {
-                    locations.Remove(entity);
+                    locations.Remove(city);
                     await context.SaveChangesAsync();
                     return true;
                 }
@@ -167,7 +165,7 @@ namespace Optio.Core.Repositories
                 }
                 else
                 {
-                    locations.Entry(city).CurrentValues.SetValues(entity);
+                    city.LocationName = entity.LocationName;
                     await context.SaveChangesAsync();
                     return true;
                 }

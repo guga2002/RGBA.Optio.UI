@@ -1,11 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.IdentityModel.Tokens;
 using Optio.Core.Data;
 using Optio.Core.Entities;
 using Optio.Core.Interfaces;
 using RGBA.Optio.Core.Entities;
-using System.Numerics;
 
 
 namespace Optio.Core.Repositories
@@ -136,7 +134,7 @@ namespace Optio.Core.Repositories
         {
             try
             {
-                var store = await merchant.SingleOrDefaultAsync(i => i.Name.ToLower() == entity.Name.ToLower());
+                var store = await merchant.SingleOrDefaultAsync(i => i.Name.ToLower()==entity.Name.ToLower());
                 if (store == null)
                 {
                     throw new InvalidOperationException("No merchant found");
@@ -189,8 +187,8 @@ namespace Optio.Core.Repositories
                 }
                 else
                 {
-                    merchant.Entry(store).CurrentValues.SetValues(entity);
-                    await context.SaveChangesAsync();   
+                    store.Name = entity.Name;
+                    await context.SaveChangesAsync();
                     return true;
                 }
             }

@@ -10,10 +10,10 @@ namespace RGBA.Optio.UI.Controllers
     public class TransactionController : ControllerBase
     {
         private readonly ITransactionService transactionService;
-        private readonly ILogger logger;
+        private readonly ILogger<TransactionController> logger;
         private readonly IMemoryCache memoryCache;
 
-        public TransactionController(ITransactionService transactionService, ILogger logger, IMemoryCache memoryCache)
+        public TransactionController(ITransactionService transactionService, ILogger<TransactionController> logger, IMemoryCache memoryCache)
         {
             this.transactionService = transactionService;
             this.logger = logger;
@@ -26,39 +26,39 @@ namespace RGBA.Optio.UI.Controllers
             try
             {
                 string cachekey = "GetAllTransaction";
-                if(ModelState.IsValid)
+                if (ModelState.IsValid)
                 {
-                    if(memoryCache.TryGetValue(cachekey,out IEnumerable<TransactionModel>? value))
+                    if (memoryCache.TryGetValue(cachekey, out IEnumerable<TransactionModel>? value))
                     {
                         return Ok(value);
                     }
                     else
                     {
                         var res = await transactionService.GetAllAsync(new TransactionModel
-                        {
-                            Amount = 0,
-                            CategoryId = 0,
-                            ChannelId = 0,
-                            MerchantId = 0,
-                            CurencyNameId = 0,
-                            Date = DateTime.Now,
-                            EquivalentInGel = 0
-                        });
+                    {
+                        Amount = 0,
+                        CategoryId = 0,
+                        ChannelId = 0,
+                        MerchantId = 0,
+                        CurencyNameId = 0,
+                        Date = DateTime.Now,
+                        EquivalentInGel = 0
+                    });
 
-                        if (!res.Any())
-                        {
-                            return NotFound();
-                        }
-                        memoryCache.Set(cachekey,res,TimeSpan.FromMinutes(20));
-                        return Ok(res);
+                    if (!res.Any())
+                    {
+                        return NotFound("data no exist");
                     }
+                        memoryCache.Set(cachekey, res, TimeSpan.FromMinutes(20));
+                        return Ok(res);
                 }
-               return BadRequest();
+                }
+                return BadRequest();
             }
             catch (Exception ex)
             {
                 logger.LogCritical(ex.Message,ex.StackTrace,DateTime.Now.ToShortTimeString());
-                return BadRequest(ex.Message);
+                return Ok(ex.Message);
             }
         }
 
@@ -106,7 +106,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public async Task<IActionResult>Get([FromQuery] long id)
+        public async Task<IActionResult>Get(long id)
         {
             try
             {
@@ -171,16 +171,22 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpDelete]
         [Route("transaction")]
-        public async Task<IActionResult> Delete([FromBody]TransactionModel model)
+        public async Task<IActionResult> Delete([FromQuery]long id)
         {
             try
             {
-                if(ModelState.IsValid && model is not null)
+                if(ModelState.IsValid)
                 {
-                    var res= await transactionService.RemoveAsync(model);
-                    return res==true ? Ok(model):BadRequest(model);
+                    var res = await transactionService.GetByIdAsync(id,new TransactionModel() { Amount=0,
+                    Date=DateTime.Now,CategoryId=0,
+                    ChannelId=0,CurencyNameId=0,EquivalentInGel=4,MerchantId=0});
+                    if (res is not null)
+                    {
+                        var rek = await transactionService.RemoveAsync(res);
+                        return rek == true ? Ok("succesfully deleted") : BadRequest(res);
+                    }
                 }
-                return BadRequest(model);
+                return BadRequest(id);
             }
             catch (Exception ex)
             {
@@ -190,8 +196,8 @@ namespace RGBA.Optio.UI.Controllers
         }
 
         [HttpPost]
-        [Route("[action]/{id}")]
-        public async Task<IActionResult> Delete([FromQuery]long id)
+        [Route("[action]")]
+        public async Task<IActionResult> DeleteSoft([FromQuery]long id)
         {
             try
             {
@@ -223,7 +229,7 @@ namespace RGBA.Optio.UI.Controllers
         }
 
         [HttpPut]
-        [Route("Transaction/{id}")]
+        [Route("Transaction/[action]")]
         public async Task<IActionResult> Update([FromQuery]long id, [FromBody]TransactionModel transactionModel)
         {
             try

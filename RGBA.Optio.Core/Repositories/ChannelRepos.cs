@@ -114,10 +114,10 @@ namespace Optio.Core.Repositories
         {
             try
             {
-                var channel = await channels.AnyAsync(i => i.ChannelType == entity.ChannelType);
-                if (channel)
+                var channel = await channels.SingleOrDefaultAsync(i => i.ChannelType.ToLower() == entity.ChannelType.ToLower());
+                if (channel is not null)
                 {
-                    channels.Remove(entity);
+                    channels.Remove(channel);
                     await context.SaveChangesAsync();
                     return true;
                 }
@@ -166,7 +166,7 @@ namespace Optio.Core.Repositories
                 var channel = await channels.SingleOrDefaultAsync(i => i.Id == id);
                 if (channel != null)
                 {
-                    context.Entry(channel).CurrentValues.SetValues(entity);
+                    channel.ChannelType = entity.ChannelType;
                     await context.SaveChangesAsync();
                     return true;
                 }

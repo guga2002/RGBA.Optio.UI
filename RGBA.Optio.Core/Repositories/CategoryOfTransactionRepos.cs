@@ -133,14 +133,18 @@ namespace Optio.Core.Repositories
         {
             try
             {
-                var category = await categoriesOfTransactionRepos.Where(i => i.TransactionCategory == entity.TransactionCategory).SingleOrDefaultAsync();
-                if (category == null)
+                var category = await categoriesOfTransactionRepos.SingleOrDefaultAsync(i => i.TransactionCategory == entity.TransactionCategory);
+                var typeoftrans = await context.Types.SingleOrDefaultAsync(i=>i.Id== entity.TransactionTypeID);
+                if (category is null || typeoftrans is null)
                 {
-                    throw new InvalidOperationException("There is no such category");
+                    throw new InvalidOperationException("There is no such category||there is no type");
                 }
-                categoriesOfTransactionRepos.Remove(entity);
-                context.SaveChanges();
-                return true;
+                else
+                {
+                    categoriesOfTransactionRepos.Remove(category);
+                    context.SaveChanges();
+                    return true;
+                }
 
             }
             catch (Exception)
@@ -185,7 +189,8 @@ namespace Optio.Core.Repositories
                 }
                 else
                 {
-                    categoriesOfTransactionRepos.Entry(category).CurrentValues.SetValues(entity);
+                    category.TransactionCategory = entity.TransactionCategory;
+                    category.TransactionTypeID = entity.TransactionTypeID;
                     await context.SaveChangesAsync();
                     return true;
                 }

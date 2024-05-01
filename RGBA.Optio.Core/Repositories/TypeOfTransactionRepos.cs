@@ -77,7 +77,7 @@ namespace Optio.Core.Repositories
         {
             try
             {
-                var typ = await TypeOfTransaction.AsNoTracking().FirstOrDefaultAsync(io => io.Id == entity.Id);
+                var typ = await TypeOfTransaction.FirstOrDefaultAsync(io => io.TransactionName.ToLower() == entity.TransactionName.ToLower());
                 if (typ is not null)
                 {
                     TypeOfTransaction.Remove(typ);
@@ -97,7 +97,6 @@ namespace Optio.Core.Repositories
             try
             {
                 var typ = await TypeOfTransaction
-                    .AsNoTracking()
                     .FirstOrDefaultAsync(io => io.Id == id && io.IsActive);
 
                 if (typ is not null)
@@ -118,24 +117,21 @@ namespace Optio.Core.Repositories
         {
             try
             {
-                var existingEntity = await TypeOfTransaction.AsNoTracking().FirstOrDefaultAsync(io => io.Id == id);
-                if (existingEntity != null)
+                var existingEntity = await TypeOfTransaction.FirstOrDefaultAsync(io => io.Id == id);
+                if (existingEntity == null)
                 {
-                    context.Entry(existingEntity).CurrentValues.SetValues(entity);
-                    try
-                    {
-                        await context.SaveChangesAsync();
-                        return true;
-                    }
-                    catch (DbUpdateConcurrencyException ex)
-                    {
-                        var entry = ex.Entries.Single();
-                        var clientValues = (TypeOfTransaction)entry.Entity;
-                        entry.CurrentValues.SetValues(clientValues);
-                        throw;
-                    }
+                    throw new InvalidOperationException("There is no such Type of transaction");
                 }
-                return false;
+                else
+                {
+                    existingEntity.TransactionName = entity.TransactionName;
+                    await context.SaveChangesAsync();
+                    return true;
+                }
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                throw;
             }
             catch (Exception)
             {

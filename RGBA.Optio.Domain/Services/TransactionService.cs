@@ -15,7 +15,7 @@ namespace RGBA.Optio.Domain.Services
         {
         }
 
-        public async  Task<bool> AddAsync(TransactionModel entity)
+        public async  Task<long> AddAsync(TransactionModel entity)
         {
             try
             {
@@ -42,11 +42,11 @@ namespace RGBA.Optio.Domain.Services
                 var mapped = mapper.Map<Transaction>(entity);
                 if (mapped is not null)
                 {
-                    await work.TransactionRepository.AddAsync(mapped);
+                    var res=await work.TransactionRepository.AddAsync(mapped);
                     await work.CheckAndCommitAsync();
-                    return true;
+                    return res;
                 }
-                return false;
+                return -1;
             }
             catch (Exception exp)
             {

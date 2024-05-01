@@ -2,6 +2,6 @@
 {
     public interface IAddInfo<T> where T : class
     {
-        Task<bool> AddAsync(T entity);
+        Task<long> AddAsync(T entity);
     }
 }

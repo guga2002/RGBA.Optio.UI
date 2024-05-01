@@ -19,7 +19,7 @@ namespace Optio.Core.Repositories
         }
       
 
-        public async Task<bool> AddAsync(Location entity)
+        public async Task<long> AddAsync(Location entity)
         {
             try
             {
@@ -32,7 +32,8 @@ namespace Optio.Core.Repositories
                 {
                     await locations.AddAsync(entity);
                     await context.SaveChangesAsync();
-                    return true;
+                    var max = await locations.MaxAsync(io => io.Id);
+                    return max;
                 }
             }
             catch (Exception)

@@ -15,7 +15,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
         {
         }
 
-        public async Task<bool> AddAsync(ChanellModel entity)
+        public async Task<long> AddAsync(ChanellModel entity)
         {
             try
             {
@@ -30,7 +30,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
                     logger.LogInformation($"{entity.ChannelType} is successfully added", DateTime.Now.ToShortDateString());
                     return res;
                 }
-                return false;
+                return -1;
             }
             catch (Exception ex)
             {
@@ -39,7 +39,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
-        public async Task<bool> AddAsync(CategoryModel entity)
+        public async Task<long> AddAsync(CategoryModel entity)
         {
             try
             {
@@ -54,7 +54,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
                     logger.LogInformation($"{entity.TransactionCategory} is successfully added", DateTime.Now.ToShortDateString());
                     return res;
                 }
-                return false;
+                return -1;
 
             }
             catch (Exception ex)
@@ -64,7 +64,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
-        public async Task<bool> AddAsync(TransactionTypeModel entity)
+        public async Task<long> AddAsync(TransactionTypeModel entity)
         {
             try
             {
@@ -79,7 +79,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
                     logger.LogInformation($"{entity.TransactionName} is successfully added", DateTime.Now.ToShortDateString());
                     return res;
                 }
-                return false;
+                return -1;
             }
             catch (Exception ex)
             {

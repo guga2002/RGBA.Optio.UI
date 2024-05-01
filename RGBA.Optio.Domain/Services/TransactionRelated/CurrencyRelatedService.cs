@@ -22,7 +22,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
         {
         }
 
-        public async Task<bool> AddAsync(CurrencyModel entity)
+        public async Task<long> AddAsync(CurrencyModel entity)
         {
             try
             {
@@ -37,7 +37,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
                     logger.LogInformation($"{entity.NameOfValute} is successfully added", DateTime.Now.ToShortDateString());
                     return res;
                 }
-                return false;
+                return -1;
             }
             catch (Exception ex)
             {
@@ -46,7 +46,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
-        public async Task<bool> AddAsync(ValuteModel entity)
+        public async Task<long> AddAsync(ValuteModel entity)
         {
             try
             {
@@ -61,7 +61,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
                     logger.LogInformation($"{entity.CurrencyID} is successfully added", DateTime.Now.ToShortDateString());
                     return res;
                 }
-                return false;
+                return -1;
             }
             catch (Exception ex)
             {

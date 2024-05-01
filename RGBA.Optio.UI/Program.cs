@@ -16,6 +16,7 @@ using RGBA.Optio.Domain.Services;
 using RGBA.Optio.Domain.Services.TransactionRelated;
 using System.Text;
 using Microsoft.OpenApi.Models;
+using RGBA.Optio.Domain.Services.Outer_Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -69,6 +70,8 @@ builder.Services.AddScoped<ITransactionRelatedService, TransactionRelatedService
 
 
 builder.Services.AddSingleton<CacheService>();
+
+builder.Services.AddSingleton<SmtpService>();
 
 builder.Services.AddMemoryCache();
 

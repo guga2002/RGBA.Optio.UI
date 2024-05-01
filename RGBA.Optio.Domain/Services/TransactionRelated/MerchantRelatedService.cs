@@ -15,7 +15,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
         {
         }
 
-        public async Task<bool> AddAsync(MerchantModel entity)
+        public async Task<long> AddAsync(MerchantModel entity)
         {
             try
             {
@@ -30,7 +30,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
                     logger.LogInformation($"{entity.Name} is successfully added", DateTime.Now.ToShortDateString());
                     return res;
                 }
-                return false;
+                return -1;
             }
             catch (Exception ex)
             {
@@ -39,7 +39,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
-        public async Task<bool> AddAsync(locationModel entity)
+        public async Task<long> AddAsync(locationModel entity)
         {
             try
             {
@@ -54,7 +54,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
                     logger.LogInformation($"{entity.LocationName} is successfully added", DateTime.Now.ToShortDateString());
                     return res;
                 }
-                else { return false; }
+                else { return -1; }
 
             }
             catch (Exception ex)

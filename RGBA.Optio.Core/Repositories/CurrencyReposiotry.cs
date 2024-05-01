@@ -14,7 +14,7 @@ namespace RGBA.Optio.Core.Repositories
         {
             currencies = context.Set<Currency>();
         }
-        public async Task<bool> AddAsync(Currency entity)
+        public async Task<long> AddAsync(Currency entity)
         {
             try
             {
@@ -22,7 +22,8 @@ namespace RGBA.Optio.Core.Repositories
                 {
                     await currencies.AddAsync(entity);
                     await context.SaveChangesAsync();
-                    return true;
+                    var max = await currencies.MaxAsync(io => io.Id);
+                    return max;
                 }
                 else
                 {

@@ -15,7 +15,7 @@ namespace Optio.Core.Repositories
             TypeOfTransaction=context.Set<TypeOfTransaction>();
         }
 
-        public async Task<bool> AddAsync(TypeOfTransaction entity)
+        public async Task<long> AddAsync(TypeOfTransaction entity)
         {
             try
             {
@@ -23,9 +23,10 @@ namespace Optio.Core.Repositories
                 {
                     await TypeOfTransaction.AddAsync(entity);
                     await context.SaveChangesAsync();
-                    return true;
+                    var max = await TypeOfTransaction.MaxAsync(io => io.Id);
+                    return max;
                 }
-                return false;
+                return -1;
             }
             catch (Exception)
             {

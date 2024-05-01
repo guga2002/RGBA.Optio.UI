@@ -2,7 +2,6 @@
 using RGBA.Optio.Domain.Custom_Exceptions;
 using RGBA.Optio.Domain.Interfaces;
 using RGBA.Optio.Domain.Models;
-using System.Numerics;
 
 namespace RGBA.Optio.UI.Controllers
 {
@@ -30,7 +29,12 @@ namespace RGBA.Optio.UI.Controllers
                     
                 }
                 var res = await ser.AddAsync(entity);
-                return res == true ? Ok(res) : BadRequest(entity.ChannelType);
+                if(res !=-1)
+                {
+                    var link = Url.Link("DefaultApi", new { controller = "TransactionRelated", action = "GetChanellByIdAsync", id = res });
+                    return Created(link, res);
+                }
+                return BadRequest(entity);
             }
             catch (Exception exp)
             {
@@ -51,7 +55,7 @@ namespace RGBA.Optio.UI.Controllers
 
                 }
                 var res = await ser.AddAsync(entity);
-                return res == true ? Ok(res) : BadRequest(entity.TransactionCategory);
+                return res == -1 ? Ok(res) : BadRequest(entity.TransactionCategory);
             }
             catch (Exception exp)
             {
@@ -72,7 +76,7 @@ namespace RGBA.Optio.UI.Controllers
 
                 }
                 var res = await ser.AddAsync(entity);
-                return res == true ? Ok(res) : BadRequest(entity.TransactionName);
+                return res == -1 ? Ok(res) : BadRequest(entity.TransactionName);
             }
             catch (Exception exp)
             {
@@ -301,7 +305,7 @@ namespace RGBA.Optio.UI.Controllers
                 if(!ModelState.IsValid)
                 {
                     throw new OptioGeneralException("shecdoma gvaqvs");
-                }
+                 }
                 var res = await ser.SoftDeleteAsync(id, new ChanellModel() { ChannelType = "UNDEFINED" });
                 return res == true ? Ok(res) : BadRequest("No  data exist on this Id");
             }

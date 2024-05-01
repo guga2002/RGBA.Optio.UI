@@ -154,7 +154,7 @@ namespace RGBA.Optio.UI.Controllers
                 if(ModelState.IsValid&&value is not null)
                 {
                   var res= await ser.AddAsync(value);
-                   if(res)
+                   if(res != -1)
                     {
                         return Ok(res);
                     }
@@ -376,7 +376,7 @@ namespace RGBA.Optio.UI.Controllers
                 if (ModelState.IsValid && value is not null)
                 {
                     var res = await ser.AddAsync(value);
-                    if (res)
+                    if (res != -1)
                     {
                         return Ok(res);
                     }

@@ -40,15 +40,116 @@ namespace RGBA.Optio.Stream.SeedServices
         #region TypeOfTransaction
         public async Task<bool> FillTypeOfTransaction()
         {
-            await _uniteOfWork.TypeOfTransactionRepository.AddAsync(new TypeOfTransaction { TransactionName = "შემოსავალი" });
-            await _uniteOfWork.TypeOfTransactionRepository.AddAsync(new TypeOfTransaction { TransactionName = "ხარჯი" });
-            await _uniteOfWork.TypeOfTransactionRepository.AddAsync(new TypeOfTransaction { TransactionName = "გადარიცხვა საკუთარ ანგარიშზე" });
-            await _uniteOfWork.TypeOfTransactionRepository.AddAsync(new TypeOfTransaction { TransactionName = "განაღდება" });
-            await _uniteOfWork.TypeOfTransactionRepository.AddAsync(new TypeOfTransaction { TransactionName = "სხვასთან გადარიცხვა" });
+            await optioDB.Types.AddAsync(new TypeOfTransaction()
+            {
+                TransactionName = "შემოსავალი",
+                Category = new List<Category>()
+                {
+                    new Category()
+                    {
+                        IsActive = true,
+                        TransactionCategory="ხელფასი",
+                    },
+                      new Category()
+                    {
+                        IsActive = true,
+                        TransactionCategory="ბონუსი",
+                    },
+                        new Category()
+                    {
+                        IsActive = true,
+                        TransactionCategory="დივიდენტი",
+                    },
+                              new Category()
+                    {
+                        IsActive = true,
+                        TransactionCategory="სხვა შემოსავალი",
+                    },
+                }
+            });
+            await optioDB.SaveChangesAsync();
+            await optioDB.Types.AddAsync(new TypeOfTransaction()
+            {
+                TransactionName = "ხარჯი",
+                Category = new List<Category>()
+                {
+                    new Category()
+                    {
+                        IsActive = true,
+                        TransactionCategory="საყოფაცხოვრებო ხარჯი",
+                    },
+                      new Category()
+                    {
+                        IsActive = true,
+                        TransactionCategory="ტრანსპორტი",
+                    },
+                        new Category()
+                    {
+                        IsActive = true,
+                        TransactionCategory="კვება და სურსათი",
+                    },
+                              new Category()
+                    {
+                        IsActive = true,
+                        TransactionCategory="ტრანსპორტი",
+                    },
+                    new Category()
+                    {
+                        IsActive = true,
+                        TransactionCategory="კომუნალურები",
+                    },
+                       new Category()
+                    {
+                        IsActive = true,
+                        TransactionCategory="განათლება",
+                    },
+                }
+            });
+            await optioDB.SaveChangesAsync();
+            await optioDB.Types.AddAsync(new TypeOfTransaction()
+            {
+                TransactionName = "გადარიცხვა საკუთარ ანგარიშზე",
+                Category = new List<Category>()
+                {
+                    new Category()
+                    {
+                        IsActive = true,
+                        TransactionCategory="შიდა გადარიცხვა",
+                    },
+                }
+            });
+            await optioDB.SaveChangesAsync();
+            await optioDB.Types.AddAsync(new TypeOfTransaction()
+            {
+                TransactionName = "სხვასთან გადარიცხვა",
+                Category = new List<Category>()
+                {
+                    new Category()
+                    {
+                        IsActive = true,
+                        TransactionCategory="სხვა ბანკში გადარიცხვა",
+                    },
+                }
+            });
+            await optioDB.SaveChangesAsync();
+            await optioDB.Types.AddAsync(new TypeOfTransaction()
+            {
+                TransactionName = "განაღდება",
+                Category = new List<Category>()
+                {
+                    new Category()
+                    {
+                        IsActive = true,
+                        TransactionCategory="თანხის განაღდება",
+                    },
+                }
+            });
+            await optioDB.SaveChangesAsync();
             return true;
         }
         #endregion
 
+        #region InsertCurrencies
         public async Task  InsertCurrencies(List<CurrenciesResponse> cur)
         {
 
@@ -78,5 +179,6 @@ namespace RGBA.Optio.Stream.SeedServices
                 }
             }
         }
+        #endregion
     }
 }

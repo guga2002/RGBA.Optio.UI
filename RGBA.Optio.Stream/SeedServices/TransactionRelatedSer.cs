@@ -23,10 +23,12 @@ namespace RGBA.Optio.Stream.SeedServices
         #region channel
         public async Task<bool> fillChannel()
         {
-            await _uniteOfWork.ChanellRepository.AddAsync(new Channels { ChannelType="Piliali" });
-            await _uniteOfWork.ChanellRepository.AddAsync(new Channels { ChannelType = "Mobiluri banki" });
-            await _uniteOfWork.ChanellRepository.AddAsync(new Channels { ChannelType = "Internet banki" });
-            await _uniteOfWork.ChanellRepository.AddAsync(new Channels { ChannelType = "terminali" });
+            await _uniteOfWork.ChanellRepository.AddAsync(new Channels { ChannelType="ფილიალი" });
+            await _uniteOfWork.ChanellRepository.AddAsync(new Channels { ChannelType = "მობილური ინტერნეტ ბანკი" });
+            await _uniteOfWork.ChanellRepository.AddAsync(new Channels { ChannelType = "ინტერნეტ ბანკი" });
+            await _uniteOfWork.ChanellRepository.AddAsync(new Channels { ChannelType = "ტერმინალი" });
+            await _uniteOfWork.ChanellRepository.AddAsync(new Channels { ChannelType = "ნაღდი ანგარიშსწორება" });
+            await _uniteOfWork.ChanellRepository.AddAsync(new Channels { ChannelType = "განვადება" });
             return true;
         }
         #endregion
@@ -34,10 +36,11 @@ namespace RGBA.Optio.Stream.SeedServices
         #region TypeOfTransaction
         public async Task<bool> FillTypeOfTransaction()
         {
-            await _uniteOfWork.TypeOfTransactionRepository.AddAsync(new TypeOfTransaction { TransactionName = "Shemosavali" });
-            await _uniteOfWork.TypeOfTransactionRepository.AddAsync(new TypeOfTransaction { TransactionName = "Xarji" });
-            await _uniteOfWork.TypeOfTransactionRepository.AddAsync(new TypeOfTransaction { TransactionName = "Gadaricxva sakutar angarishebs shoris" });
-            await _uniteOfWork.TypeOfTransactionRepository.AddAsync(new TypeOfTransaction { TransactionName = "ganaghdeba" });
+            await _uniteOfWork.TypeOfTransactionRepository.AddAsync(new TypeOfTransaction { TransactionName = "შემოსავალი" });
+            await _uniteOfWork.TypeOfTransactionRepository.AddAsync(new TypeOfTransaction { TransactionName = "ხარჯი" });
+            await _uniteOfWork.TypeOfTransactionRepository.AddAsync(new TypeOfTransaction { TransactionName = "გადარიცხვა საკუთარ ანგარიშზე" });
+            await _uniteOfWork.TypeOfTransactionRepository.AddAsync(new TypeOfTransaction { TransactionName = "განაღდება" });
+            await _uniteOfWork.TypeOfTransactionRepository.AddAsync(new TypeOfTransaction { TransactionName = "სხვასთან გადარიცხვა" });
             return true;
         }
         #endregion

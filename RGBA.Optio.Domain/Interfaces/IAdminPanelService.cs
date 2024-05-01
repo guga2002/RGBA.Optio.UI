@@ -15,12 +15,12 @@ namespace RGBA.Optio.Domain.Interfaces
         Task<IdentityResult> AddRolesAsync(string RoleName);
         Task<IdentityResult> AssignRoleToUserAsync(string UserId, string Role);
         Task<IdentityResult> ResetPasswordAsync(PasswordResetModel arg,string username);
-        Task<bool> SignOutAsync();
+        Task<bool> SignOutAsync(string Username);
         Task<IdentityResult> DeleteUser(string id);
         Task<IEnumerable<RoleModel>> GetAllRoles();
         Task<IEnumerable<UserModel>> GetAllUser();
         Task<bool> isEmailConfirmed(string email);
-        Task<bool> ConfirmMail(string mail);
+        Task<bool> ConfirmMail(string Username,string mail);
         Task<bool> sendlinktouser(string name, string link);
         Task<bool> IsUserExist(string email);
     }

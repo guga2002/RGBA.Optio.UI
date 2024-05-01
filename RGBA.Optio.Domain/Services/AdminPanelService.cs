@@ -13,6 +13,7 @@ using RGBA.Optio.Domain.Models.RequestModels;
 using RGBA.Optio.Domain.Services.Outer_Services;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net.Mail;
+using System.Reflection.Metadata.Ecma335;
 using System.Security.Claims;
 using System.Text;
 
@@ -73,23 +74,27 @@ namespace RGBA.Optio.Domain.Services
             }
             return false;
         }
-        public async Task<bool> ConfirmMail(string mail)
+        public async Task<bool> ConfirmMail(string Username, string mail)
         {
-            if(await isEmailConfirmed(mail))
+            try
             {
-                throw new ArgumentException(" email already confirmed");
-            }
-            var res=await  userManager.FindByNameAsync(mail);
-            if (res is not null)
-            {
-                var token = await userManager.GenerateEmailConfirmationTokenAsync(res);
-                if (token is not null)
+                var user = await userManager.FindByNameAsync(Username);
+                if (user is not null&&user.UserName is not null)
                 {
-                    await userManager.ConfirmEmailAsync(res, token);
+                    if (await isEmailConfirmed(user.UserName))
+                    {
+                        return false;
+                    }
+                    await userManager.ConfirmEmailAsync(user, mail);
                     return true;
                 }
+                return false;
             }
-            return false;
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public async Task<bool> sendlinktouser(string name, string link)
@@ -249,9 +254,9 @@ namespace RGBA.Optio.Domain.Services
                     if (res.Succeeded)
                     {
                         var body = @"
-<!DOCTYPE html>
-<html lang='en'>
-<head>
+                    <!DOCTYPE html>
+                    <html lang='en'>
+                    <head>
     <meta charset='UTF-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
@@ -379,6 +384,11 @@ namespace RGBA.Optio.Domain.Services
                      </html>";
 
                     smtp.SendMessage(usr.Email, $"Security Alert: New Sign-in to Your RGBASOLUTION Account {DateTime.Now.ToShortTimeString()}", emailContent);
+                    await userManager.AddClaimAsync(usr, new Claim("Name", usr.Name));
+                    await userManager.AddClaimAsync(usr, new Claim("Surname", usr.Surname));
+                    await userManager.AddClaimAsync(usr, new Claim("PersonalNumber", usr.PersonalNumber));
+                    await userManager.AddClaimAsync(usr, new Claim("BirthDay", usr.BirthDate.ToShortDateString()));
+                    await userManager.AddLoginAsync(usr,new UserLoginInfo("JWT",GenerateJwtToken(usr.UserName),"Authorization"));
                 }
                 return (result, token);
             }
@@ -387,7 +397,7 @@ namespace RGBA.Optio.Domain.Services
                 await ClearPersistentCookieAsync();
             }
 
-            return (result, null);
+            return (null, null);
         }
         private string GenerateJwtToken(string username)
         {
@@ -421,18 +431,31 @@ namespace RGBA.Optio.Domain.Services
             await _httpContextAccessor.HttpContext.SignOutAsync(IdentityConstants.ApplicationScheme);
         }
 
-        public async Task<bool> SignOutAsync()
+        public async Task<bool> SignOutAsync(string Username)
         {
             try
             {
-                await signin.SignOutAsync();
-                return true;
+                var user = await userManager.FindByNameAsync(Username);
+                if (user is not null)
+                {
+                    await userManager.RemoveClaimsAsync(user, await userManager.GetClaimsAsync(user));
+                    await signin.SignOutAsync();
+                   var login=await  userManager.GetLoginsAsync(user);
+                    if (login is not null)
+                    {
+                        var first = login.FirstOrDefault();
+                        if (first is not null)
+                        {
+                            await userManager.RemoveLoginAsync(user, first.LoginProvider, first.ProviderKey);
+                        }
+                    }
+                    return true;
+                }
+                return false;
             }
             catch (Exception)
             {
-
                 throw;
-
             }
         }
 

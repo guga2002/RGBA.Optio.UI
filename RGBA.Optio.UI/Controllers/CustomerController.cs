@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using RGBA.Optio.Core.Entities;
 using RGBA.Optio.Domain.Custom_Exceptions;
 using RGBA.Optio.Domain.Interfaces;
 using RGBA.Optio.Domain.Models;
@@ -17,25 +19,26 @@ namespace RGBA.Optio.UI.Controllers
         private readonly IAdminPanelService ser;
         private readonly ILogger<CustomerController> log;
         private readonly SmtpService smtp;
-        public CustomerController(IAdminPanelService se, ILogger<CustomerController> log, SmtpService smtp)
+        private readonly UserManager<User> usermanager;
+        public CustomerController(IAdminPanelService se, ILogger<CustomerController> log, SmtpService smtp, UserManager<User> usermanager)
         {
             this.ser = se;
             this.log = log;
             this.smtp = smtp;
-
+            this.usermanager = usermanager;
         }
 
         [HttpGet]
         [Route("GetEmailVerification")]
         [ApiExplorerSettings(IgnoreApi = true)]// ar gamochndeba swaggershi
         [AllowAnonymous]
-        public async Task<IActionResult> GetEmailVerificationMessage([FromQuery] string UserName)
+        public async Task<IActionResult> GetEmailVerificationMessage([FromQuery] string? SecuritySchema)
         {
             try
             {
-                if (!await ser.isEmailConfirmed(UserName))
+                if (User is not null && User.Identity is not null && SecuritySchema is not null && User.Identity.Name is not null)
                 {
-                    var res = await ser.ConfirmMail(UserName);
+                    var res = await ser.ConfirmMail(User.Identity.Name, SecuritySchema);
                     if (res)
                     {
                         return Content("<div style='text-align: center;'><h1 style='color: green; font-weight: bold; font-size: 24px;'>Congratulations!</h1><p style='font-size: 16px;'>Your email has been verified successfully.</p></div>", "text/html");
@@ -44,7 +47,7 @@ namespace RGBA.Optio.UI.Controllers
                     return Content("<h1>somethings strange</h1>", "text/html");
                 }
                 else
-                { 
+                {
 
                     return Content("<div style='text-align: center;'><h1 style='color: red; font-weight: bold; font-size: 24px;'>The link has expired!</h1><p style='font-size: 16px;'>Please contact support for assistance.</p></div>", "text/html");
                 }
@@ -148,7 +151,8 @@ namespace RGBA.Optio.UI.Controllers
                   <div align='center' style='font-family: Arial, sans-serif;'>
                   <p style='font-size: 16px;'>გადადი ლინკზე რათა შეცვალო პაროლი:</p>
                  <p style='font-size: 16px;'>
-                 <a href='{link}' style='display: inline-block; padding: 10px 20px; background-color: #007bff; color: #ffffff; text-decoration: none; border-radius: 5px;'>შეცვალე პაროლი</a>
+                 <a href='{link}' style='display: inline-block; padding: 10px 20px; background-color: #007bff; color: #ffffff; text-decoration: none; border-radius: 5px;'>შეცვალე პაროლი
+                 </a>
                  </p>
                  <p style='font-size: 16px;'>ლინკი ვალიდურია 24 საათის განავლობაში</p>
                  <p style='font-size: 16px;'>ჩვენი ჯგუფი გიხდის მადლობას..</p>
@@ -263,9 +267,15 @@ namespace RGBA.Optio.UI.Controllers
                     {
                         throw new ArgumentException("Email is already  Verified");
                     }
-                    var link = Url.ActionLink("GetEmailVerificationMessage", "Customer", new { UserName = User.Identity.Name }, Request.Scheme);
-                    await ser.sendlinktouser(User.Identity.Name, link);
-                    return Ok(link);
+                    var user = await usermanager.FindByNameAsync(User.Identity.Name);
+                    if (user != null) {
+
+                       var rek= await usermanager.GenerateEmailConfirmationTokenAsync(user);
+                        var link = Url.ActionLink("GetEmailVerificationMessage", "Customer", new { SecuritySchema = rek}, Request.Scheme);
+                        await ser.sendlinktouser(User.Identity.Name, link);
+                        return Ok(link);
+                    }
+                    return BadRequest("somethings is bad");
                 }
                 else
                 {
@@ -286,9 +296,9 @@ namespace RGBA.Optio.UI.Controllers
         {
             try
             {
-                if(User.Identity is not null&&User.Identity.IsAuthenticated)
+                if(User.Identity is not null&&User.Identity.IsAuthenticated&&User.Identity.Name is not null)
                 {
-                    var res=await ser.SignOutAsync();
+                    var res=await ser.SignOutAsync(User.Identity.Name);
                     return Ok(res);
                 }
                 return Unauthorized(new AuthenticationHeaderValue("Bearer"));

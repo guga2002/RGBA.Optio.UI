@@ -3,6 +3,10 @@ using RGBA.Optio.Core.Interfaces;
 using Optio.Core.Entities;
 using RGBA.Optio.Stream.Interfaces;
 using Faker;
+using RGBA.Optio.Stream.DecerializerCLasses;
+using RGBA.Optio.Core.Entities;
+using Currency = RGBA.Optio.Core.Entities.Currency;
+using Microsoft.EntityFrameworkCore;
 
 namespace RGBA.Optio.Stream.SeedServices
 {
@@ -44,5 +48,35 @@ namespace RGBA.Optio.Stream.SeedServices
             return true;
         }
         #endregion
+
+        public async Task  InsertCurrencies(List<CurrenciesResponse> cur)
+        {
+
+            foreach (var currency in cur)
+            {
+                foreach (var Dgiuri in currency.Currencies)
+                {
+                    var curenc=await optioDB.Currencies.FirstOrDefaultAsync(io=>io.NameOfValute==Dgiuri.name);
+                    if (curenc is  null)
+                    {
+                        curenc = new Currency()
+                        {
+                            CurrencyCode = Dgiuri.code,
+                            NameOfValute = Dgiuri.name,
+                            IsActive = true,
+                        };
+                    }
+
+                    var valute = new ValuteCourse()
+                    {
+                        ExchangeRate = (decimal)Dgiuri.rate/Dgiuri.quantity,
+                        DateOfValuteCourse = currency.Date,
+                        Currency = curenc,
+                    };
+                    optioDB.ValuteCourses.Add(valute);
+                    await optioDB.SaveChangesAsync();
+                }
+            }
+        }
     }
 }

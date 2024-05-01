@@ -1,6 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson.IO;
+using RGBA.Optio.Stream.DecerializerCLasses;
 using RGBA.Optio.Stream.Interfaces;
+using System.Net.Http;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace RGBA.Optio.Stream.Controllers
 {
@@ -14,6 +19,36 @@ namespace RGBA.Optio.Stream.Controllers
         {
             this._merchantRelatedService = _merchantRelatedService;
             this.ITransactionRelatedSer = ITransactionRelatedSer;
+        }
+
+
+        [HttpGet]
+        [Route("ValuteCourse")]
+        public async Task LoadCurrencies()
+        {
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    var response = await client.GetAsync("https://nbg.gov.ge/gw/api/ct/monetarypolicy/currencies/en/json");
+                    response.EnsureSuccessStatusCode(); 
+                    var responseBody = await response.Content.ReadAsStringAsync();
+                    var currenciesResponse = Newtonsoft.Json.JsonConvert.DeserializeObject<List<CurrenciesResponse>>(responseBody);
+                     await ITransactionRelatedSer.InsertCurrencies(currenciesResponse);
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"HTTP request failed: {ex.Message}");
+            }
+            catch (JsonException ex)
+            {
+                Console.WriteLine($"JSON deserialization failed: {ex.Message}");
+            }
+            catch (Exception ex)
+            { 
+                Console.WriteLine($"An unexpected error occurred: {ex.Message}");
+            }
         }
 
         [HttpGet]

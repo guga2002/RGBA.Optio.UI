@@ -6,7 +6,7 @@ using System.Numerics;
 namespace Optio.Core.Entities
 {
     [Table("CategoryOfTransactions")]
-    [Index(nameof(TransactionCategory),IsUnique = true,IsDescending =new bool[]{true})]
+    [Index(nameof(TransactionCategory),IsDescending =new bool[]{true})]
     public class Category:AbstractClass
     {
 
@@ -17,7 +17,9 @@ namespace Optio.Core.Entities
 
         [ForeignKey("typeOfTransaction")]
         public long TransactionTypeID { get; set; }
+
         public TypeOfTransaction typeOfTransaction { get; set; }
+
         public virtual IEnumerable<Transaction> Transactions { get; set; }
     }
 }

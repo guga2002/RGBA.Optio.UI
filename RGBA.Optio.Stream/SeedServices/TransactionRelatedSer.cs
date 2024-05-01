@@ -43,11 +43,13 @@ namespace RGBA.Optio.Stream.SeedServices
             await optioDB.Types.AddAsync(new TypeOfTransaction()
             {
                 TransactionName = "შემოსავალი",
+              
                 Category = new List<Category>()
                 {
                     new Category()
                     {
                         IsActive = true,
+
                         TransactionCategory="ხელფასი",
                     },
                       new Category()
@@ -92,6 +94,7 @@ namespace RGBA.Optio.Stream.SeedServices
                     {
                         IsActive = true,
                         TransactionCategory="ტრანსპორტი",
+                        TransactionTypeID=1,
                     },
                     new Category()
                     {
@@ -115,6 +118,7 @@ namespace RGBA.Optio.Stream.SeedServices
                     {
                         IsActive = true,
                         TransactionCategory="შიდა გადარიცხვა",
+                        TransactionTypeID=1,
                     },
                 }
             });
@@ -128,7 +132,8 @@ namespace RGBA.Optio.Stream.SeedServices
                     {
                         IsActive = true,
                         TransactionCategory="სხვა ბანკში გადარიცხვა",
-                    },
+                        TransactionTypeID=1
+                    }
                 }
             });
             await optioDB.SaveChangesAsync();
@@ -141,6 +146,7 @@ namespace RGBA.Optio.Stream.SeedServices
                     {
                         IsActive = true,
                         TransactionCategory="თანხის განაღდება",
+                        TransactionTypeID=1
                     },
                 }
             });

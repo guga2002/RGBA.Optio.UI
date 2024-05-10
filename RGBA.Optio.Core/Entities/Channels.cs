@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Optio.Core.Entities
 {
     [Table("Channels")]
-    [Index(nameof(ChannelType),IsUnique =true,IsDescending =new bool[] {true})]
+    [Index(nameof(ChannelType),IsDescending =new bool[] {true})]
     public class Channels:AbstractClass
     {
         [Column("Channel_Type")]

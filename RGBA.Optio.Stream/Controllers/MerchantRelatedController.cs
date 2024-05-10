@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson.IO;
-using RGBA.Optio.Stream.DecerializerCLasses;
+using RGBA.Optio.Stream.DecerializerClasses;
 using RGBA.Optio.Stream.Interfaces;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -34,7 +34,7 @@ namespace RGBA.Optio.Stream.Controllers
                     response.EnsureSuccessStatusCode(); 
                     var responseBody = await response.Content.ReadAsStringAsync();
                     var currenciesResponse = Newtonsoft.Json.JsonConvert.DeserializeObject<List<CurrenciesResponse>>(responseBody);
-                     await ITransactionRelatedSer.InsertCurrencies(currenciesResponse);
+                    await ITransactionRelatedSer.InsertCurrencies(currenciesResponse);
                 }
             }
             catch (HttpRequestException ex)
@@ -89,6 +89,13 @@ namespace RGBA.Optio.Stream.Controllers
             return Ok();
         }
 
+        [HttpGet]
+        [Route("Transaction")]
+        public async Task<IActionResult> FillTransactions([FromQuery]int n)
+        {
+            await ITransactionRelatedSer.FillTransactions(n);
+            return Ok();
+        }
 
     }
 }

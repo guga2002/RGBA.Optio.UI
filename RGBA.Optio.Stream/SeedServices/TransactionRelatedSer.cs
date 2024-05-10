@@ -2,8 +2,7 @@
 using RGBA.Optio.Core.Interfaces;
 using Optio.Core.Entities;
 using RGBA.Optio.Stream.Interfaces;
-using Faker;
-using RGBA.Optio.Stream.DecerializerCLasses;
+using RGBA.Optio.Stream.DecerializerClasses;
 using RGBA.Optio.Core.Entities;
 using Currency = RGBA.Optio.Core.Entities.Currency;
 using Microsoft.EntityFrameworkCore;
@@ -184,6 +183,61 @@ namespace RGBA.Optio.Stream.SeedServices
                     await optioDB.SaveChangesAsync();
                 }
             }
+        }
+        #endregion
+
+        #region FillTransactions
+        public async Task<bool> FillTransactions(int n)
+        {
+            var category= await optioDB.CategoryOfTransactions.ToListAsync();
+            var merchants=await optioDB.Merchants.ToListAsync();
+            var channel = await optioDB.Channels.ToListAsync();
+            var currency = await optioDB.Currencies.ToListAsync();
+            for (var i = 0; i < n; i++)
+            {
+                var categoryIndex = rand.Next(0, (int)category.Max(i => i.Id));
+                if(!await optioDB.CategoryOfTransactions.AnyAsync(i => i.Id == categoryIndex))
+                {
+                    i--;
+                    continue;
+                }
+                var merchantIndex = rand.Next(0, (int)merchants.Max(i => i.Id));
+                if (!await optioDB.Merchants.AnyAsync(i => i.Id == merchantIndex))
+                {
+                    i--;
+                    continue;
+                }
+                var channelIndex = rand.Next(0, (int)channel.Max(i => i.Id));
+                if (!await optioDB.Channels.AnyAsync(i => i.Id == channelIndex))
+                {
+                    i--;
+                    continue;
+                }
+                
+                var currencyIndex = rand.Next(0, (int)currency.Max(i => i.Id));
+                var currencyIn = await optioDB.Currencies.Where(i => i.Id == currencyIndex).Include(i=>i.Courses).FirstOrDefaultAsync();
+                if (currencyIn is null)
+                {
+                    i--;
+                    continue;
+                }
+
+                var trans = new Transaction
+                {
+                    Date = DateTime.Now,
+                    Amount = rand1.Next(10000),
+                    AmountEquivalent = 0,
+                    CurrencyId = currencyIndex,
+                    CategoryId = categoryIndex,
+                    MerchantId = merchantIndex,
+                    ChannelId = channelIndex
+                };
+
+                trans.AmountEquivalent = trans.Amount * currencyIn.Courses.OrderByDescending(i => i.DateOfValuteCourse).FirstOrDefault().ExchangeRate;
+                await optioDB.Transactions.AddAsync(trans);
+                await optioDB.SaveChangesAsync();
+            }
+            return true;
         }
         #endregion
     }

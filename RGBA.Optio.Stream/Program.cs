@@ -32,7 +32,7 @@ builder.Services.AddSwaggerGen(opt =>
         Type = SecuritySchemeType.ApiKey,
         Name = "Authorization",
         In = ParameterLocation.Header,
-        Description = "Enter  YOu token there, 'Bearer {token}'"
+        Description = "Enter  You token there, 'Bearer {token}'"
     });
     opt.AddSecurityRequirement(new OpenApiSecurityRequirement
 {

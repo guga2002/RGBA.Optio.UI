@@ -7,7 +7,7 @@ namespace RGBA.Optio.Core.Entities
 {
     [Table("Curencies")]
     [Index(nameof(NameOfValute),IsDescending =new bool[]{true})]
-    [Index(nameof(CurrencyCode),IsUnique =true,IsDescending =new bool[] { true })]
+    [Index(nameof(CurrencyCode),IsDescending =new bool[] { true })]
     public class Currency
     {
         [Key]

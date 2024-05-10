@@ -6,6 +6,7 @@ using RGBA.Optio.Stream.Interfaces;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using System.Diagnostics;
 
 namespace RGBA.Optio.Stream.Controllers
 {
@@ -93,9 +94,35 @@ namespace RGBA.Optio.Stream.Controllers
         [Route("Transaction")]
         public async Task<IActionResult> FillTransactions([FromQuery]int n)
         {
+            Stopwatch st = new Stopwatch();
+            st.Start();
             await ITransactionRelatedSer.FillTransactions(n);
-            return Ok();
+            st.Stop();
+            return Ok(st.ElapsedMilliseconds);
+        }
+        [HttpGet]
+        [Route("TransactionFillBoolk")]
+        public async Task<IActionResult> FillTransactionsboolk([FromQuery] int n)
+        {
+            Stopwatch st = new Stopwatch();
+            st.Start();
+            await ITransactionRelatedSer.FillTransactionsBulk(n);
+            st.Stop();
+            return Ok(st.ElapsedMilliseconds);
         }
 
+        [HttpGet]
+        [Route("AllTransactionsWithdapper")]
+        public async Task<IActionResult> Getall()
+        {
+            return Ok(await ITransactionRelatedSer.GetAllTransactions());
+        }
+
+        [HttpGet]
+        [Route("AllTransactions")]
+        public async Task<IActionResult> GetallW()
+        {
+            return Ok(await ITransactionRelatedSer.GetAllTransactionsWithoutDapper());
+        }
     }
 }

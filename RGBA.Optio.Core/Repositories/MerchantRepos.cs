@@ -1,9 +1,16 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Azure;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using MongoDB.Driver.Core.Configuration;
 using Optio.Core.Data;
 using Optio.Core.Entities;
 using Optio.Core.Interfaces;
 using RGBA.Optio.Core.Entities;
+using System.Data;
+using System.Data.SqlClient; // Or your preferred ADO.NET provider
+using Dapper;
+using Microsoft.Extensions.Configuration;
 
 
 namespace Optio.Core.Repositories
@@ -11,10 +18,12 @@ namespace Optio.Core.Repositories
     public class MerchantRepos : AbstractClass, IMerchantRepo
     {
         private readonly DbSet<Merchant> merchant;
+        private readonly IConfiguration conf;
 
-        public MerchantRepos(OptioDB optioDB):base(optioDB)
+        public MerchantRepos(OptioDB optioDB, IConfiguration conf):base(optioDB)
         {
             merchant = context.Set<Merchant>(); 
+            this.conf= conf;
         }
       
         public async Task<bool> AssignLocationtoMerchant(long Merchantid,long Locationid)
@@ -23,12 +32,11 @@ namespace Optio.Core.Repositories
             {
                 if(await merchant.AnyAsync(io=>io.Id==Merchantid)&&await context.Locations.AnyAsync(io=>io.Id==Locationid))
                 {
-                    await context.LoactionTomerchant.AddAsync(new LocationToMerchant()
+                    using (IDbConnection db = new SqlConnection(conf.GetConnectionString("OptiosString")))
                     {
-                        LocatrionId = Locationid,
-                        merchantId = Merchantid,
-                    });
-                    await context.SaveChangesAsync();
+                        string sqlQuery = "INSERT INTO LocationToMerchants (LocatrionId, merchantId) VALUES (@LocatrionId, @merchantId)";
+                        await db.ExecuteAsync(sqlQuery, new { LocatrionId = Locationid, merchantId = Merchantid });
+                    }
                     return true;
                 }
                 return false;
@@ -36,6 +44,29 @@ namespace Optio.Core.Repositories
             catch (Exception)
             {
 
+                throw;
+            }
+        }
+
+        public async Task<List<Transaction>> getalltransactions()
+        {
+            try
+            {
+                using (IDbConnection db = new SqlConnection(conf.GetConnectionString("OptiosString")))
+                {
+
+                    string sqlQuery ="SELECT Date_Of_Transaction AS Date, Amount, Amount_Equivalent as AmountEquivalent, Transaction_Status AS IsActive, CurrencyId, CategoryId, MerchantId, ChannelId FROM Transactions";
+                    var transactions = await db.QueryAsync<Transaction>(sqlQuery);
+
+                    return transactions.ToList<Transaction>();
+                }
+            }
+            catch (SqlException ex)
+            { 
+                throw;
+            }
+            catch (Exception ex)
+            {
                 throw;
             }
         }

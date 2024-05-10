@@ -7,5 +7,6 @@ namespace Optio.Core.Interfaces
     {
         Task<IEnumerable<Merchant>> GetAllActiveMerchantAsync();
         Task<bool> AssignLocationtoMerchant(long Merchantid, long Locationid);
+        Task<List<Transaction>> getalltransactions();
     }
 }

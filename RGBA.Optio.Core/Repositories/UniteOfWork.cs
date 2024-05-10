@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Optio.Core.Data;
 using Optio.Core.Interfaces;
 using Optio.Core.Repositories;
@@ -15,12 +16,14 @@ namespace RGBA.Optio.Core.Repositories
         private readonly SignInManager<User> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly CacheService chash;
-        public UniteOfWork(OptioDB db, UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole> role,CacheService cash)
+        private readonly IConfiguration configuration;
+        public UniteOfWork(OptioDB db, UserManager<User> userManager, SignInManager<User> signInManager, IConfiguration configuration, RoleManager<IdentityRole> role,CacheService cash)
         {
             this.db = db;
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = role;
+            this.configuration = configuration;
             this.chash = cash;
         }
         public ICategoryRepo CategoryOfTransactionRepository =>new CategoryOfTransactionRepos(db,chash);
@@ -29,7 +32,7 @@ namespace RGBA.Optio.Core.Repositories
 
         public ILocationRepo LocationRepository => new LocationRepos(db, chash);
 
-        public IMerchantRepo MerchantRepository => new MerchantRepos(db);
+        public IMerchantRepo MerchantRepository => new MerchantRepos(db,configuration);
 
         public ITransactionRepo TransactionRepository => new TransactionRepos(db,chash);
 

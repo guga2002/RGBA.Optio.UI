@@ -9,6 +9,7 @@ namespace RGBA.Optio.Domain.Models.ResponseModels
     public class TranscationQuantitiesWithDateModel
     {
         public DateTime Date {  get; set; }
-        public long Quantity {  get; set; }
+
+        public decimal SubTotal { get; set; }
     }
 }

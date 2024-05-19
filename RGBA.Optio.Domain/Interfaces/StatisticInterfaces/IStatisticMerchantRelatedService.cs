@@ -1,5 +1,4 @@
-﻿using RGBA.Optio.Domain.Models;
-using RGBA.Optio.Domain.Models.ResponseModels;
+﻿using RGBA.Optio.Domain.Models.ResponseModels;
 
 namespace RGBA.Optio.Domain.Interfaces.StatisticInterfaces
 {

@@ -3,7 +3,6 @@ using Optio.Core.Data;
 using Optio.Core.Entities;
 using Optio.Core.Interfaces;
 using RGBA.Optio.Core.PerformanceImprovmentServices;
-using System.Numerics;
 
 namespace Optio.Core.Repositories
 {
@@ -115,22 +114,13 @@ namespace Optio.Core.Repositories
         {
             try
             {
-                var channel = await channels.SingleOrDefaultAsync(i => i.ChannelType.ToLower() == entity.ChannelType.ToLower());
-                if (channel is not null)
-                {
-                    channels.Remove(channel);
-                    await context.SaveChangesAsync();
-                    return true;
-                }
-                else
-                {
-                    throw new InvalidOperationException("No similar channel found");
-                }
-
+                ArgumentNullException.ThrowIfNull(entity, nameof(entity));
+                channels.Remove(entity);
+                await context.SaveChangesAsync();
+                return true;
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -140,8 +130,8 @@ namespace Optio.Core.Repositories
         {
             try
             {
-                var channel = await channels.SingleOrDefaultAsync(i => i.Id == id);
-                if (channel != null)
+                var channel = await channels.FindAsync(id);
+                if (channel is not null)
                 {
                     channel.IsActive = false;
                     await context.SaveChangesAsync();
@@ -164,8 +154,9 @@ namespace Optio.Core.Repositories
         {
             try
             {
-                var channel = await channels.SingleOrDefaultAsync(i => i.Id == id);
-                if (channel != null)
+                ArgumentNullException.ThrowIfNull(entity,nameof(entity));
+                var channel = await channels.FindAsync(id);
+                if (channel is not null)
                 {
                     channel.ChannelType = entity.ChannelType;
                     await context.SaveChangesAsync();
@@ -177,7 +168,7 @@ namespace Optio.Core.Repositories
                 }
 
             }
-            catch (DbUpdateConcurrencyException ex)
+            catch (DbUpdateConcurrencyException)
             {
                 throw;
             }

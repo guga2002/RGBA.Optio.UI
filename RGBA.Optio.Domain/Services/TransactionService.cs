@@ -5,7 +5,6 @@ using RGBA.Optio.Core.Interfaces;
 using RGBA.Optio.Domain.Custom_Exceptions;
 using RGBA.Optio.Domain.Interfaces;
 using RGBA.Optio.Domain.Models;
-using System.Numerics;
 
 namespace RGBA.Optio.Domain.Services
 {
@@ -123,13 +122,14 @@ namespace RGBA.Optio.Domain.Services
             }
         }
 
-        public  async Task<bool> RemoveAsync(TransactionModel entity)
+        public  async Task<bool> RemoveAsync(long Id, TransactionModel Identity)
         {
             try
             {
-                if (entity is not null)
+                var transac = await work.TransactionRepository.GetByIdAsync(Id);
+                if (transac is not null)
                 {
-                    var mapped = mapper.Map<Transaction>(entity);
+                    var mapped = mapper.Map<Transaction>(transac);
                     if (mapped is not null)
                     {
                         var res = await work.TransactionRepository.RemoveAsync(mapped);
@@ -137,7 +137,7 @@ namespace RGBA.Optio.Domain.Services
                         return res;
                     }
                 }
-                throw new ResourceNotFoundException("No data exist  on this transaction in DB");
+                return false;
             }
             catch (Exception exp)
             {

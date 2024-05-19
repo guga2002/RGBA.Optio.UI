@@ -27,24 +27,21 @@ namespace RGBA.Optio.UI.Controllers
             try
             {
                 string cacheKey = "GetAllMerchantsKey";
-                if (ModelState.IsValid)
+
+                if (cache.TryGetValue(cacheKey, out IEnumerable<MerchantModel>? cachedData))
                 {
-                    if (cache.TryGetValue(cacheKey, out IEnumerable<MerchantModel>? cachedData))
-                    {
-                        return Ok(cachedData);
-                    }
-                    else
-                    {
-                        var res = await ser.GetAllAsync(new MerchantModel() { Name="Undefined",});
-                        if (!res.Any())
-                        {
-                            return NotFound();
-                        }
-                        cache.Set(cacheKey, res, TimeSpan.FromMinutes(20));
-                        return Ok(res);
-                    }
+                    return Ok(cachedData);
                 }
-                return BadRequest();
+                else
+                {
+                    var res = await ser.GetAllAsync(new MerchantModel() { Name = "Undefined", });
+                    if (!res.Any())
+                    {
+                        return NotFound();
+                    }
+                    cache.Set(cacheKey, res, TimeSpan.FromMinutes(20));
+                    return Ok(res);
+                }
             }
             catch (Exception exp)
             {
@@ -55,8 +52,8 @@ namespace RGBA.Optio.UI.Controllers
 
 
         [HttpPost]
-        [Route("Merchant/{Merchantid}/Location/{Locationid}")]
-        public async Task<IActionResult> AssignLocationtoMerchant(long Merchantid, long Locationid)
+        [Route("Merchant/{Merchantid:long}/Location/{Locationid:long}")]
+        public async Task<IActionResult> AssignLocationtoMerchant([FromRoute]long Merchantid,[FromRoute] long Locationid)
         {
             try
             {
@@ -81,26 +78,22 @@ namespace RGBA.Optio.UI.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
-                {
-                    string cacheKey = "GetAllActiveMerchantsKey";
+                string cacheKey = "GetAllActiveMerchantsKey";
 
-                    if (cache.TryGetValue(cacheKey, out IEnumerable<MerchantModel>? cachedData))
-                    {
-                        return Ok(cachedData);
-                    }
-                    else
-                    {
-                        var res = await ser.GetAllActiveAsync(new MerchantModel() { Name = "Undefined" });
-                        if (!res.Any())
-                        {
-                            return NotFound();
-                        }
-                        cache.Set(cacheKey, res, TimeSpan.FromMinutes(20));
-                        return Ok(res);
-                    }
+                if (cache.TryGetValue(cacheKey, out IEnumerable<MerchantModel>? cachedData))
+                {
+                    return Ok(cachedData);
                 }
-                return BadRequest();
+                else
+                {
+                    var res = await ser.GetAllActiveAsync(new MerchantModel() { Name = "Undefined" });
+                    if (!res.Any())
+                    {
+                        return NotFound();
+                    }
+                    cache.Set(cacheKey, res, TimeSpan.FromMinutes(20));
+                    return Ok(res);
+                }
             }
             catch (Exception exp)
             {
@@ -111,32 +104,28 @@ namespace RGBA.Optio.UI.Controllers
 
 
         [HttpGet]
-        [Route("{id}")]
-        public async Task<IActionResult> Get(long id)
+        [Route("{id:long}")]
+        public async Task<IActionResult> Get([FromRoute] long id)
         {
             try
             {
-                if (ModelState.IsValid)
-                {
-                    string cashedkey = $"GetValueById{id}";
 
-                    if(cache.TryGetValue(cashedkey,out MerchantModel? Value))
-                    {
-                        return Ok(Value);
-                    }
-                    else
-                    {
-                        var res = await ser.GetByIdAsync(id, new MerchantModel() { Name = "Undefined" });
-                        if (res is null)
-                        {
-                            return NotFound();
-                        }
-                        cache.Set(cashedkey, res, TimeSpan.FromMinutes(20));
-                        return Ok(res);
-                    }
-                   
+                string cashedkey = $"GetValueById{id}";
+
+                if (cache.TryGetValue(cashedkey, out MerchantModel? Value))
+                {
+                    return Ok(Value);
                 }
-                return BadRequest(id);
+                else
+                {
+                    var res = await ser.GetByIdAsync(id, new MerchantModel() { Name = "Undefined" });
+                    if (res is null)
+                    {
+                        return NotFound();
+                    }
+                    cache.Set(cashedkey, res, TimeSpan.FromMinutes(20));
+                    return Ok(res);
+                }
             }
             catch (Exception exp)
             {
@@ -171,8 +160,8 @@ namespace RGBA.Optio.UI.Controllers
 
 
         [HttpPut]
-        [Route("{id}")]
-        public async Task<IActionResult> Update(long id, [FromBody] MerchantModel value)
+        [Route("{id:long}")]
+        public async Task<IActionResult> Update([FromRoute] long id, [FromBody] MerchantModel value)
         {
             try
             {
@@ -196,22 +185,18 @@ namespace RGBA.Optio.UI.Controllers
 
 
         [HttpPost]
-        [Route("[action]/{id}")]
-        public async Task<IActionResult>  Delete(long id)
+        [Route("[action]/{id:long}")]
+        public async Task<IActionResult>  Delete([FromRoute] long id)
         {
 
             try
             {
-                if (ModelState.IsValid )
+                var res = await ser.SoftDeleteAsync(id, new MerchantModel() { Name = "Undefined" });
+                if (res)
                 {
-                    var res = await ser.SoftDeleteAsync(id,new MerchantModel() { Name = "Undefined" });
-                    if (res)
-                    {
-                        return Ok(res);
-                    }
-                    return StatusCode(405, "SOmethings unusual");
+                    return Ok(res);
                 }
-                return BadRequest(id);
+                return StatusCode(405, "Somethings unusual");
             }
             catch (Exception exp)
             {
@@ -222,17 +207,13 @@ namespace RGBA.Optio.UI.Controllers
 
 
         [HttpDelete]
-        [Route("merchant")]
-        public async Task<IActionResult> Deletemerchant([FromBody]MerchantModel mod)
+        [Route("merchant/{id:long}")]
+        public async Task<IActionResult> Deletemerchant([FromRoute]long id)
         {
             try
             {
-                if(!ModelState.IsValid)
-                {
-                    throw new OptioGeneralException(mod.Name);
-                }
-                var res =await ser.RemoveAsync(mod);
-                return res == true ? Ok(mod) : BadRequest(mod);
+                var res =await ser.RemoveAsync(id,new locationModel() { LocationName="undefined"});
+                return res == true ? Ok("success") : BadRequest("somethings went wrong");
             }
             catch (Exception exp)
             {
@@ -244,17 +225,13 @@ namespace RGBA.Optio.UI.Controllers
 
         //locationEndpoints
         [HttpDelete]
-        [Route("location")]
-        public async Task<IActionResult> DeleteLocation([FromBody]locationModel mod)
+        [Route("location/{id:long}")]
+        public async Task<IActionResult> DeleteLocation([FromRoute]long id)
         {
             try
             {
-                if (!ModelState.IsValid)
-                {
-                    throw new OptioGeneralException(mod.LocationName);
-                }
-                var res = await ser.RemoveAsync(mod);
-                return res == true ? Ok(mod) : BadRequest(mod);
+                var res = await ser.RemoveAsync(id,new locationModel() { LocationName="Undefined"});
+                return res == true ? Ok("succesfully deleted") : BadRequest("soemthings went wrong");
             }
             catch (Exception exp)
             {
@@ -270,25 +247,21 @@ namespace RGBA.Optio.UI.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
+                string cashedkey = "GetLocation";
+                if (cache.TryGetValue(cashedkey, out IEnumerable<locationModel>? mod))
                 {
-                    string cashedkey = "GetLocation";
-                    if (cache.TryGetValue(cashedkey, out IEnumerable<locationModel>? mod))
-                    {
-                        return Ok(mod);
-                    }
-                    else
-                    {
-                        var res = await ser.GetAllAsync(new locationModel() { LocationName = "Undefined" });
-                        if (!res.Any())
-                        {
-                            return NotFound();
-                        }
-                        cache.Set(cashedkey, res, TimeSpan.FromMinutes(15));
-                        return Ok(res);
-                    }
+                    return Ok(mod);
                 }
-                return BadRequest();
+                else
+                {
+                    var res = await ser.GetAllAsync(new locationModel() { LocationName = "Undefined" });
+                    if (!res.Any())
+                    {
+                        return NotFound();
+                    }
+                    cache.Set(cashedkey, res, TimeSpan.FromMinutes(15));
+                    return Ok(res);
+                }
             }
             catch (Exception exp)
             {
@@ -304,26 +277,22 @@ namespace RGBA.Optio.UI.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
-                {
-                    var cashed = "GetAllActiveLocation";
+                var cashed = "GetAllActiveLocation";
 
-                    if (cache.TryGetValue(cashed, out IEnumerable<locationModel>? loc))
-                    {
-                        return Ok(loc);
-                    }
-                    else
-                    {
-                        var res = await ser.GetAllActiveAsync(new locationModel() { LocationName = "Undefined" });
-                        if (!res.Any())
-                        {
-                            return NotFound();
-                        }
-                        cache.Set(cashed, res, TimeSpan.FromMinutes(15));
-                        return Ok(res);
-                    }
+                if (cache.TryGetValue(cashed, out IEnumerable<locationModel>? loc))
+                {
+                    return Ok(loc);
                 }
-                return BadRequest();
+                else
+                {
+                    var res = await ser.GetAllActiveAsync(new locationModel() { LocationName = "Undefined" });
+                    if (!res.Any())
+                    {
+                        return NotFound();
+                    }
+                    cache.Set(cashed, res, TimeSpan.FromMinutes(15));
+                    return Ok(res);
+                }
             }
             catch (Exception exp)
             {
@@ -334,30 +303,26 @@ namespace RGBA.Optio.UI.Controllers
 
 
         [HttpGet]
-        [Route("Location/{id}")]
-        public async Task<IActionResult> GetLocation(long id)
+        [Route("Location/{id:long}")]
+        public async Task<IActionResult> GetLocation([FromRoute] long id)
         {
             try
             {
-                if (ModelState.IsValid)
+                var cashedkey = $"getalllocationbyid{id}";
+                if (cache.TryGetValue(cashedkey, out locationModel? mod))
                 {
-                    var cashedkey = $"getalllocationbyid{id}";
-                    if (cache.TryGetValue(cashedkey, out locationModel? mod))
-                    {
-                        return Ok(mod);
-                    }
-                    else
-                    {
-                        var res = await ser.GetByIdAsync(id, new locationModel() { LocationName = "Undefined" });
-                        if (res is not null)
-                        {
-                            return NotFound();
-                        }
-                        cache.Set(cashedkey, res, TimeSpan.FromMinutes(15));
-                        return Ok(res);
-                    }
+                    return Ok(mod);
                 }
-                return BadRequest(id);
+                else
+                {
+                    var res = await ser.GetByIdAsync(id, new locationModel() { LocationName = "Undefined" });
+                    if (res is not null)
+                    {
+                        return NotFound();
+                    }
+                    cache.Set(cashedkey, res, TimeSpan.FromMinutes(15));
+                    return Ok(res);
+                }
             }
             catch (Exception exp)
             {
@@ -393,8 +358,8 @@ namespace RGBA.Optio.UI.Controllers
 
 
         [HttpPut]
-        [Route("Location/{id}")]
-        public async Task<IActionResult> Update(long id, [FromBody] locationModel value)
+        [Route("Location/{id:long}")]
+        public async Task<IActionResult> Update([FromRoute]long id, [FromBody] locationModel value)
         {
             try
             {
@@ -418,22 +383,18 @@ namespace RGBA.Optio.UI.Controllers
 
 
         [HttpPost]
-        [Route("[action]/{id}")]
-        public async Task<IActionResult> DeleteLocation(long id)
+        [Route("[action]/{id:long}")]
+        public async Task<IActionResult> DeleteLocationSoft([FromRoute]long id)
         {
 
             try
             {
-                if (ModelState.IsValid)
+                var res = await ser.SoftDeleteAsync(id, new locationModel() { LocationName = "Undefined" });
+                if (res)
                 {
-                    var res = await ser.SoftDeleteAsync(id, new locationModel() { LocationName = "Undefined" });
-                    if (res)
-                    {
-                        return Ok(res);
-                    }
-                    return StatusCode(405, "Somethings unusual");
+                    return Ok(res);
                 }
-                return BadRequest(id);
+                return StatusCode(405, "Somethings unusual");
             }
             catch (Exception exp)
             {

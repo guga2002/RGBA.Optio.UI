@@ -134,23 +134,14 @@ namespace Optio.Core.Repositories
         {
             try
             {
-                var category = await categoriesOfTransactionRepos.SingleOrDefaultAsync(i => i.TransactionCategory == entity.TransactionCategory);
-                var typeoftrans = await context.Types.SingleOrDefaultAsync(i=>i.Id== entity.TransactionTypeID);
-                if (category is null || typeoftrans is null)
-                {
-                    throw new InvalidOperationException("There is no such category||there is no type");
-                }
-                else
-                {
-                    categoriesOfTransactionRepos.Remove(category);
-                    context.SaveChanges();
-                    return true;
-                }
+                ArgumentNullException.ThrowIfNull(entity,nameof(entity));
+                categoriesOfTransactionRepos.Remove(entity);
+                await context.SaveChangesAsync();
+                return true;
 
             }
             catch (Exception)
             {
-
                 throw;
             }
 
@@ -161,8 +152,8 @@ namespace Optio.Core.Repositories
         {
             try
             {
-                var category = await categoriesOfTransactionRepos.SingleOrDefaultAsync(i => i.Id == id);
-                if (category == null)
+                var category = await categoriesOfTransactionRepos.FindAsync(id);
+                if (category is null)
                 {
                     throw new InvalidOperationException("There is no such category");
                 }
@@ -173,7 +164,6 @@ namespace Optio.Core.Repositories
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -183,8 +173,9 @@ namespace Optio.Core.Repositories
         {
             try
             {
-                var category = await categoriesOfTransactionRepos.SingleOrDefaultAsync(i => i.Id == id);
-                if (category == null)
+                ArgumentNullException.ThrowIfNull(entity,nameof(entity));
+                var category = await categoriesOfTransactionRepos.FindAsync(id);
+                if (category is null)
                 {
                     throw new InvalidOperationException("There is no such category");
                 }

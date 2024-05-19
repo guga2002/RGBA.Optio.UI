@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using RGBA.Optio.Core.Entities;
@@ -12,8 +11,6 @@ using RGBA.Optio.Domain.Models;
 using RGBA.Optio.Domain.Models.RequestModels;
 using RGBA.Optio.Domain.Services.Outer_Services;
 using System.IdentityModel.Tokens.Jwt;
-using System.Net.Mail;
-using System.Reflection.Metadata.Ecma335;
 using System.Security.Claims;
 using System.Text;
 

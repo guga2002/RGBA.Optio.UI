@@ -269,19 +269,19 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
-        public async Task<bool> RemoveAsync(ChanellModel entity)
+        public async Task<bool> RemoveAsync(long Id, ChanellModel identity)
         {
             try
             {
-                if(entity==null||entity.ChannelType==null)
+                var chanell = await work.ChanellRepository.GetByIdAsync(Id);
+                if (chanell is not null)
                 {
-                    throw new ResourceNotFoundException("ChanellModel have problem");
-                }
-                var mapped = mapper.Map<Channels>(entity);
-                if(mapped is not null)
-                {
-                    var res=await work.ChanellRepository.RemoveAsync(mapped);
-                    return res;
+                    var mapped = mapper.Map<Channels>(chanell);
+                    if (mapped is not null)
+                    {
+                        var res = await work.ChanellRepository.RemoveAsync(mapped);
+                        return res;
+                    }
                 }
                 return false;
             }
@@ -292,19 +292,19 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
-        public async Task<bool> RemoveAsync(CategoryModel entity)
+        public async Task<bool> RemoveAsync(long Id, CategoryModel identity)
         {
             try
             {
-                if (entity == null || entity.TransactionCategory == null)
+                 var category = await work.CategoryOfTransactionRepository.GetByIdAsync(Id);
+                if (category is not null)
                 {
-                    throw new ResourceNotFoundException("Categorry have problem");
-                }
-                var mapped = mapper.Map<Category>(entity);
-                if (mapped is not null)
-                {
-                    var res = await work.CategoryOfTransactionRepository.RemoveAsync(mapped);
-                    return res;
+                    var mapped = mapper.Map<Category>(category);
+                    if (mapped is not null)
+                    {
+                        var res = await work.CategoryOfTransactionRepository.RemoveAsync(mapped);
+                        return res;
+                    }
                 }
                 return false;
             }
@@ -315,19 +315,19 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
-        public  async Task<bool> RemoveAsync(TransactionTypeModel entity)
+        public  async Task<bool> RemoveAsync(long Id, TransactionTypeModel Identity)
         {
             try
             {
-                if (entity == null || entity.TransactionName == null)
+                var transactyp = await work.TypeOfTransactionRepository.GetByIdAsync(Id);
+                if (transactyp is not null)
                 {
-                    throw new ResourceNotFoundException("Type of  transaction have problem");
-                }
-                var mapped = mapper.Map<TypeOfTransaction>(entity);
-                if (mapped is not null)
-                {
-                    var res = await work.TypeOfTransactionRepository.RemoveAsync(mapped);
-                    return res;
+                    var mapped = mapper.Map<TypeOfTransaction>(transactyp);
+                    if (mapped is not null)
+                    {
+                        var res = await work.TypeOfTransactionRepository.RemoveAsync(mapped);
+                        return res;
+                    }
                 }
                 return false;
             }

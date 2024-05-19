@@ -71,7 +71,7 @@ namespace RGBA.Optio.Stream.Controllers
         [Route("AssignLocationToMerchant")]
         public async Task<IActionResult> FillDataLocationToMerchant(int countNumber)
         {
-            Stopwatch st=new Stopwatch();
+            Stopwatch st = new Stopwatch();
             st.Start();
             await _merchantRelatedService.FillDataLocationToMerchant(countNumber);
             st.Stop();
@@ -103,7 +103,7 @@ namespace RGBA.Optio.Stream.Controllers
             st.Stop();
             return Ok(st.ElapsedMilliseconds);
         }
-      /*  [HttpGet]
+        [HttpGet]
         [Route("TransactionFillBoolk")]
         public async Task<IActionResult> FillTransactionsboolk([FromQuery] int n)
         {
@@ -126,6 +126,6 @@ namespace RGBA.Optio.Stream.Controllers
         public async Task<IActionResult> GetallW()
         {
             return Ok(await ITransactionRelatedSer.GetAllTransactionsWithoutDapper());
-        }*/
+        }
     }
 }

@@ -182,8 +182,8 @@ namespace RGBA.Optio.UI.Controllers
         }
 
         [HttpGet]
-        [Route("chanell/{id}")]
-        public async  Task<IActionResult> GetChanellByIdAsync(long id)
+        [Route("chanell/{id:long}")]
+        public async  Task<IActionResult> GetChanellByIdAsync([FromRoute]long id)
         {
             try
             {
@@ -198,8 +198,8 @@ namespace RGBA.Optio.UI.Controllers
         }
 
         [HttpGet]
-        [Route("category/{id}")]
-        public async Task<IActionResult> GetcategoryByIdAsync(long id)
+        [Route("category/{id:long}")]
+        public async Task<IActionResult> GetcategoryByIdAsync([FromRoute]long id)
         {
             try
             {
@@ -214,8 +214,8 @@ namespace RGBA.Optio.UI.Controllers
         }
 
         [HttpGet]
-        [Route("transactiontype/{id}")]
-        public async Task<IActionResult> GetTransactionTypeByIdAsync(long id)
+        [Route("transactiontype/{id:long}")]
+        public async Task<IActionResult> GetTransactionTypeByIdAsync([FromRoute] long id)
         {
             try
             {
@@ -230,16 +230,12 @@ namespace RGBA.Optio.UI.Controllers
         }
 
         [HttpDelete]
-        [Route("chanell")]
-        public async  Task<IActionResult> RemoveAsync([FromBody] ChanellModel entity)
+        [Route("chanell/{id:long}")]
+        public async  Task<IActionResult> RemoveChanellAsync([FromRoute] long id)
         {
             try
             {
-                if(!ModelState.IsValid)
-                {
-                    throw new OptioGeneralException(entity.ChannelType);
-                }
-                var res = await ser.RemoveAsync(entity);
+                var res = await ser.RemoveAsync(id,new ChanellModel() { ChannelType="undefined"});
                 return res == true ? Ok(res) : BadRequest("Data do not exist");
             }
             catch (Exception exp)
@@ -250,16 +246,12 @@ namespace RGBA.Optio.UI.Controllers
         }
 
         [HttpDelete]
-        [Route("category")]
-        public async Task<IActionResult> RemoveAsync([FromBody] CategoryModel entity)
+        [Route("category/{id:long}")]
+        public async Task<IActionResult> RemoveCategoryAsync([FromRoute] long id)
         {
             try
             {
-                if (!ModelState.IsValid)
-                {
-                    throw new OptioGeneralException(entity.TransactionCategory);
-                }
-                var res = await ser.RemoveAsync(entity);
+                var res = await ser.RemoveAsync(id,new CategoryModel() { TransactionCategory="undefined",TransactionTypeID=34,});
                 return res == true ? Ok(res) : BadRequest("Data do not exist");
             }
             catch (Exception exp)
@@ -270,16 +262,12 @@ namespace RGBA.Optio.UI.Controllers
         }
 
         [HttpDelete]
-        [Route("Transactiontype")]
-        public async Task<IActionResult> RemoveAsync([FromBody] TransactionTypeModel entity)
+        [Route("transactiontype/{id:long}")]
+        public async Task<IActionResult> RemoveTransactionTypeAsync([FromRoute] long id)
         {
             try
             {
-                if (!ModelState.IsValid)
-                {
-                    throw new OptioGeneralException(entity.TransactionName);
-                }
-                var res = await ser.RemoveAsync(entity);
+                var res = await ser.RemoveAsync(id,new TransactionTypeModel() { TransactionName="undefined"});
                 if (res)
                 {
                     return Ok(res);
@@ -297,8 +285,8 @@ namespace RGBA.Optio.UI.Controllers
         }
 
         [HttpPost]
-        [Route("chanell/{id}/softdelete")]
-        public async Task<IActionResult> ChanellSoftDeleteAsync(long id)
+        [Route("chanell/{id:long}/softdelete")]
+        public async Task<IActionResult> ChanellSoftDeleteAsync([FromRoute] long id)
         {
             try
             {
@@ -317,8 +305,8 @@ namespace RGBA.Optio.UI.Controllers
         }
 
         [HttpPost]
-        [Route("category/{id}/softdelete")]
-        public async Task<IActionResult> CategorySoftDeleteAsync(long id)
+        [Route("category/{id:long}/softdelete")]
+        public async Task<IActionResult> CategorySoftDeleteAsync([FromRoute] long id)
         {
             try
             {
@@ -337,8 +325,8 @@ namespace RGBA.Optio.UI.Controllers
         }
 
         [HttpPost]
-        [Route("transactiontype/{id}/softdelete")]
-        public async Task<IActionResult> TransactionTypeSoftDeleteAsync(long id)
+        [Route("transactiontype/{id:long}/softdelete")]
+        public async Task<IActionResult> TransactionTypeSoftDeleteAsync([FromRoute] long id)
         {
             try
             {
@@ -357,8 +345,8 @@ namespace RGBA.Optio.UI.Controllers
         }
 
         [HttpPut]
-        [Route("chanell/{id}/update")]
-        public async Task<IActionResult> UpdateAsync(long id, [FromBody] ChanellModel entity)
+        [Route("chanell/{id:long}/update")]
+        public async Task<IActionResult> UpdateAsync([FromRoute] long id, [FromBody] ChanellModel entity)
         {
             try
             {
@@ -377,8 +365,8 @@ namespace RGBA.Optio.UI.Controllers
         }
 
         [HttpPut]
-        [Route("category/{id}/update")]
-        public async  Task<IActionResult> UpdateAsync(long id, [FromBody]CategoryModel entity)
+        [Route("category/{id:long}/update")]
+        public async  Task<IActionResult> UpdateAsync([FromRoute]long id, [FromBody]CategoryModel entity)
         {
             try
             {
@@ -397,8 +385,8 @@ namespace RGBA.Optio.UI.Controllers
         }
 
         [HttpPut]
-        [Route("transactiontype/{id}/update")]
-        public async Task<IActionResult> UpdateAsync(long id, [FromBody]TransactionTypeModel entity)
+        [Route("transactiontype/{id:long}/update")]
+        public async Task<IActionResult> UpdateAsync([FromRoute]long id, [FromBody]TransactionTypeModel entity)
         {
             try
             {

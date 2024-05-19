@@ -313,9 +313,6 @@ namespace RGBA.Optio.Stream.SeedServices
                 {
                     throw;
                 }
-              
-                //await optioDB.Transactions.AddAsync(trans);
-                //await optioDB.SaveChangesAsync();
             }
             return true;
         }

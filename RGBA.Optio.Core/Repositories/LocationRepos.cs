@@ -46,16 +46,10 @@ namespace Optio.Core.Repositories
         {
             try
             {
-                if (locations.IsNullOrEmpty())
-                {
-                    throw new InvalidOperationException("No cities found");
-                }
                 return await locations.AsNoTracking().ToListAsync();
-
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -111,22 +105,13 @@ namespace Optio.Core.Repositories
         {
             try
             {
-                var city = await locations.SingleOrDefaultAsync(i => i.LocationName.ToLower()==entity.LocationName.ToLower());
-                if (city == null)
-                {
-                    throw new InvalidOperationException("No such city was found");
-                }
-                else
-                {
-                    locations.Remove(city);
-                    await context.SaveChangesAsync();
-                    return true;
-                }
-
+                ArgumentNullException.ThrowIfNull(entity, nameof(entity));
+                locations.Remove(entity);
+                await context.SaveChangesAsync();
+                return true;
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -135,8 +120,8 @@ namespace Optio.Core.Repositories
         {
             try
             {
-            var city = await locations.SingleOrDefaultAsync(i => i.Id == id);
-                if (city == null)
+            var city = await locations.FindAsync(id);
+                if (city is null)
                 {
                     throw new InvalidOperationException("No such city was found");
                 }
@@ -146,11 +131,9 @@ namespace Optio.Core.Repositories
                     await context.SaveChangesAsync();
                     return true;
                 }
-
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -159,8 +142,9 @@ namespace Optio.Core.Repositories
         {
             try
             {
-                var city = await locations.SingleOrDefaultAsync(i => i.Id == id);
-                if (city == null)
+                ArgumentNullException.ThrowIfNull(entity,nameof(entity));
+                var city = await locations.FindAsync(id);
+                if (city is null)
                 {
                     throw new InvalidOperationException("No such city was found");
                 }
@@ -178,7 +162,6 @@ namespace Optio.Core.Repositories
             }
             catch (Exception)
             {
-
                 throw;
             }
         }

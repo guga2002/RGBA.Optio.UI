@@ -1,14 +1,10 @@
-﻿using Azure;
-using Microsoft.Data.SqlClient;
+﻿using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using MongoDB.Driver.Core.Configuration;
 using Optio.Core.Data;
 using Optio.Core.Entities;
 using Optio.Core.Interfaces;
-using RGBA.Optio.Core.Entities;
 using System.Data;
-using System.Data.SqlClient; // Or your preferred ADO.NET provider
 using Dapper;
 using Microsoft.Extensions.Configuration;
 
@@ -61,11 +57,11 @@ namespace Optio.Core.Repositories
                     return transactions.ToList<Transaction>();
                 }
             }
-            catch (SqlException ex)
+            catch (SqlException)
             { 
                 throw;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -144,8 +140,8 @@ namespace Optio.Core.Repositories
         {
             try
             {
-                var store = await merchant.AsNoTracking().SingleOrDefaultAsync(i => i.Id == id);
-                if (store == null)
+                var store = await merchant.FindAsync(id);
+                if (store is null)
                 {
                     throw new InvalidOperationException("No merchant found");
                 }
@@ -166,21 +162,13 @@ namespace Optio.Core.Repositories
         {
             try
             {
-                var store = await merchant.SingleOrDefaultAsync(i => i.Name.ToLower()==entity.Name.ToLower());
-                if (store == null)
-                {
-                    throw new InvalidOperationException("No merchant found");
-                }
-                else
-                {
-                    merchant.Remove(store);
-                    await context.SaveChangesAsync();
-                    return true;
-                }
+                ArgumentNullException.ThrowIfNull(entity, nameof(entity));
+                merchant.Remove(entity);
+                await context.SaveChangesAsync();
+                return true;
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -189,8 +177,8 @@ namespace Optio.Core.Repositories
         {
             try
             {
-                var store=await merchant.SingleOrDefaultAsync(i=>i.Id==id);
-                if (store == null)
+                var store=await merchant.FindAsync(id);
+                if (store is null)
                 {
                     throw new InvalidOperationException("No merchant found");
                 }
@@ -203,7 +191,6 @@ namespace Optio.Core.Repositories
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -212,8 +199,9 @@ namespace Optio.Core.Repositories
         {
             try
             {
-                var store = await merchant.SingleOrDefaultAsync(i => i.Id == id);
-                if (store == null)
+                ArgumentNullException.ThrowIfNull(entity,nameof(entity));
+                var store = await merchant.FindAsync(id);
+                if (store is null)
                 {
                     throw new InvalidOperationException("No merchant found");
                 }

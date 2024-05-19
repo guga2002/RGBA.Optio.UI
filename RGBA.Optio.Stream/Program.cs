@@ -19,6 +19,8 @@ using Microsoft.OpenApi.Models;
 using RGBA.Optio.Domain.Services.Outer_Services;
 using RGBA.Optio.Stream.Interfaces;
 using RGBA.Optio.Stream.SeedServices;
+using RGBA.Optio.Domain.Interfaces.StatisticInterfaces;
+using RGBA.Optio.Domain.Services.StatisticServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -65,7 +67,8 @@ builder.Services.AddScoped<ITypeOfTransactionRepo, TypeOfTransactionRepos>();
 builder.Services.AddScoped<IUniteOfWork, UniteOfWork>();
 
 builder.Services.AddScoped<IAdminPanelService, AdminPanelService>();
-builder.Services.AddScoped<IStatisticService, StatisticService>();
+builder.Services.AddScoped<IStatisticMerchantRelatedService, StatisticMerchantRelatedService>();
+builder.Services.AddScoped<IStatisticTransactionRelatedService, StatisticTransactionRelatedService>();
 builder.Services.AddScoped<ITransactionService, TransactionService>();
 builder.Services.AddScoped<ICurrencyRelatedService, CurrencyRelatedService>();
 builder.Services.AddScoped<IMerchantRelatedService, MerchantRelatedService>();

@@ -3,7 +3,6 @@ using Optio.Core.Data;
 using Optio.Core.Repositories;
 using RGBA.Optio.Core.Entities;
 using RGBA.Optio.Core.Interfaces;
-using System.Numerics;
 
 namespace RGBA.Optio.Core.Repositories
 {
@@ -45,9 +44,8 @@ namespace RGBA.Optio.Core.Repositories
         {
             try
             {
-                return await courses
-                    .AsNoTracking()
-                    .ToListAsync();
+                var res = await courses.AsNoTracking().ToListAsync();
+                return res;
             }
             catch (Exception)
             {
@@ -77,7 +75,7 @@ namespace RGBA.Optio.Core.Repositories
                 return await courses.
                     AsNoTracking()
                     .FirstOrDefaultAsync(io => io.Id == id && io.IsActive==true) 
-                    ?? throw new ArgumentException(" No  Valute COurse exist On this ID :(");
+                    ?? throw new ArgumentException(" No  Valute Course exist On this ID :(");
             }
             catch (Exception)
             {
@@ -88,12 +86,10 @@ namespace RGBA.Optio.Core.Repositories
         public async Task<bool> RemoveAsync(ValuteCourse entity)
         {
             try
-            {
-                var course = await courses
-                    .FirstOrDefaultAsync(io => io.CurrencyID == entity.CurrencyID&&io.ExchangeRate==io.ExchangeRate);
-                if (course is not null)
+            { 
+                if (entity is not null)
                 {
-                    courses.Remove(course);
+                    courses.Remove(entity);
                     await context.SaveChangesAsync();
                     return true;
                 }
@@ -130,7 +126,8 @@ namespace RGBA.Optio.Core.Repositories
         {
             try
             {
-                var course = await courses.FirstOrDefaultAsync(io => io.Id == id&&io.ExchangeRate==entity.ExchangeRate&&io.CurrencyID==entity.CurrencyID);
+                ArgumentNullException.ThrowIfNull(entity,nameof(entity));
+                var course = await courses.FindAsync(id);
                 if (course is not null)
                 {
                    course.DateOfValuteCourse = entity.DateOfValuteCourse;
@@ -141,7 +138,7 @@ namespace RGBA.Optio.Core.Repositories
                     await context.SaveChangesAsync();
                     return true;
                 }
-                throw new ArgumentException("THe data is already up to data, or  such  a data no exist");
+                throw new ArgumentException("The data is already up to data, or  such  a data no exist");
             }
             catch (DbUpdateConcurrencyException ex)
             {

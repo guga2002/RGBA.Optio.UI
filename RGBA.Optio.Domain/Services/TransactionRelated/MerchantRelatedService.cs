@@ -200,19 +200,19 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
-        public async Task<bool> RemoveAsync(locationModel entity)
+        public async Task<bool> RemoveAsync(long Id, locationModel Identity)
         {
             try
             {
-                if (entity is null || string.IsNullOrWhiteSpace(entity?.LocationName))
+                var location = await work.LocationRepository.GetByIdAsync(Id);
+                if (location is not null)
                 {
-                    throw new OptioGeneralException("Entity can not be null");
-                }
-                var mapp = mapper.Map<Location>(entity);
-                if(mapp is not null)
-                {
-                    var res=await work.LocationRepository.RemoveAsync(mapp);
-                    return res;
+                    var mapp = mapper.Map<Location>(location);
+                    if (mapp is not null)
+                    {
+                        var res = await work.LocationRepository.RemoveAsync(mapp);
+                        return res;
+                    }
                 }
                 return false;
             }
@@ -223,19 +223,19 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
-        public async Task<bool> RemoveAsync(MerchantModel entity)
+        public async Task<bool> RemoveAsync(long Id, MerchantModel identity)
         {
             try
             {
-                if (entity is null || string.IsNullOrWhiteSpace(entity?.Name))
+                var merchant = await work.MerchantRepository.GetByIdAsync(Id);
+                if (merchant is not null)
                 {
-                    throw new OptioGeneralException("Entity can not be null");
-                }
-                var mapp = mapper.Map<Merchant>(entity);
-                if (mapp is not null)
-                {
-                    var res = await work.MerchantRepository.RemoveAsync(mapp);
-                    return res;
+                    var mapp = mapper.Map<Merchant>(merchant);
+                    if (mapp is not null)
+                    {
+                        var res = await work.MerchantRepository.RemoveAsync(mapp);
+                        return res;
+                    }
                 }
                 return false;
             }

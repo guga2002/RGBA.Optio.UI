@@ -1,5 +1,4 @@
 ﻿using Optio.Core.Entities;
-using System.Numerics;
 
 namespace Optio.Core.Interfaces
 {

@@ -52,8 +52,8 @@ namespace RGBA.Optio.UI.Controllers
         }
 
         [HttpDelete]
-        [Route("Role/{role}/[action]")]
-        public async Task<IActionResult> Delete([FromQuery]string role)
+        [Route("Role/{role:alpha}/[action]")]
+        public async Task<IActionResult> Delete([FromRoute]string role)
         {
             try
             {
@@ -72,8 +72,8 @@ namespace RGBA.Optio.UI.Controllers
         }
 
         [HttpPost]
-        [Route("Role/{role}/[action]")]
-        public async Task<IActionResult> Add([FromQuery]string role)
+        [Route("Role/{role:alpha}/[action]")]
+        public async Task<IActionResult> Add([FromRoute]string role)
         {
             try
             {
@@ -93,7 +93,7 @@ namespace RGBA.Optio.UI.Controllers
 
         [HttpDelete]
         [Route("User/{id}/[action]")]
-        public async Task<IActionResult> DeleteUser([FromQuery]string id)
+        public async Task<IActionResult> DeleteUser([FromRoute]string id)
         {
             try
             {
@@ -112,8 +112,8 @@ namespace RGBA.Optio.UI.Controllers
         }
 
         [HttpPost]
-        [Route("User/{Userid}[action]/{role}")]
-        public async Task<IActionResult> Role([FromQuery] string Userid,[FromQuery]string role)
+        [Route("User/{Userid}[action]/{role:alpha}")]
+        public async Task<IActionResult> Role([FromRoute] string Userid,[FromRoute]string role)
         {
             try
             {

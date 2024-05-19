@@ -2,7 +2,7 @@
 {
     public interface IRemoveInfo<T,K> where T : class
     {
-        Task<bool> RemoveAsync(T entity);
+        Task<bool> RemoveAsync(K id,T identity);
 
         Task<bool> SoftDeleteAsync(K id,T Identify);
     }

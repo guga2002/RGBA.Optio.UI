@@ -103,8 +103,8 @@ namespace Optio.Core.Repositories
                  .ThenInclude(io => io.Courses)
                     .Include(io => io.Merchant)
                      .ThenInclude(io => io.Locations)
-                    .SingleOrDefaultAsync(io => io.Id == ID);
-                return res;
+                    .FirstOrDefaultAsync(io => io.Id == ID);
+                return res ?? throw new ArgumentNullException("no  data  exsit, On this ID");
             }
             catch (Exception)
             {
@@ -116,15 +116,10 @@ namespace Optio.Core.Repositories
         {
             try
             {
-                if (await transactions.AnyAsync(io => io.Id == entity.Id))
-                {
-                    var res =await transactions.SingleOrDefaultAsync(io => io.Id == entity.Id);
-                    if(res!=null)
-                    transactions.Remove(res);
-                    await context.SaveChangesAsync();
-                    return true;
-                }
-                return false;
+                ArgumentNullException.ThrowIfNull(entity);
+                transactions.Remove(entity);
+                await context.SaveChangesAsync();
+                return true;
             }
             catch (Exception)
             {
@@ -136,7 +131,7 @@ namespace Optio.Core.Repositories
         {
             try
             {
-                var res = await transactions.SingleOrDefaultAsync(io => io.Id == id);
+                var res = await transactions.FindAsync(id);
                 if (res is not null)
                 {
                     res.IsActive = false;
@@ -155,7 +150,7 @@ namespace Optio.Core.Repositories
         {
             try
             {
-                var tran = await transactions.SingleOrDefaultAsync(io => io.Id == id);
+                var tran = await transactions.FindAsync(id);
                 if (tran is not null)
                 {
                     context.Entry(tran).CurrentValues.SetValues(entity);

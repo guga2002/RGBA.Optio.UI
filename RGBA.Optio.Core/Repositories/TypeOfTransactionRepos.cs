@@ -67,21 +67,16 @@ namespace Optio.Core.Repositories
 
         public async Task<TypeOfTransaction> GetByIdAsync(long id)
         {
-            return await (from typ in TypeOfTransaction
-                    where typ.Id == id && typ.IsActive
-                    select typ).AsNoTracking()
-                    .FirstOrDefaultAsync()
-                    ??throw new ArgumentException(" No exist  type on this Id");
+            return await TypeOfTransaction.FindAsync(id)?? throw new ArgumentNullException("Typeoftransaction No Exist");
         }
 
         public async Task<bool> RemoveAsync(TypeOfTransaction entity)
         {
             try
             {
-                var typ = await TypeOfTransaction.FirstOrDefaultAsync(io => io.TransactionName.ToLower() == entity.TransactionName.ToLower());
-                if (typ is not null)
+                if (entity is not null)
                 {
-                    TypeOfTransaction.Remove(typ);
+                    TypeOfTransaction.Remove(entity);
                     await context.SaveChangesAsync();
                     return true;
                 }
@@ -118,8 +113,9 @@ namespace Optio.Core.Repositories
         {
             try
             {
-                var existingEntity = await TypeOfTransaction.FirstOrDefaultAsync(io => io.Id == id);
-                if (existingEntity == null)
+                ArgumentNullException.ThrowIfNull(entity, nameof(entity));
+                var existingEntity = await TypeOfTransaction.FindAsync(id);
+                if (existingEntity is null)
                 {
                     throw new InvalidOperationException("There is no such Type of transaction");
                 }

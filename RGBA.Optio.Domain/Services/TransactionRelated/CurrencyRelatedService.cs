@@ -4,15 +4,7 @@ using RGBA.Optio.Core.Entities;
 using RGBA.Optio.Core.Interfaces;
 using RGBA.Optio.Domain.Custom_Exceptions;
 using RGBA.Optio.Domain.Interfaces;
-using RGBA.Optio.Domain.Interfaces.InterfacesForTransaction;
 using RGBA.Optio.Domain.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RGBA.Optio.Domain.Services.TransactionRelated
 {
@@ -198,22 +190,22 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
-        public async Task<bool> RemoveAsync(CurrencyModel entity)
+        public async Task<bool> RemoveAsync(int Id,CurrencyModel identity)
         {
             try
             {
-                if (entity == null || string.IsNullOrWhiteSpace(entity.NameOfValute) || string.IsNullOrWhiteSpace(entity.CurrencyCode))
+                var currency = await work.CurrencyRepository.GetByIdAsync(Id);
+
+                if (currency is not null)
                 {
-                    throw new OptioGeneralException("Entity can not be null");
-                }
-                var mapp = mapper.Map<Currency>(entity);
-                if(mapp is not null)
-                {
-                    var res= await work.CurrencyRepository.RemoveAsync(mapp);
-                    return res;
+                    var mapp = mapper.Map<Currency>(currency);
+                    if (mapp is not null)
+                    {
+                        var res = await work.CurrencyRepository.RemoveAsync(mapp);
+                        return res;
+                    }
                 }
                 throw new ArgumentException("no such entity exist");
-                    
             }
             catch (Exception ex)
             {
@@ -222,22 +214,21 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
-        public async Task<bool> RemoveAsync(ValuteModel entity)
+        public async Task<bool> RemoveAsync(long Id,ValuteModel identity)
         {
             try
             {
-                if (entity == null || string.IsNullOrWhiteSpace(entity.DateOfValuteCourse.ToString()) || entity.ExchangeRate<0 ||entity.CurrencyID<0)
+                var valute = await work.ValuteCourse.GetByIdAsync(Id);
+                if (valute is not null)
                 {
-                    throw new OptioGeneralException("Entity can not be null");
-                }
-                var mapp = mapper.Map<ValuteCourse>(entity);
-                if (mapp is not null)
-                {
-                    var res = await work.ValuteCourse.RemoveAsync(mapp);
-                    return res;
+                    var mapp = mapper.Map<ValuteCourse>(valute);
+                    if (mapp is not null)
+                    {
+                        var res = await work.ValuteCourse.RemoveAsync(mapp);
+                        return res;
+                    }
                 }
                 return false;
-
             }
             catch (Exception ex)
             {

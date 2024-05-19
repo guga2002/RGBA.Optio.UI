@@ -131,8 +131,8 @@ namespace RGBA.Optio.UI.Controllers
         }
 
         [HttpGet()]
-        [Route("currency/{id}")]
-        public async Task<IActionResult> GetByIdAsync(int id)
+        [Route("currency/{id:int}")]
+        public async Task<IActionResult> GetByIdAsync([FromRoute] int id)
         {
             try
             {
@@ -147,8 +147,8 @@ namespace RGBA.Optio.UI.Controllers
         }
 
         [HttpGet]
-        [Route("valute/{id}")]
-        public async Task<IActionResult> GetByIdAsync(long id)
+        [Route("valute/{id:long}")]
+        public async Task<IActionResult> GetByIdAsync([FromRoute]long id)
         {
             try
             {
@@ -163,22 +163,17 @@ namespace RGBA.Optio.UI.Controllers
         }
 
         [HttpDelete]
-        [Route("currency/{id}")]
-        public async Task<IActionResult> RemoveAsync(int id )
+        [Route("currency/{id:int}")]
+        public async Task<IActionResult> RemoveCurrencyAsync([FromRoute]int id )
         {
             try
             {
-                var res = await ser.GetByIdAsync(id, new CurrencyModel() { CurrencyCode = "Undefined", NameOfValute = "Undefined" });
-                if (res is not null)
+                var rek = await ser.RemoveAsync(id, new CurrencyModel() { CurrencyCode = "Undefined", NameOfValute = "Undefined" });
+                if (rek)
                 {
-                    var rek = await ser.RemoveAsync(res);
-                    if (rek)
-                    {
-                        return Ok(res);
-                    }
-                    return BadRequest(rek);
+                    return Ok(rek);
                 }
-                return NotFound();
+                return BadRequest(rek);
             }
             catch (Exception exp)
             {
@@ -188,22 +183,17 @@ namespace RGBA.Optio.UI.Controllers
         }
 
         [HttpDelete]
-        [Route("valute/{id}")]
-        public  async Task<IActionResult> RemoveAsync(long id)
+        [Route("valute/{id:long}")]
+        public  async Task<IActionResult> RemoveValuteAsync([FromRoute] long id)
         {
             try
             {
-                var rek = await ser.GetByIdAsync(id, new ValuteModel());
-                if (rek is not null)
+                var res = await ser.RemoveAsync(id, new ValuteModel());
+                if (res)
                 {
-                    var res = await ser.RemoveAsync(rek);
-                    if (res)
-                    {
-                        return Ok(res);
-                    }
-                    return BadRequest(rek);
+                    return Ok(res);
                 }
-                return NotFound(id);
+                return BadRequest(id);
             }
             catch (Exception exp)
             {
@@ -213,8 +203,8 @@ namespace RGBA.Optio.UI.Controllers
         }
 
         [HttpPatch]
-        [Route("currency/{id}/[action]")]
-        public async Task<IActionResult> SoftDelete(int id)
+        [Route("currency/{id:int}/[action]")]
+        public async Task<IActionResult> SoftDelete([FromRoute]int id)
         {
             try
             {
@@ -229,8 +219,8 @@ namespace RGBA.Optio.UI.Controllers
         }
 
         [HttpPatch]
-        [Route("valute/{id}/[action]")]
-        public async Task<IActionResult> SoftDelete(long id)
+        [Route("valute/{id:long}/[action]")]
+        public async Task<IActionResult> SoftDelete([FromRoute] long id)
         {
             try
             {
@@ -249,8 +239,8 @@ namespace RGBA.Optio.UI.Controllers
             }
         }
         [HttpPut]
-        [Route("currency/{id}")]
-        public async Task<IActionResult> UpdateAsync(int id,[FromBody]CurrencyModel entity)
+        [Route("currency/{id:int}")]
+        public async Task<IActionResult> UpdateAsync([FromRoute] int id,[FromBody]CurrencyModel entity)
         {
             try
             {
@@ -265,8 +255,8 @@ namespace RGBA.Optio.UI.Controllers
         }
 
         [HttpPut]
-        [Route("valute/{id}")]
-        public async Task<IActionResult> UpdateAsync(long id,[FromBody]ValuteModel mod)
+        [Route("valute/{id:long}")]
+        public async Task<IActionResult> UpdateAsync([FromRoute] long id,[FromBody]ValuteModel mod)
         {
             try
             {

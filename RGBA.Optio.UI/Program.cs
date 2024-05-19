@@ -17,6 +17,7 @@ using RGBA.Optio.Domain.Services.TransactionRelated;
 using System.Text;
 using Microsoft.OpenApi.Models;
 using RGBA.Optio.Domain.Services.Outer_Services;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -108,6 +109,17 @@ builder.Logging.AddConsole();
 builder.Logging.AddProvider(new LoggerProvider());
 builder.Logging.SetMinimumLevel(LogLevel.Debug);
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("RequestPipeline",
+        builder =>
+        {
+            builder.WithOrigins("https://localhost:44359")
+                   .AllowAnyHeader()
+                   .AllowAnyMethod();
+        });
+});
+
 var app = builder.Build();
 
 //if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
@@ -129,7 +141,7 @@ app.UseHttpsRedirection();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
-
+app.UseCors("RequestPipeline");
 app.MapControllers();
 
 app.Run();

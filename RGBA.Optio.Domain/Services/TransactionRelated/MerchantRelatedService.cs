@@ -5,7 +5,6 @@ using RGBA.Optio.Core.Interfaces;
 using RGBA.Optio.Domain.Custom_Exceptions;
 using RGBA.Optio.Domain.Interfaces;
 using RGBA.Optio.Domain.Models;
-using System.Numerics;
 
 namespace RGBA.Optio.Domain.Services.TransactionRelated
 {
@@ -15,6 +14,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
         {
         }
 
+        #region AddAsync
         public async Task<long> AddAsync(MerchantModel entity)
         {
             try
@@ -63,7 +63,9 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
                 throw;
             }
         }
+        #endregion
 
+        #region AssignLocationtoMerchant
         public async Task<bool> AssignLocationtoMerchant(long Merchantid, long Locationid)
         {
             try
@@ -77,6 +79,10 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
                 throw;
             }
         }
+
+        #endregion
+
+        #region GetAllActiveAsync
 
         public async Task<IEnumerable<locationModel>> GetAllActiveAsync(locationModel Identify)
         {
@@ -115,6 +121,9 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
                 throw;
             }
         }
+        #endregion
+
+        #region GetAllAsync
 
         public async Task<IEnumerable<locationModel>> GetAllAsync(locationModel Identify)
         {
@@ -154,7 +163,9 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
                 throw;
             }
         }
+        #endregion
 
+        #region GetByIdAsync
 
         public async Task<locationModel> GetByIdAsync(long id, locationModel Identify)
         {
@@ -199,6 +210,9 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
                 throw;
             }
         }
+        #endregion
+
+        #region RemoveAsync
 
         public async Task<bool> RemoveAsync(long Id, locationModel Identity)
         {
@@ -245,6 +259,9 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
                 throw;
             }
         }
+        #endregion
+
+        #region SoftDeleteAsync
 
         public async Task<bool> SoftDeleteAsync(long id, locationModel Identify)
         {
@@ -273,6 +290,9 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
                 throw;
             }
         }
+        #endregion
+
+        #region UpdateAsync
 
         public async Task<bool> UpdateAsync(long id, locationModel entity)
         {
@@ -325,5 +345,6 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
                 throw;
             }
         }
+        #endregion
     }
 }

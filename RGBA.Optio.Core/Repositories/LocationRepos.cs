@@ -16,8 +16,9 @@ namespace Optio.Core.Repositories
             locations=context.Set<Location>();
             this.cacheService=cacheService;
         }
-      
 
+
+        #region AddAsync
         public async Task<long> AddAsync(Location entity)
         {
             try
@@ -40,7 +41,9 @@ namespace Optio.Core.Repositories
                 throw;
             }
         }
+        #endregion
 
+        #region GetAllAsync
         public async Task<IEnumerable<Location>> GetAllAsync()
         {
             try
@@ -52,6 +55,9 @@ namespace Optio.Core.Repositories
                 throw;
             }
         }
+        #endregion
+
+        #region GetAllActiveLocationAsync
 
         public async Task<IEnumerable<Location>> GetAllActiveLocationAsync()
         {
@@ -73,6 +79,9 @@ namespace Optio.Core.Repositories
                 throw;
             }
         }
+        #endregion
+
+        #region GetByIdAsync
 
         public async Task<Location> GetByIdAsync(long id)
         {
@@ -99,7 +108,9 @@ namespace Optio.Core.Repositories
                 throw;
             }
         }
+        #endregion
 
+        #region RemoveAsync
         public async Task<bool> RemoveAsync(Location entity)
         {
             try
@@ -114,7 +125,9 @@ namespace Optio.Core.Repositories
                 throw;
             }
         }
+        #endregion
 
+        #region SoftDeleteAsync
         public async Task<bool> SoftDeleteAsync(long id)
         {
             try
@@ -136,7 +149,9 @@ namespace Optio.Core.Repositories
                 throw;
             }
         }
+        #endregion
 
+        #region UpdateAsync
         public async Task<bool> UpdateAsync(long id, Location entity)
         {
             try
@@ -164,5 +179,6 @@ namespace Optio.Core.Repositories
                 throw;
             }
         }
+        #endregion
     }
 }

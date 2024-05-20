@@ -21,7 +21,8 @@ namespace Optio.Core.Repositories
             merchant = context.Set<Merchant>(); 
             this.conf= conf;
         }
-      
+
+        #region AssignLocationtoMerchant
         public async Task<bool> AssignLocationtoMerchant(long Merchantid,long Locationid)
         {
             try
@@ -43,7 +44,9 @@ namespace Optio.Core.Repositories
                 throw;
             }
         }
+        #endregion
 
+        #region getalltransactions
         public async Task<List<Transaction>> getalltransactions()
         {
             try
@@ -66,7 +69,9 @@ namespace Optio.Core.Repositories
                 throw;
             }
         }
+        #endregion
 
+        #region AddAsync
         public async Task<long> AddAsync(Merchant entity)
         {
             try
@@ -91,7 +96,9 @@ namespace Optio.Core.Repositories
                 throw;
             }
         }
+        #endregion
 
+        #region GetAllAsync
         public async Task<IEnumerable<Merchant>> GetAllAsync()
         {
             try
@@ -114,7 +121,9 @@ namespace Optio.Core.Repositories
                 throw;
             }
         }
+        #endregion
 
+        #region GetAllActiveMerchantAsync
         public async Task<IEnumerable<Merchant>> GetAllActiveMerchantAsync()
         {
             try
@@ -136,6 +145,9 @@ namespace Optio.Core.Repositories
             }
         }
 
+        #endregion
+
+        #region GetByIdAsync
         public async Task<Merchant> GetByIdAsync(long id)
         {
             try
@@ -157,7 +169,9 @@ namespace Optio.Core.Repositories
                 throw;
             }
         }
+        #endregion
 
+        #region RemoveAsync
         public async Task<bool> RemoveAsync(Merchant entity)
         {
             try
@@ -172,7 +186,9 @@ namespace Optio.Core.Repositories
                 throw;
             }
         }
+        #endregion
 
+        #region SoftDeleteAsync
         public async Task<bool> SoftDeleteAsync(long id)
         {
             try
@@ -194,7 +210,9 @@ namespace Optio.Core.Repositories
                 throw;
             }
         }
+        #endregion
 
+        #region UpdateAsync
         public async Task<bool> UpdateAsync(long id, Merchant entity)
         {
             try
@@ -222,5 +240,6 @@ namespace Optio.Core.Repositories
                 throw;
             }
         }
+        #endregion
     }
 }

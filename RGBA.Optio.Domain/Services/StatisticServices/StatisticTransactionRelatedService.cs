@@ -16,6 +16,7 @@ namespace RGBA.Optio.Domain.Services.StatisticServices
         {
         }
 
+        #region GetAllTransactionBetweenDate
         public async Task<IEnumerable<TransactionModel>> GetAllTransactionBetweenDate(DateTime start, DateTime end)
         {
             try
@@ -37,7 +38,9 @@ namespace RGBA.Optio.Domain.Services.StatisticServices
                 throw;
             }
         }
+        #endregion
 
+        #region GetMostPopularCategoryAsync
         public async Task<IEnumerable<CategoryResponseModel>> GetMostPopularCategoryAsync(DateTime start, DateTime end)
         {
             try
@@ -67,7 +70,9 @@ namespace RGBA.Optio.Domain.Services.StatisticServices
                 throw;
             }
         }
+        #endregion
 
+        #region GetTransactionQuantityWithDateAsync
         public async Task<IEnumerable<TranscationQuantitiesWithDateModel>> GetTransactionQuantityWithDateAsync(DateTime start, DateTime end)
         {
             try
@@ -96,5 +101,6 @@ namespace RGBA.Optio.Domain.Services.StatisticServices
                 throw;
             }
         }
+        #endregion
     }
 }

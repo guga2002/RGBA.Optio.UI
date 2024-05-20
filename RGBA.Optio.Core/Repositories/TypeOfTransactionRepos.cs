@@ -15,6 +15,7 @@ namespace Optio.Core.Repositories
             TypeOfTransaction=context.Set<TypeOfTransaction>();
         }
 
+        #region AddAsync
         public async Task<long> AddAsync(TypeOfTransaction entity)
         {
             try
@@ -33,7 +34,9 @@ namespace Optio.Core.Repositories
                 throw;
             }
         }
+        #endregion
 
+        #region GetAllAsync
         public async Task<IEnumerable<TypeOfTransaction>> GetAllAsync()
         {
             try
@@ -48,6 +51,9 @@ namespace Optio.Core.Repositories
                 throw;
             }
         }
+        #endregion
+
+        #region GetAllActiveTypeOfTransactionAsync
 
         public async Task<IEnumerable<TypeOfTransaction>> GetAllActiveTypeOfTransactionAsync()
         {
@@ -64,12 +70,17 @@ namespace Optio.Core.Repositories
                 throw;
             }
         }
+        #endregion
+
+        #region GetByIdAsync
 
         public async Task<TypeOfTransaction> GetByIdAsync(long id)
         {
             return await TypeOfTransaction.FindAsync(id)?? throw new ArgumentNullException("Typeoftransaction No Exist");
         }
+        #endregion
 
+        #region RemoveAsync
         public async Task<bool> RemoveAsync(TypeOfTransaction entity)
         {
             try
@@ -87,7 +98,9 @@ namespace Optio.Core.Repositories
                 throw;
             }
         }
+        #endregion
 
+        #region SoftDeleteAsync
         public async Task<bool> SoftDeleteAsync(long id)
         {
             try
@@ -108,6 +121,9 @@ namespace Optio.Core.Repositories
                 throw;
             }
         }
+        #endregion
+
+        #region UpdateAsync
 
         public async Task<bool> UpdateAsync(long id, TypeOfTransaction entity)
         {
@@ -135,5 +151,6 @@ namespace Optio.Core.Repositories
                 throw;
             }
         }
+        #endregion
     }
 }

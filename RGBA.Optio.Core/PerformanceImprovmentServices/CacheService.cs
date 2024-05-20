@@ -11,6 +11,7 @@ namespace RGBA.Optio.Core.PerformanceImprovmentServices
             _cache = cache;
         }
 
+        #region GetOrCreate
         public T GetOrCreate<T>(string key, Func<T> createItem, TimeSpan absoluteExpiration)
         {
             if (!_cache.TryGetValue(key, out T item))
@@ -25,6 +26,7 @@ namespace RGBA.Optio.Core.PerformanceImprovmentServices
 
             return item;
         }
+        #endregion
 
         public void Remove(string key)
         {

@@ -17,8 +17,9 @@ namespace Optio.Core.Repositories
             channels = optioDB.Set<Channels>();
             this.cacheService = cacheService;
         }
-     
 
+
+        #region AddAsync
         public async Task<long> AddAsync(Channels entity)
         {
             try
@@ -42,7 +43,9 @@ namespace Optio.Core.Repositories
             }
         }
 
+        #endregion
 
+        #region GetAllAsync
         Func<OptioDB, IEnumerable<Channels>> CompiledQueryGetAll =
             EF.CompileQuery(
                 (OptioDB db) =>
@@ -68,6 +71,9 @@ namespace Optio.Core.Repositories
             }
         }
 
+        #endregion
+
+        #region GetAllActiveChannelAsync
 
         public async Task<IEnumerable<Channels>> GetAllActiveChannelAsync()
         {
@@ -81,7 +87,9 @@ namespace Optio.Core.Repositories
                 throw;
             }
         }
+        #endregion
 
+        #region GetByIdAsync
 
         Func<OptioDB, long, Channels?> CompiledQueryGetBtId =
             EF.CompileQuery(
@@ -108,8 +116,9 @@ namespace Optio.Core.Repositories
                 throw;
             }
         }
+        #endregion
 
-
+        #region RemoveAsync
         public async Task<bool> RemoveAsync(Channels entity)
         {
             try
@@ -124,7 +133,9 @@ namespace Optio.Core.Repositories
                 throw;
             }
         }
+        #endregion
 
+        #region SoftDeleteAsync
 
         public async Task<bool> SoftDeleteAsync(long id)
         {
@@ -148,7 +159,9 @@ namespace Optio.Core.Repositories
                 throw;
             }
         }
+        #endregion
 
+        #region UpdateAsync
 
         public async Task<bool> UpdateAsync(long id, Channels entity)
         {
@@ -176,7 +189,7 @@ namespace Optio.Core.Repositories
             {
                 throw;
             }
-
         }
+        #endregion
     }
 }

@@ -17,6 +17,7 @@ namespace Optio.Core.Repositories
             this._cache = cache;
         }
 
+        #region AddAsync
         public async Task<long> AddAsync(Transaction entity)
         {
             try
@@ -43,7 +44,9 @@ namespace Optio.Core.Repositories
                 throw;
             }
         }
+        #endregion
 
+        #region GetAllAsync
         public async Task<IEnumerable<Transaction>> GetAllAsync()
         {
             try
@@ -55,6 +58,9 @@ namespace Optio.Core.Repositories
                 throw;
             }
         }
+        #endregion
+
+        #region GetAllWithDetailsAsync
         public async Task<IEnumerable<Transaction>> GetAllWithDetailsAsync()
         {
             try
@@ -71,7 +77,9 @@ namespace Optio.Core.Repositories
                 throw;
             }
         }
+        #endregion
 
+        #region GetByIdAsync
         public async Task<Transaction> GetByIdAsync(long id)
         {
             try
@@ -92,7 +100,9 @@ namespace Optio.Core.Repositories
             }
         }
 
-         
+        #endregion
+
+        #region GetByIdWithDetailsAsync
         public async Task<Transaction> GetByIdWithDetailsAsync(long ID)
         {
             try
@@ -111,7 +121,9 @@ namespace Optio.Core.Repositories
                 throw;
             }
         }
+        #endregion
 
+        #region RemoveAsync
         public async Task<bool> RemoveAsync(Transaction entity)
         {
             try
@@ -126,7 +138,9 @@ namespace Optio.Core.Repositories
                 throw;
             }
         }
+        #endregion
 
+        #region SoftDeleteAsync
         public async Task<bool> SoftDeleteAsync(long id)
         {
             try
@@ -145,7 +159,9 @@ namespace Optio.Core.Repositories
                 throw;
             }
         }
+        #endregion
 
+        #region UpdateAsync
         public async Task<bool> UpdateAsync(long id,Transaction entity)
         {
             try
@@ -171,7 +187,9 @@ namespace Optio.Core.Repositories
                 throw;
             }
         }
+        #endregion
 
+        #region GetAllActiveAsync
         public async Task<IEnumerable<Transaction>> GetAllActiveAsync()
         {
             try
@@ -184,5 +202,6 @@ namespace Optio.Core.Repositories
                 throw;
             }
         }
+        #endregion
     }
 }

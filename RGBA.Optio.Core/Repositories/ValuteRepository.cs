@@ -14,6 +14,7 @@ namespace RGBA.Optio.Core.Repositories
             courses = context.Set<ValuteCourse>();
         }
 
+        #region AddAsync
         public async Task<long> AddAsync(ValuteCourse entity)
         {
             try
@@ -39,7 +40,9 @@ namespace RGBA.Optio.Core.Repositories
                 throw;
             }
         }
+        #endregion
 
+        #region GetAllAsync
         public async Task<IEnumerable<ValuteCourse>> GetAllAsync()
         {
             try
@@ -52,7 +55,9 @@ namespace RGBA.Optio.Core.Repositories
                 throw;
             }
         }
+        #endregion
 
+        #region GetAllActiveValuteAsync
         public async Task<IEnumerable<ValuteCourse>> GetAllActiveValuteAsync()
         {
             try
@@ -68,6 +73,9 @@ namespace RGBA.Optio.Core.Repositories
             }
         }
 
+        #endregion
+
+        #region GetByIdAsync
         public async Task<ValuteCourse> GetByIdAsync(long id)
         {
             try
@@ -82,6 +90,9 @@ namespace RGBA.Optio.Core.Repositories
                 throw;
             }
         }
+        #endregion
+
+        #region RemoveAsync
 
         public async Task<bool> RemoveAsync(ValuteCourse entity)
         {
@@ -100,7 +111,9 @@ namespace RGBA.Optio.Core.Repositories
                 throw;
             }
         }
+        #endregion
 
+        #region SoftDeleteAsync
         public async Task<bool> SoftDeleteAsync(long id)
         {
             try
@@ -121,6 +134,9 @@ namespace RGBA.Optio.Core.Repositories
                 throw;
             }
         }
+        #endregion
+
+        #region UpdateAsync
 
         public async Task<bool> UpdateAsync(long id, ValuteCourse entity)
         {
@@ -145,5 +161,6 @@ namespace RGBA.Optio.Core.Repositories
                 throw;
             }
         }
+        #endregion
     }
 }

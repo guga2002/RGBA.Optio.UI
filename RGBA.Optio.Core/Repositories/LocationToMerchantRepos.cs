@@ -1,9 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using Optio.Core.Data;
 using Optio.Core.Entities;
 using RGBA.Optio.Core.Interfaces;
-using RGBA.Optio.Core.PerformanceImprovmentServices;
 using AbstractClass = Optio.Core.Repositories.AbstractClass;
 
 
@@ -17,6 +15,7 @@ namespace RGBA.Optio.Core.Repositories
         {
             locations = context.Set<Location>();
         }
+        #region GetLocationIdByMerchantIdAsync
         public async Task<Location> GetLocationIdByMerchantIdAsync(long merchantId)
         {
             try
@@ -44,5 +43,6 @@ namespace RGBA.Optio.Core.Repositories
                 throw;
             }
         }
+        #endregion
     }
 }

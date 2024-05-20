@@ -34,6 +34,8 @@ namespace RGBA.Optio.Domain.Services
             this.smtp = smtp;
         }
 
+        #region AddRolesAsync
+
         public async Task<IdentityResult> AddRolesAsync(string RoleName)
         {
             try
@@ -51,6 +53,9 @@ namespace RGBA.Optio.Domain.Services
                 throw;
             }
         }
+        #endregion
+
+        #region isEmailConfirmed
         public async Task<bool> isEmailConfirmed(string email)
         {
             var res = await userManager.FindByNameAsync(email);
@@ -60,6 +65,9 @@ namespace RGBA.Optio.Domain.Services
             }
             return false;
         }
+        #endregion
+
+        #region IsUserExist
 
         public async Task<bool> IsUserExist(string email)
         {
@@ -71,6 +79,9 @@ namespace RGBA.Optio.Domain.Services
             }
             return false;
         }
+        #endregion
+
+        #region ConfirmMail
         public async Task<bool> ConfirmMail(string Username, string mail)
         {
             try
@@ -93,7 +104,9 @@ namespace RGBA.Optio.Domain.Services
                 throw;
             }
         }
+        #endregion
 
+        #region sendlinktouser
         public async Task<bool> sendlinktouser(string name, string link)
         {
             var res=await userManager.FindByNameAsync(name);
@@ -116,6 +129,9 @@ namespace RGBA.Optio.Domain.Services
             }
             return false;
         }
+        #endregion
+
+        #region AssignRoleToUserAsync
 
         public async Task<IdentityResult> AssignRoleToUserAsync(string UserId, string Role)
         {
@@ -138,7 +154,9 @@ namespace RGBA.Optio.Domain.Services
                 throw;
             }
         }
+        #endregion
 
+        #region DeleteRole
         public async Task<IdentityResult> DeleteRole(string rol)
         {
             try
@@ -155,7 +173,9 @@ namespace RGBA.Optio.Domain.Services
                 throw;
             }
         }
+        #endregion
 
+        #region DeleteUser
         public async Task<IdentityResult> DeleteUser(string id)
         {
             var res = userManager.Users.FirstOrDefault(io => io.Id == id);
@@ -166,9 +186,9 @@ namespace RGBA.Optio.Domain.Services
             }
             return new IdentityResult();
         }
+        #endregion
 
-      
-
+        #region ForgetPassword
         public async Task<bool> ForgetPassword(string Email,string NewPassword)
         {
             var user=await userManager.FindByEmailAsync(Email);
@@ -193,6 +213,9 @@ namespace RGBA.Optio.Domain.Services
             }
             throw new ArgumentException("Such User no exist");
         }
+        #endregion
+
+        #region Info
 
         public async Task<UserModel> Info(string Username)
         {
@@ -212,6 +235,9 @@ namespace RGBA.Optio.Domain.Services
             }
 
         }
+        #endregion
+
+        #region RefreshToken
 
         public async Task<bool> RefreshToken(string Username, string token)
         {
@@ -238,7 +264,9 @@ namespace RGBA.Optio.Domain.Services
 
             return result.Succeeded;
         }
+        #endregion
 
+        #region RegisterUserAsync
         public async Task<IdentityResult> RegisterUserAsync(UserModel User, string Password)
         {
             try
@@ -339,6 +367,9 @@ namespace RGBA.Optio.Domain.Services
                 throw;
             }
         }
+        #endregion
+
+        #region ResetPasswordAsync
 
         public async Task<IdentityResult> ResetPasswordAsync(PasswordResetModel arg, string username)
         {
@@ -350,6 +381,9 @@ namespace RGBA.Optio.Domain.Services
             }
             return new IdentityResult();
         }
+        #endregion
+
+        #region SignInAsync
 
         public async Task<(Microsoft.AspNetCore.Identity.SignInResult, string)> SignInAsync(SignInModel mod)
         {
@@ -391,11 +425,15 @@ namespace RGBA.Optio.Domain.Services
             }
             else if (!result.Succeeded && !mod.SetCookie)
             {
-                await ClearPersistentCookieAsync();
+                //await ClearPersistentCookieAsync();
             }
 
             return (null, null);
         }
+        #endregion
+
+        #region GenerateJwtToken
+
         private string GenerateJwtToken(string username)
         {
             var claims = new[]
@@ -416,18 +454,22 @@ namespace RGBA.Optio.Domain.Services
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+        #endregion
 
+        #region SetPersistentCookieAsync&&SetPersistentCookieAsync
 
         private async Task SetPersistentCookieAsync(ClaimsPrincipal principal)
         {
             await _httpContextAccessor.HttpContext.SignInAsync(IdentityConstants.ApplicationScheme,principal, new AuthenticationProperties { IsPersistent = true });
         }
 
-        private async Task ClearPersistentCookieAsync()
+        private async Task SetPersistentCookieAsync()
         {
             await _httpContextAccessor.HttpContext.SignOutAsync(IdentityConstants.ApplicationScheme);
         }
+        #endregion
 
+        #region SignOutAsync
         public async Task<bool> SignOutAsync(string Username)
         {
             try
@@ -455,6 +497,9 @@ namespace RGBA.Optio.Domain.Services
                 throw;
             }
         }
+        #endregion
+
+        #region GetAllRoles
 
         public async Task<IEnumerable<RoleModel>> GetAllRoles()
         {
@@ -466,6 +511,9 @@ namespace RGBA.Optio.Domain.Services
             }).ToListAsync();
             return res;
         }
+        #endregion
+
+        #region GetAllUser
         public async Task<IEnumerable<UserModel>> GetAllUser()
         {
             var res =await userManager.Users.Select(io=>new UserModel
@@ -481,5 +529,6 @@ namespace RGBA.Optio.Domain.Services
 
             return res;
         }
+        #endregion
     }
 }

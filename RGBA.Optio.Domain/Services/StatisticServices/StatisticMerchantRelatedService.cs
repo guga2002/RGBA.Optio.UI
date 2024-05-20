@@ -19,7 +19,7 @@ namespace RGBA.Optio.Domain.Services.StatisticServices
         {
             try
             {
-                var trans = await work.TransactionRepository.GetAllWithDetailsAsync();
+                var trans = await work.TransactionRepository.GetAllAsync();
                 var transInDate = trans.Where(i => i.Date >= start && i.Date <= end).ToList();
                 if (transInDate.Count == 0)
                 {
@@ -33,7 +33,7 @@ namespace RGBA.Optio.Domain.Services.StatisticServices
                                   {
                                       channelId = g.Key,
                                       channelCount = g.Count(),
-                                      volume = g.Sum(i => i.Amount)
+                                      volume = g.Sum(i => i.AmountEquivalent)
                                   };
 
                     var channelList = channel.ToList();
@@ -85,9 +85,9 @@ namespace RGBA.Optio.Domain.Services.StatisticServices
                                        group tran by tran.MerchantId into merch
                                        select new
                                        {
-                                           merchantId=merch.Key,
-                                           quantity=merch.Count(),
-                                           volume=merch.Sum(i=>i.Amount)
+                                           merchantId = merch.Key,
+                                           quantity = merch.Count(),
+                                           volume = merch.Sum(i => i.Amount)
                                        };
                     var merchantLocationTask = filtredTrans.Select(async mg =>
                     {
@@ -97,7 +97,7 @@ namespace RGBA.Optio.Domain.Services.StatisticServices
                         {
                             LocationId = locationId,
                             MerchantId = mg.merchantId,
-                            merchantName=merchantDetails.Name,
+                            merchantName = merchantDetails.Name,
                             TransactionCount = mg.quantity,
                             TransactionAmount = mg.volume
 
@@ -116,18 +116,17 @@ namespace RGBA.Optio.Domain.Services.StatisticServices
                                          };
                     var locationList=locationGroups.ToList();
                     var merchantList=merchantLocationTask.ToList();
-                    var locationTask = locationList.Select(async lc=>
+                    var locationTask = locationList.Select(async lc =>
                     {
                         var locationDetails = await work.LocationRepository.GetByIdAsync(lc.LocatId);
-                      
+
                         return new LocationResponseModel
                         {
                             Location = locationDetails.LocationName,
                             Quantity = lc.TransactCount,
                             Volume = lc.TotalVolume,
                             Average = lc.TotalVolume / lc.TransactCount,
-                            MerchantName=lc.merchants
-                                                        
+                            MerchantName = lc.merchants
                         };
                     });
 
@@ -150,7 +149,7 @@ namespace RGBA.Optio.Domain.Services.StatisticServices
         {
             try
             {
-                var trans = await work.TransactionRepository.GetAllWithDetailsAsync();
+                var trans = await work.TransactionRepository.GetAllAsync();
                 var transInDate = trans.Where(i => i.Date >= start && i.Date <= end).ToList();
                 if (transInDate.Count == 0)
                 {
@@ -159,13 +158,13 @@ namespace RGBA.Optio.Domain.Services.StatisticServices
                 else
                 {
                     var merchant = from i in transInDate
-                                  group i by i.MerchantId into g
-                                  select new
-                                  {
-                                      merchantId = g.Key,
-                                      merchantCount = g.Count(),
-                                      volume = g.Sum(i => i.Amount)
-                                  };
+                                   group i by i.MerchantId into g
+                                   select new
+                                   {
+                                       merchantId = g.Key,
+                                       merchantCount = g.Count(),
+                                       volume = g.Sum(i => i.Amount)
+                                   };
 
                     var merchantlList = merchant.ToList();
                     var tasks = merchantlList.Select(async g =>

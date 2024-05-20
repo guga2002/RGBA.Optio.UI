@@ -14,6 +14,7 @@ namespace RGBA.Optio.Domain.Services
         {
         }
 
+        #region AddAsync
         public async  Task<long> AddAsync(TransactionModel entity)
         {
             try
@@ -54,6 +55,9 @@ namespace RGBA.Optio.Domain.Services
             }
         }
 
+        #endregion
+
+        #region GetAllActiveAsync
         public async Task<IEnumerable<TransactionModel>> GetAllActiveAsync(TransactionModel Identify)
         {
             try
@@ -76,7 +80,9 @@ namespace RGBA.Optio.Domain.Services
                 throw;
             }
         }
+        #endregion
 
+        #region GetAllAsync
         public async Task<IEnumerable<TransactionModel>> GetAllAsync(TransactionModel Identify)
         {
             try
@@ -99,7 +105,9 @@ namespace RGBA.Optio.Domain.Services
                 throw;
             }
         }
+        #endregion
 
+        #region GetByIdAsync
         public async Task<TransactionModel> GetByIdAsync(long id, TransactionModel Identify)
         {
             try
@@ -121,8 +129,11 @@ namespace RGBA.Optio.Domain.Services
                 throw;
             }
         }
+        #endregion
 
-        public  async Task<bool> RemoveAsync(long Id, TransactionModel Identity)
+        #region RemoveAsync
+
+        public async Task<bool> RemoveAsync(long Id, TransactionModel Identity)
         {
             try
             {
@@ -145,7 +156,9 @@ namespace RGBA.Optio.Domain.Services
                 throw;
             }
         }
+        #endregion
 
+        #region SoftDeleteAsync
         public async Task<bool> SoftDeleteAsync(long id, TransactionModel Identify)
         {
             try
@@ -160,6 +173,9 @@ namespace RGBA.Optio.Domain.Services
                 throw;
             }
         }
+        #endregion
+
+        #region UpdateAsync
 
         public async Task<bool> UpdateAsync(long id, TransactionModel entity)
         {
@@ -183,5 +199,6 @@ namespace RGBA.Optio.Domain.Services
                 throw;
             }
         }
+        #endregion
     }
 }

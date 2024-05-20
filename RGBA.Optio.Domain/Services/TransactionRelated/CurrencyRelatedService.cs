@@ -14,6 +14,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
         {
         }
 
+        #region AddAsync
         public async Task<long> AddAsync(CurrencyModel entity)
         {
             try
@@ -38,6 +39,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
+
         public async Task<long> AddAsync(ValuteModel entity)
         {
             try
@@ -61,7 +63,9 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
                 throw;
             }
         }
+        #endregion
 
+        #region GetAllActiveAsync
         public async Task<IEnumerable<CurrencyModel>> GetAllActiveAsync(CurrencyModel Identify)
         {
             try
@@ -102,7 +106,9 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
                 throw;
             }
         }
+        #endregion
 
+        #region GetAllAsync
         public async Task<IEnumerable<CurrencyModel>> GetAllAsync(CurrencyModel Identify)
         {
             try
@@ -144,6 +150,9 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
                 throw;
             }
         }
+        #endregion
+
+        #region GetByIdAsync
 
         public async Task<CurrencyModel> GetByIdAsync(int id, CurrencyModel Identify)
         {
@@ -189,6 +198,9 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
                 throw;
             }
         }
+        #endregion
+
+        #region RemoveAsync
 
         public async Task<bool> RemoveAsync(int Id,CurrencyModel identity)
         {
@@ -237,6 +249,9 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
             }
         }
 
+        #endregion
+
+        #region SoftDeleteAsync
         public async Task<bool> SoftDeleteAsync(int id, CurrencyModel Identify)
         {
             try
@@ -264,6 +279,9 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
                 throw;
             }
         }
+        #endregion
+
+        #region UpdateAsync
 
         public Task<bool> UpdateAsync(int id, CurrencyModel entity)
         {
@@ -318,5 +336,6 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
                 throw;
             }
         }
+        #endregion
     }
 }

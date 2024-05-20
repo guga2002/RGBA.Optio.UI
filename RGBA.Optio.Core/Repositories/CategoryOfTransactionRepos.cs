@@ -17,7 +17,8 @@ namespace Optio.Core.Repositories
             this.cacheService = cacheService;
         }
 
-    
+
+        #region AddAsync
         public async Task<long> AddAsync(Category entity)
         {
             try
@@ -43,16 +44,17 @@ namespace Optio.Core.Repositories
                 throw;
             }
         }
+        #endregion
 
+        /*  Func<OptioDB, IEnumerable<Category>> CompiledQueryGetAll =
+           EF.CompileQuery(
+               (OptioDB db) =>
+               db.CategoryOfTransactions
+               .AsNoTracking()
+               .ToList()
+              );*/
 
-      /*  Func<OptioDB, IEnumerable<Category>> CompiledQueryGetAll =
-         EF.CompileQuery(
-             (OptioDB db) =>
-             db.CategoryOfTransactions
-             .AsNoTracking()
-             .ToList()
-            );*/
-
+        #region GetAllAsync
         public async Task<IEnumerable<Category>> GetAllAsync()
         {
             try
@@ -74,16 +76,17 @@ namespace Optio.Core.Repositories
                 throw;
             }
         }
+        #endregion
 
+        /* Func<OptioDB,Guid, Category?> CompiledQueryGetById =
+          EF.CompileQuery(
+              (OptioDB db,Guid id) =>
+              db.CategoryOfTransactions
+              .AsNoTracking()
+              .SingleOrDefault(i=>i.Id==id)
+             );*/
 
-       /* Func<OptioDB,Guid, Category?> CompiledQueryGetById =
-         EF.CompileQuery(
-             (OptioDB db,Guid id) =>
-             db.CategoryOfTransactions
-             .AsNoTracking()
-             .SingleOrDefault(i=>i.Id==id)
-            );*/
-
+        #region GetByIdAsync
         public async Task<Category> GetByIdAsync(long id)
         {
             try
@@ -107,7 +110,9 @@ namespace Optio.Core.Repositories
             }
 
         }
+        #endregion
 
+        #region GetAllActiveAsync
         public async Task<IEnumerable<Category>> GetAllActiveAsync()
         {
             try
@@ -129,7 +134,9 @@ namespace Optio.Core.Repositories
                 throw;
             }
         }
+        #endregion
 
+        #region RemoveAsync
         public async Task<bool> RemoveAsync(Category entity)
         {
             try
@@ -147,6 +154,9 @@ namespace Optio.Core.Repositories
 
         }
 
+        #endregion
+
+        #region SoftDeleteAsync
 
         public async Task<bool> SoftDeleteAsync(long id)
         {
@@ -168,6 +178,9 @@ namespace Optio.Core.Repositories
             }
         }
 
+        #endregion
+
+        #region UpdateAsync
 
         public async Task<bool> UpdateAsync(long id,Category entity)
         {
@@ -196,5 +209,6 @@ namespace Optio.Core.Repositories
                 throw;
             }
         }
+        #endregion
     }
 }

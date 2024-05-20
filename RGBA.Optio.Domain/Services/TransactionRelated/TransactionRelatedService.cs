@@ -15,6 +15,7 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
         {
         }
 
+        #region AddAsync
         public async Task<long> AddAsync(ChanellModel entity)
         {
             try
@@ -87,7 +88,9 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
                 throw;
             }
         }
+        #endregion
 
+        #region GetAllActiveAsync
         public async Task<IEnumerable<ChanellModel>> GetAllActiveAsync(ChanellModel Identify)
         {
             try
@@ -144,6 +147,9 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
                 throw;
             }
         }
+        #endregion
+
+        #region GetAllAsync
 
         public async Task<IEnumerable<ChanellModel>> GetAllAsync(ChanellModel Identify)
         {
@@ -202,6 +208,9 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
                 throw;
             }
         }
+        #endregion
+
+        #region GetByIdAsync
 
         public async Task<ChanellModel> GetByIdAsync(long id, ChanellModel Identify)
         {
@@ -268,7 +277,9 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
                 throw;
             }
         }
+        #endregion
 
+        #region RemoveAsync
         public async Task<bool> RemoveAsync(long Id, ChanellModel identity)
         {
             try
@@ -337,7 +348,9 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
                 throw;
             }
         }
+        #endregion
 
+        #region SoftDeleteAsync
         public async Task<bool> SoftDeleteAsync(long id, ChanellModel Identify)
         {
             try
@@ -379,8 +392,10 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
                 throw;
             }
         }
+        #endregion
 
-        public  async Task<bool> UpdateAsync(long id, ChanellModel entity)
+        #region UpdateAsync
+        public async Task<bool> UpdateAsync(long id, ChanellModel entity)
         {
             try
             {
@@ -446,5 +461,6 @@ namespace RGBA.Optio.Domain.Services.TransactionRelated
                 throw;
             }
         }
+        #endregion
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using Optio.Core.Data;
 using Optio.Core.Entities;
 using Optio.Core.Interfaces;

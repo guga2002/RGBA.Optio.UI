@@ -74,7 +74,7 @@ builder.Services.AddScoped<ICurrencyRelatedService, CurrencyRelatedService>();
 builder.Services.AddScoped<IMerchantRelatedService, MerchantRelatedService>();
 builder.Services.AddScoped<ITransactionRelatedService, TransactionRelatedService>();
 builder.Services.AddScoped<ITransactionRelatedSer, TransactionRelatedSer>();
-
+builder.Services.AddScoped<ILocationToMerchantRepository, LocationToMerchantRepos>();
 
 builder.Services.AddSingleton<CacheService>();
 

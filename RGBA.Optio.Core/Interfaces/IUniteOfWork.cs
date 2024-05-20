@@ -15,6 +15,8 @@ namespace RGBA.Optio.Core.Interfaces
         ITransactionRepo TransactionRepository { get; }
 
         ITypeOfTransactionRepo TypeOfTransactionRepository { get; }
+        
+        ILocationToMerchantRepository LocationToMerchantRepository { get; }
        
         IValuteCourse ValuteCourse { get; }
 

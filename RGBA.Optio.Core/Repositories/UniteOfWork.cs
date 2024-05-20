@@ -42,6 +42,8 @@ namespace RGBA.Optio.Core.Repositories
         public IValuteCourse ValuteCourse => new ValuteRepository(db);
 
         public ICurrencyRepository CurrencyRepository => new CurrencyReposiotry(db);
+    
+        public ILocationToMerchantRepository LocationToMerchantRepository => new LocationToMerchantRepos(db);
 
         public async Task CheckAndCommitAsync()
         {

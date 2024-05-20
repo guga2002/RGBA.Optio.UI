@@ -10,8 +10,8 @@ namespace RGBA.Optio.Domain.Models.ResponseModels
     {
         public string Location { get; set; }
         public string MerchantName {  get; set; }
-        public long Volume { get; set; }
+        public decimal Volume { get; set; }
         public long Quantity { get; set; }
-        public long Average { get; set; }
+        public decimal Average { get; set; }
     }
 }

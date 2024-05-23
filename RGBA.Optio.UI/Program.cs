@@ -3,23 +3,17 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Optio.Core.Data;
-using Optio.Core.Interfaces;
-using Optio.Core.Repositories;
 using RGBA.Optio.Core.Entities;
 using RGBA.Optio.Core.Interfaces;
 using RGBA.Optio.Core.PerformanceImprovmentServices;
 using RGBA.Optio.Core.Repositories;
-using RGBA.Optio.Domain.Interfaces;
 using RGBA.Optio.Domain.LoggerFiles;
 using RGBA.Optio.Domain.Mapper;
-using RGBA.Optio.Domain.Services;
-using RGBA.Optio.Domain.Services.TransactionRelated;
 using System.Text;
 using Microsoft.OpenApi.Models;
 using RGBA.Optio.Domain.Services.Outer_Services;
-using RGBA.Optio.Domain.Interfaces.StatisticInterfaces;
-using RGBA.Optio.Domain.Services.StatisticServices;
-using Microsoft.Build.Framework;
+using RGBA.Optio.UI.Reflections;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -54,24 +48,34 @@ builder.Services.AddSwaggerGen(opt =>
 builder.Services.AddScoped<RoleManager<IdentityRole>>();
 builder.Services.AddScoped<UserManager<User>>();
 builder.Services.AddScoped<SignInManager<User>>();
+builder.Services.AddScoped<IUniteOfWork, UniteOfWork>();
 
-
-builder.Services.AddScoped<ICategoryRepo, CategoryOfTransactionRepos>();
+#region addScopped
+/*builder.Services.AddScoped<ICategoryRepo, CategoryOfTransactionRepos>();
 builder.Services.AddScoped<IChannelRepo, ChannelRepos>();
 builder.Services.AddScoped<ILocationRepo, LocationRepos>();
 builder.Services.AddScoped<IMerchantRepo, MerchantRepos>();
 builder.Services.AddScoped<ITransactionRepo, TransactionRepos>();
-builder.Services.AddScoped<ITypeOfTransactionRepo, TypeOfTransactionRepos>();
-builder.Services.AddScoped<IUniteOfWork, UniteOfWork>();
+builder.Services.AddScoped<ITypeOfTransactionRepo, TypeOfTransactionRepos>();*/
 
-builder.Services.AddScoped<IAdminPanelService, AdminPanelService>();
+
+/*builder.Services.AddScoped<IAdminPanelService, AdminPanelService>();
 builder.Services.AddScoped<IStatisticMerchantRelatedService, StatisticMerchantRelatedService>();
 builder.Services.AddScoped<IStatisticTransactionRelatedService, StatisticTransactionRelatedService>();
 builder.Services.AddScoped<ITransactionService, TransactionService>();
 builder.Services.AddScoped<ICurrencyRelatedService,CurrencyRelatedService>();
 builder.Services.AddScoped<IMerchantRelatedService, MerchantRelatedService>();
 builder.Services.AddScoped<ITransactionRelatedService, TransactionRelatedService>();
-builder.Services.AddScoped<ILocationToMerchantRepository,LocationToMerchantRepos>();
+builder.Services.AddScoped<ILocationToMerchantRepository,LocationToMerchantRepos>();*/
+
+#endregion
+
+
+var domainAssembly = Assembly.Load("RGBA.Optio.Domain");
+builder.Services.AddInjectServices(domainAssembly);
+
+var domainAssembly2 = Assembly.Load("RGBA.Optio.Core");
+builder.Services.AddInjectRepositories(domainAssembly2);
 
 
 builder.Services.AddSingleton<CacheService>();

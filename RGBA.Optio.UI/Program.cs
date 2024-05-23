@@ -50,7 +50,7 @@ builder.Services.AddScoped<UserManager<User>>();
 builder.Services.AddScoped<SignInManager<User>>();
 builder.Services.AddScoped<IUniteOfWork, UniteOfWork>();
 
-#region addScopped
+#region addScoppedManually
 /*builder.Services.AddScoped<ICategoryRepo, CategoryOfTransactionRepos>();
 builder.Services.AddScoped<IChannelRepo, ChannelRepos>();
 builder.Services.AddScoped<ILocationRepo, LocationRepos>();
@@ -70,12 +70,11 @@ builder.Services.AddScoped<ILocationToMerchantRepository,LocationToMerchantRepos
 
 #endregion
 
+var domainAssemblyServices = Assembly.Load("RGBA.Optio.Domain");
+builder.Services.AddInjectServices(domainAssemblyServices);
 
-var domainAssembly = Assembly.Load("RGBA.Optio.Domain");
-builder.Services.AddInjectServices(domainAssembly);
-
-var domainAssembly2 = Assembly.Load("RGBA.Optio.Core");
-builder.Services.AddInjectRepositories(domainAssembly2);
+var domainAssemblyRepos = Assembly.Load("RGBA.Optio.Core");
+builder.Services.AddInjectRepositories(domainAssemblyRepos);
 
 
 builder.Services.AddSingleton<CacheService>();

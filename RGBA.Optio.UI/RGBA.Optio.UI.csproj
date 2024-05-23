@@ -30,6 +30,7 @@
   <ItemGroup>
     <ProjectReference Include="..\RGBA.Optio.Core\RGBA.Optio.Core.csproj" />
     <ProjectReference Include="..\RGBA.Optio.Domain\RGBA.Optio.Domain.csproj" />
+    <ProjectReference Include="..\RGBA.Optio.Infrastructure\RGBA.Optio.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

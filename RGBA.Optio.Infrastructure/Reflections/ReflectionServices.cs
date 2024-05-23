@@ -1,6 +1,5 @@
-﻿using System.Net.NetworkInformation;
-using System;
-using System.Reflection;
+﻿using System.Reflection;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace RGBA.Optio.UI.Reflections
 {

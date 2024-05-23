@@ -21,6 +21,8 @@ using RGBA.Optio.Stream.Interfaces;
 using RGBA.Optio.Stream.SeedServices;
 using RGBA.Optio.Domain.Interfaces.StatisticInterfaces;
 using RGBA.Optio.Domain.Services.StatisticServices;
+using System.Reflection;
+using RGBA.Optio.UI.Reflections;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -56,15 +58,16 @@ builder.Services.AddScoped<IMerchantRelatedSer,MerchantRelatedSer>();
 builder.Services.AddScoped<RoleManager<IdentityRole>>();
 builder.Services.AddScoped<UserManager<User>>();
 builder.Services.AddScoped<SignInManager<User>>();
+builder.Services.AddScoped<IUniteOfWork, UniteOfWork>();
 
-
+#region AddScopedManually
 builder.Services.AddScoped<ICategoryRepo, CategoryOfTransactionRepos>();
 builder.Services.AddScoped<IChannelRepo, ChannelRepos>();
 builder.Services.AddScoped<ILocationRepo, LocationRepos>();
 builder.Services.AddScoped<IMerchantRepo, MerchantRepos>();
 builder.Services.AddScoped<ITransactionRepo, TransactionRepos>();
 builder.Services.AddScoped<ITypeOfTransactionRepo, TypeOfTransactionRepos>();
-builder.Services.AddScoped<IUniteOfWork, UniteOfWork>();
+
 
 builder.Services.AddScoped<IAdminPanelService, AdminPanelService>();
 builder.Services.AddScoped<IStatisticMerchantRelatedService, StatisticMerchantRelatedService>();
@@ -75,6 +78,13 @@ builder.Services.AddScoped<IMerchantRelatedService, MerchantRelatedService>();
 builder.Services.AddScoped<ITransactionRelatedService, TransactionRelatedService>();
 builder.Services.AddScoped<ITransactionRelatedSer, TransactionRelatedSer>();
 builder.Services.AddScoped<ILocationToMerchantRepository, LocationToMerchantRepos>();
+#endregion
+
+var domainAssemblyServices = Assembly.Load("RGBA.Optio.Domain");
+builder.Services.AddInjectServices(domainAssemblyServices);
+
+var domainAssemblyRepos = Assembly.Load("RGBA.Optio.Core");
+builder.Services.AddInjectRepositories(domainAssemblyRepos);
 
 builder.Services.AddSingleton<CacheService>();
 

@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RGBA.Optio.Core", "RGBA.Opt
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RGBA.Optio.Domain", "RGBA.Optio.Domain\RGBA.Optio.Domain.csproj", "{366A044E-99DC-45A8-AAE0-E360F30164BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RGBA.Optio.Stream", "RGBA.Optio.Stream\RGBA.Optio.Stream.csproj", "{0BCD68AB-D7BA-4D1C-B192-AD21939ED3B2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RGBA.Optio.Stream", "RGBA.Optio.Stream\RGBA.Optio.Stream.csproj", "{0BCD68AB-D7BA-4D1C-B192-AD21939ED3B2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RGBA.Optio.Infrastructure", "RGBA.Optio.Infrastructure\RGBA.Optio.Infrastructure.csproj", "{96B36CB1-A45A-4137-A4C8-C02353A2DE0A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{0BCD68AB-D7BA-4D1C-B192-AD21939ED3B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0BCD68AB-D7BA-4D1C-B192-AD21939ED3B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0BCD68AB-D7BA-4D1C-B192-AD21939ED3B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96B36CB1-A45A-4137-A4C8-C02353A2DE0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96B36CB1-A45A-4137-A4C8-C02353A2DE0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96B36CB1-A45A-4137-A4C8-C02353A2DE0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96B36CB1-A45A-4137-A4C8-C02353A2DE0A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

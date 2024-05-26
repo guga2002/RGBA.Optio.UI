@@ -8,12 +8,9 @@ using RGBA.Optio.Domain.Models;
 
 namespace RGBA.Optio.Domain.Services
 {
-    public class TransactionService : AbstractService<TransactionService>, ITransactionService
+    public class TransactionService(IUniteOfWork work, IMapper map, ILogger<TransactionService> log)
+        : AbstractService<TransactionService>(work, map, log), ITransactionService
     {
-        public TransactionService(IUniteOfWork work, IMapper map, ILogger<TransactionService> log) : base(work, map, log)
-        {
-        }
-
         #region AddAsync
         public async  Task<long> AddAsync(TransactionModel entity)
         {

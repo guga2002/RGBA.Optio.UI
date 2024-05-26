@@ -2,8 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using RGBA.Optio.Domain.Custom_Exceptions;
 using RGBA.Optio.Domain.Interfaces;
-using RGBA.Optio.Domain.Models.RequestModels;
-using System.Data;
 
 namespace RGBA.Optio.UI.Controllers
 {
@@ -61,7 +59,7 @@ namespace RGBA.Optio.UI.Controllers
                 {
                     throw new OptioGeneralException(role);
                 }
-            var res=await panel.DeleteRole(role);
+                var res=await panel.DeleteRole(role);
                 return Ok(res);
             }
             catch (Exception exp)
@@ -112,8 +110,8 @@ namespace RGBA.Optio.UI.Controllers
         }
 
         [HttpPost]
-        [Route("User/{Userid}[action]/{role:alpha}")]
-        public async Task<IActionResult> Role([FromRoute] string Userid,[FromRoute]string role)
+        [Route("User/{userid}[action]/{role:alpha}")]
+        public async Task<IActionResult> Role([FromRoute] string userid,[FromRoute]string role)
         {
             try
             {
@@ -121,7 +119,7 @@ namespace RGBA.Optio.UI.Controllers
                 {
                     throw new OptioGeneralException(role);
                 }
-                var res = await panel.AssignRoleToUserAsync(Userid,role);
+                var res = await panel.AssignRoleToUserAsync(userid,role);
                 return Ok(res);
             }
             catch (Exception exp)

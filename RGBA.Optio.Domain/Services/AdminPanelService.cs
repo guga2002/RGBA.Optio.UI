@@ -110,9 +110,8 @@ namespace RGBA.Optio.Domain.Services
         public async Task<bool> sendlinktouser(string name, string link)
         {
             var res=await userManager.FindByNameAsync(name);
-            if(res != null&&res.Email is not null)
-            {
-                var body = $@"
+            if (res == null || res.Email is null) return false;
+            var body = $@"
                   <div align='center' style='font-family: Arial, sans-serif;'>
                   <p style='font-size: 16px;'>ძვირასო {res.Name},</p>
                   <p style='font-size: 16px;'>გთხოვთ დაადასტუროთ თქვენი მეილი, ამ ლინკზე გადასვლით:</p>
@@ -124,10 +123,8 @@ namespace RGBA.Optio.Domain.Services
                   <h2 style='font-size: 16px;color:red;'>თუ თქვენ  არ გამოგიგზავნიათ მოთხოვნა, გთხოვთ დაგვიკავშირდეთ!</h2>
                 </div>";
 
-                smtp.SendMessage(res.Email, "დაადასტურე მეილი"+' '+DateTime.Now.Hour+':'+DateTime.Now.Minute, body);
-                return true;
-            }
-            return false;
+            smtp.SendMessage(res.Email, "დაადასტურე მეილი"+' '+DateTime.Now.Hour+':'+DateTime.Now.Minute, body);
+            return true;
         }
         #endregion
 

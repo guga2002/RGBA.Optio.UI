@@ -9,16 +9,8 @@ namespace RGBA.Optio.UI.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class CurrencyController : ControllerBase
+    public class CurrencyController(ICurrencyRelatedService se, ILogger<CurrencyController> log) : ControllerBase 
     {
-        private readonly ICurrencyRelatedService ser;
-        private readonly ILogger<CurrencyController> Log;
-        public CurrencyController(ICurrencyRelatedService se, ILogger<CurrencyController> Log)
-        {
-            this.ser = se;
-            this.Log = Log;
-        }
-
         [HttpPost]
         [Route("currency")]
         public async Task<IActionResult> Add([FromBody]CurrencyModel entity)
@@ -29,7 +21,7 @@ namespace RGBA.Optio.UI.Controllers
                 {
                     throw new OptioGeneralException(entity.CurrencyCode);
                 }
-                var res = await ser.AddAsync(entity);
+                var res = await se.AddAsync(entity);
                 if(res!=-1)
                 {
                     return Ok(entity);
@@ -38,13 +30,13 @@ namespace RGBA.Optio.UI.Controllers
             }
             catch (Exception exp)
             {
-                Log.LogCritical(exp.Message, exp.StackTrace);
+                log.LogCritical(exp.Message, exp.StackTrace);
                 return BadRequest(exp.Message);
             }
         }
         [HttpPost]
-        [Route("valute")]
-        public async  Task<IActionResult> Add([FromBody]ValuteModel entity)
+        [Route(nameof(AddCurrency))] 
+        public async  Task<IActionResult> AddCurrency([FromBody]ValuteModel entity)
         {
             try
             {
@@ -52,7 +44,7 @@ namespace RGBA.Optio.UI.Controllers
                 {
                     throw new OptioGeneralException(entity.DateOfValuteCourse.ToShortDateString());
                 }
-                var res = await ser.AddAsync(entity);
+                var res = await se.AddAsync(entity);
                 if (res != -1)
                 {
                     return Ok(entity.DateOfValuteCourse.ToShortTimeString());
@@ -61,7 +53,7 @@ namespace RGBA.Optio.UI.Controllers
             }
             catch (Exception exp)
             {
-                Log.LogCritical(exp.Message, exp.StackTrace);
+                log.LogCritical(exp.Message, exp.StackTrace);
                 return BadRequest(exp.Message);
             }
         }
@@ -72,28 +64,28 @@ namespace RGBA.Optio.UI.Controllers
         {
             try
             {
-                var res =await ser.GetAllActiveAsync(new CurrencyModel() { CurrencyCode="Undefined",NameOfValute="Undefined"});
+                var res =await se.GetAllActiveAsync(new CurrencyModel() { CurrencyCode="Undefined",NameOfValute="Undefined"});
                 return Ok(res);
             }
             catch (Exception exp)
             {
-                Log.LogCritical(exp.Message, exp.StackTrace);
+                log.LogCritical(exp.Message, exp.StackTrace);
                 return BadRequest(exp.Message);
             }
         }
 
         [HttpGet]
-        [Route("Valute/active")]
-        public async Task<IActionResult> AllActiveValute()
+        [Route("Currency/active")]
+        public async Task<IActionResult> AllActiveCurrency()
         {
             try
             {
-                var res = await ser.GetAllActiveAsync(new ValuteModel() { DateOfValuteCourse=DateTime.Now,ExchangeRate=0,CurrencyID=0});
+                var res = await se.GetAllActiveAsync(new ValuteModel() { DateOfValuteCourse=DateTime.Now,ExchangeRate=0,CurrencyID=0});
                 return Ok(res);
             }
             catch (Exception exp)
             {
-                Log.LogCritical(exp.Message, exp.StackTrace);
+                log.LogCritical(exp.Message, exp.StackTrace);
                 return BadRequest(exp.Message);
             }
         }
@@ -104,12 +96,12 @@ namespace RGBA.Optio.UI.Controllers
         {
             try
             {
-                var res = await ser.GetAllAsync(new CurrencyModel() {CurrencyCode="Undefined",NameOfValute="Undefined"});
+                var res = await se.GetAllAsync(new CurrencyModel() {CurrencyCode="Undefined",NameOfValute="Undefined"});
                 return Ok(res);
             }
             catch (Exception exp)
             {
-                Log.LogCritical(exp.Message, exp.StackTrace);
+                log.LogCritical(exp.Message, exp.StackTrace);
                 return BadRequest(exp.Message);
             }
         }
@@ -120,12 +112,12 @@ namespace RGBA.Optio.UI.Controllers
         {
             try
             {
-                var res = await ser.GetAllAsync(new ValuteModel() { CurrencyID = 0, ExchangeRate = 0, DateOfValuteCourse = DateTime.Now });
+                var res = await se.GetAllAsync(new ValuteModel() { CurrencyID = 0, ExchangeRate = 0, DateOfValuteCourse = DateTime.Now });
                 return Ok(res);
             }
             catch (Exception exp)
             {
-                Log.LogCritical(exp.Message, exp.StackTrace);
+                log.LogCritical(exp.Message, exp.StackTrace);
                 return BadRequest(exp.Message);
             }
         }
@@ -136,12 +128,12 @@ namespace RGBA.Optio.UI.Controllers
         {
             try
             {
-                var res = await ser.GetByIdAsync(id, new CurrencyModel() { CurrencyCode = "Undefined",NameOfValute="Undefined"});
+                var res = await se.GetByIdAsync(id, new CurrencyModel() { CurrencyCode = "Undefined",NameOfValute="Undefined"});
                 return Ok(res);
             }
             catch (Exception exp)
             {
-                Log.LogCritical(exp.Message, exp.StackTrace);
+                log.LogCritical(exp.Message, exp.StackTrace);
                 return BadRequest(exp.Message);
             }
         }
@@ -152,12 +144,12 @@ namespace RGBA.Optio.UI.Controllers
         {
             try
             {
-                var res = await ser.GetByIdAsync(id, new ValuteModel() {CurrencyID=0,ExchangeRate=0,DateOfValuteCourse=DateTime.Now});
+                var res = await se.GetByIdAsync(id, new ValuteModel() {CurrencyID=0,ExchangeRate=0,DateOfValuteCourse=DateTime.Now});
                 return Ok(res);
             }
             catch (Exception exp)
             {
-                Log.LogCritical(exp.Message, exp.StackTrace);
+                log.LogCritical(exp.Message, exp.StackTrace);
                 return BadRequest(exp.Message);
             }
         }
@@ -168,7 +160,7 @@ namespace RGBA.Optio.UI.Controllers
         {
             try
             {
-                var rek = await ser.RemoveAsync(id, new CurrencyModel() { CurrencyCode = "Undefined", NameOfValute = "Undefined" });
+                var rek = await se.RemoveAsync(id, new CurrencyModel() { CurrencyCode = "Undefined", NameOfValute = "Undefined" });
                 if (rek)
                 {
                     return Ok(rek);
@@ -177,7 +169,7 @@ namespace RGBA.Optio.UI.Controllers
             }
             catch (Exception exp)
             {
-                Log.LogCritical(exp.Message, exp.StackTrace);
+                log.LogCritical(exp.Message, exp.StackTrace);
                 return BadRequest(exp.Message);
             }
         }
@@ -188,7 +180,7 @@ namespace RGBA.Optio.UI.Controllers
         {
             try
             {
-                var res = await ser.RemoveAsync(id, new ValuteModel());
+                var res = await se.RemoveAsync(id, new ValuteModel());
                 if (res)
                 {
                     return Ok(res);
@@ -197,7 +189,7 @@ namespace RGBA.Optio.UI.Controllers
             }
             catch (Exception exp)
             {
-                Log.LogCritical(exp.Message, exp.StackTrace);
+                log.LogCritical(exp.Message, exp.StackTrace);
                 return BadRequest(exp.Message);
             }
         }
@@ -208,12 +200,12 @@ namespace RGBA.Optio.UI.Controllers
         {
             try
             {
-                var res = await ser.SoftDeleteAsync(id,new CurrencyModel() { CurrencyCode="undefined",NameOfValute="undefined"});
+                var res = await se.SoftDeleteAsync(id,new CurrencyModel() { CurrencyCode="undefined",NameOfValute="undefined"});
                 return Ok(res);
             }
             catch (Exception exp)
             {
-                Log.LogCritical(exp.Message, exp.StackTrace);
+                log.LogCritical(exp.Message, exp.StackTrace);
                 return BadRequest(exp.Message);
             }
         }
@@ -224,7 +216,7 @@ namespace RGBA.Optio.UI.Controllers
         {
             try
             {
-                var res = await ser.SoftDeleteAsync(id, new ValuteModel() {CurrencyID=0,ExchangeRate=0,DateOfValuteCourse=DateTime.Now});
+                var res = await se.SoftDeleteAsync(id, new ValuteModel() {CurrencyID=0,ExchangeRate=0,DateOfValuteCourse=DateTime.Now});
                 if (res)
                 {
                     return Ok(res);
@@ -234,7 +226,7 @@ namespace RGBA.Optio.UI.Controllers
             }
             catch (Exception exp)
             {
-                Log.LogCritical(exp.Message, exp.StackTrace);
+                log.LogCritical(exp.Message, exp.StackTrace);
                 return BadRequest(exp.Message);
             }
         }
@@ -244,12 +236,12 @@ namespace RGBA.Optio.UI.Controllers
         {
             try
             {
-                var res = await ser.UpdateAsync(id,entity);
+                var res = await se.UpdateAsync(id,entity);
                 return Ok(res);
             }
             catch (Exception exp)
             {
-                Log.LogCritical(exp.Message, exp.StackTrace);
+                log.LogCritical(exp.Message, exp.StackTrace);
                 return BadRequest(exp.Message);
             }
         }
@@ -260,12 +252,12 @@ namespace RGBA.Optio.UI.Controllers
         {
             try
             {
-                var res = await ser.UpdateAsync(id,mod);
+                var res = await se.UpdateAsync(id,mod);
                 return Ok(res);
             }
             catch (Exception exp)
             {
-                Log.LogCritical(exp.Message, exp.StackTrace);
+                log.LogCritical(exp.Message, exp.StackTrace);
                 return BadRequest(exp.Message);
             }
         }

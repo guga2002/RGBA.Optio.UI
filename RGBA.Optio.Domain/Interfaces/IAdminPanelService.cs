@@ -7,8 +7,8 @@ namespace RGBA.Optio.Domain.Interfaces
     public interface IAdminPanelService
     {
         Task<IdentityResult> DeleteRole(string role);
-        Task<UserModel> Info(string Username);
-        Task<bool> ForgetPassword(string Email, string NewPassword);
+        Task<UserModel> Info(string Username);  
+        Task<bool> ForgetPassword(string email, string newPassword); 
         Task<bool> RefreshToken(string Username,string token);
         Task<IdentityResult> RegisterUserAsync(UserModel User, string Password);
         Task<(SignInResult, string)> SignInAsync(SignInModel mod);

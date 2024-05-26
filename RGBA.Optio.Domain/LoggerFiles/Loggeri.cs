@@ -6,12 +6,8 @@ namespace RGBA.Optio.Domain.LoggerFiles
 {
     public class Loggeri : ILogger
     {
-        private readonly OptioMongoContext context;
+        private readonly OptioMongoContext context = new();
 
-        public Loggeri()
-        {
-            context = new OptioMongoContext();
-        }
         public IDisposable? BeginScope<TState>(TState state) where TState : notnull
         {
             return null;
@@ -24,15 +20,14 @@ namespace RGBA.Optio.Domain.LoggerFiles
 
         public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func<TState, Exception?, string> formatter)
         {
-            if (logLevel == LogLevel.Information || logLevel == LogLevel.Error || logLevel == LogLevel.Critical)
+            if (logLevel is not (LogLevel.Information or LogLevel.Error or LogLevel.Critical)) return;
+
+            var doc = new BsonDocument
             {
-                var doc = new BsonDocument
-               {
-                   { "LogLevel", logLevel.ToString() },
-                   { "Message", formatter(state, exception) }
-                };
-                context.UserLogs.InsertOne(doc);
-            }
+                { "LogLevel", logLevel.ToString() },
+                { "Message", formatter(state, exception) }
+            };
+            context.UserLogs.InsertOne(doc);
         }
     }
 }

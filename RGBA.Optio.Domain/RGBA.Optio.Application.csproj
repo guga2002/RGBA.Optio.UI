@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RGBA.Optio.Core\RGBA.Optio.Core.csproj" />
+    <ProjectReference Include="..\RGBA.Optio.Core\RGBA.Optio.Domain.csproj" />
   </ItemGroup>
 
 </Project>

@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34714.143
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RGBA.Optio.UI", "RGBA.Optio.UI\RGBA.Optio.UI.csproj", "{F787AA19-A57B-4C20-8C2A-B882CE79F3A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RGBA.Optio.API", "RGBA.Optio.UI\RGBA.Optio.API.csproj", "{F787AA19-A57B-4C20-8C2A-B882CE79F3A9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RGBA.Optio.Core", "RGBA.Optio.Core\RGBA.Optio.Core.csproj", "{BE9E5666-AC04-4C04-A13F-8EB564FCDFD4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RGBA.Optio.Domain", "RGBA.Optio.Core\RGBA.Optio.Domain.csproj", "{BE9E5666-AC04-4C04-A13F-8EB564FCDFD4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RGBA.Optio.Domain", "RGBA.Optio.Domain\RGBA.Optio.Domain.csproj", "{366A044E-99DC-45A8-AAE0-E360F30164BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RGBA.Optio.Application", "RGBA.Optio.Domain\RGBA.Optio.Application.csproj", "{366A044E-99DC-45A8-AAE0-E360F30164BA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RGBA.Optio.Stream", "RGBA.Optio.Stream\RGBA.Optio.Stream.csproj", "{0BCD68AB-D7BA-4D1C-B192-AD21939ED3B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RGBA.Optio.Infrastructure", "RGBA.Optio.Infrastructure\RGBA.Optio.Infrastructure.csproj", "{96B36CB1-A45A-4137-A4C8-C02353A2DE0A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RGBA.Optio.Persistance", "RGBA.Optio.Infrastructure\RGBA.Optio.Persistance.csproj", "{96B36CB1-A45A-4137-A4C8-C02353A2DE0A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

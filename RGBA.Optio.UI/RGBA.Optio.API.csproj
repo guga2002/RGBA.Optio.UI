@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -28,9 +28,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RGBA.Optio.Core\RGBA.Optio.Core.csproj" />
-    <ProjectReference Include="..\RGBA.Optio.Domain\RGBA.Optio.Domain.csproj" />
-    <ProjectReference Include="..\RGBA.Optio.Infrastructure\RGBA.Optio.Infrastructure.csproj" />
+    <ProjectReference Include="..\RGBA.Optio.Core\RGBA.Optio.Domain.csproj" />
+    <ProjectReference Include="..\RGBA.Optio.Domain\RGBA.Optio.Application.csproj" />
+    <ProjectReference Include="..\RGBA.Optio.Infrastructure\RGBA.Optio.Persistance.csproj" />
   </ItemGroup>
 
 </Project>

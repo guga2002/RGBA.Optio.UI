@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "6/7O7THlT1IkGR12Lp0P4KRXLCKPRBExWZoqK2qkKTXWuTkChUWGZwvxJ37pYyLhFvFIESMPjpA7OIr8s4X5qQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\RAISA\\source\\repos\\RGBA.Optio.UI\\RGBA.Optio.Infrastructure\\RGBA.Optio.Infrastructure.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\RAISA\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.1\\microsoft.extensions.dependencyinjection.abstractions.8.0.1.nupkg.sha512"
+  ],
+  "logs": []
+}

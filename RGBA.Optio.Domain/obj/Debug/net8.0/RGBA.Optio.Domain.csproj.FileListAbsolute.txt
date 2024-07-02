@@ -1,0 +1,16 @@
+C:\Users\RAISA\source\repos\RGBA.Optio.UI\RGBA.Optio.Domain\bin\Debug\net8.0\RGBA.Optio.Domain.deps.json
+C:\Users\RAISA\source\repos\RGBA.Optio.UI\RGBA.Optio.Domain\bin\Debug\net8.0\RGBA.Optio.Domain.dll
+C:\Users\RAISA\source\repos\RGBA.Optio.UI\RGBA.Optio.Domain\bin\Debug\net8.0\RGBA.Optio.Domain.pdb
+C:\Users\RAISA\source\repos\RGBA.Optio.UI\RGBA.Optio.Domain\bin\Debug\net8.0\RGBA.Optio.Core.dll
+C:\Users\RAISA\source\repos\RGBA.Optio.UI\RGBA.Optio.Domain\bin\Debug\net8.0\RGBA.Optio.Core.pdb
+C:\Users\RAISA\source\repos\RGBA.Optio.UI\RGBA.Optio.Domain\obj\Debug\net8.0\RGBA.Optio.Domain.csproj.AssemblyReference.cache
+C:\Users\RAISA\source\repos\RGBA.Optio.UI\RGBA.Optio.Domain\obj\Debug\net8.0\RGBA.Optio.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\RAISA\source\repos\RGBA.Optio.UI\RGBA.Optio.Domain\obj\Debug\net8.0\RGBA.Optio.Domain.AssemblyInfoInputs.cache
+C:\Users\RAISA\source\repos\RGBA.Optio.UI\RGBA.Optio.Domain\obj\Debug\net8.0\RGBA.Optio.Domain.AssemblyInfo.cs
+C:\Users\RAISA\source\repos\RGBA.Optio.UI\RGBA.Optio.Domain\obj\Debug\net8.0\RGBA.Optio.Domain.csproj.CoreCompileInputs.cache
+C:\Users\RAISA\source\repos\RGBA.Optio.UI\RGBA.Optio.Domain\obj\Debug\net8.0\RGBA.Optio.Domain.sourcelink.json
+C:\Users\RAISA\source\repos\RGBA.Optio.UI\RGBA.Optio.Domain\obj\Debug\net8.0\RGBA.Opt.0DD973EB.Up2Date
+C:\Users\RAISA\source\repos\RGBA.Optio.UI\RGBA.Optio.Domain\obj\Debug\net8.0\RGBA.Optio.Domain.dll
+C:\Users\RAISA\source\repos\RGBA.Optio.UI\RGBA.Optio.Domain\obj\Debug\net8.0\refint\RGBA.Optio.Domain.dll
+C:\Users\RAISA\source\repos\RGBA.Optio.UI\RGBA.Optio.Domain\obj\Debug\net8.0\RGBA.Optio.Domain.pdb
+C:\Users\RAISA\source\repos\RGBA.Optio.UI\RGBA.Optio.Domain\obj\Debug\net8.0\ref\RGBA.Optio.Domain.dll

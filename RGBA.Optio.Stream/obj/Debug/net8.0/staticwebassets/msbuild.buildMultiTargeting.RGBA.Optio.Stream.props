@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\RGBA.Optio.Stream.props" />
+</Project>

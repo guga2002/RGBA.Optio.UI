@@ -1,0 +1,13 @@
+C:\Users\RAISA\source\repos\RGBA.Optio.UI\RGBA.Optio.Infrastructure\bin\Debug\net8.0\RGBA.Optio.Infrastructure.deps.json
+C:\Users\RAISA\source\repos\RGBA.Optio.UI\RGBA.Optio.Infrastructure\bin\Debug\net8.0\RGBA.Optio.Infrastructure.dll
+C:\Users\RAISA\source\repos\RGBA.Optio.UI\RGBA.Optio.Infrastructure\bin\Debug\net8.0\RGBA.Optio.Infrastructure.pdb
+C:\Users\RAISA\source\repos\RGBA.Optio.UI\RGBA.Optio.Infrastructure\obj\Debug\net8.0\RGBA.Optio.Infrastructure.csproj.AssemblyReference.cache
+C:\Users\RAISA\source\repos\RGBA.Optio.UI\RGBA.Optio.Infrastructure\obj\Debug\net8.0\RGBA.Optio.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\RAISA\source\repos\RGBA.Optio.UI\RGBA.Optio.Infrastructure\obj\Debug\net8.0\RGBA.Optio.Infrastructure.AssemblyInfoInputs.cache
+C:\Users\RAISA\source\repos\RGBA.Optio.UI\RGBA.Optio.Infrastructure\obj\Debug\net8.0\RGBA.Optio.Infrastructure.AssemblyInfo.cs
+C:\Users\RAISA\source\repos\RGBA.Optio.UI\RGBA.Optio.Infrastructure\obj\Debug\net8.0\RGBA.Optio.Infrastructure.csproj.CoreCompileInputs.cache
+C:\Users\RAISA\source\repos\RGBA.Optio.UI\RGBA.Optio.Infrastructure\obj\Debug\net8.0\RGBA.Optio.Infrastructure.sourcelink.json
+C:\Users\RAISA\source\repos\RGBA.Optio.UI\RGBA.Optio.Infrastructure\obj\Debug\net8.0\RGBA.Optio.Infrastructure.dll
+C:\Users\RAISA\source\repos\RGBA.Optio.UI\RGBA.Optio.Infrastructure\obj\Debug\net8.0\refint\RGBA.Optio.Infrastructure.dll
+C:\Users\RAISA\source\repos\RGBA.Optio.UI\RGBA.Optio.Infrastructure\obj\Debug\net8.0\RGBA.Optio.Infrastructure.pdb
+C:\Users\RAISA\source\repos\RGBA.Optio.UI\RGBA.Optio.Infrastructure\obj\Debug\net8.0\ref\RGBA.Optio.Infrastructure.dll

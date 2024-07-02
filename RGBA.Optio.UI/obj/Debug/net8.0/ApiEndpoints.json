@@ -1,0 +1,1157 @@
+[
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.AdminPanellController",
+    "Method": "Add",
+    "RelativePath": "api/AdminPanell/Role/{role}/Add",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "role",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.AdminPanellController",
+    "Method": "Delete",
+    "RelativePath": "api/AdminPanell/Role/{role}/Delete",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "role",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.AdminPanellController",
+    "Method": "Roles",
+    "RelativePath": "api/AdminPanell/Roles",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.AdminPanellController",
+    "Method": "DeleteUser",
+    "RelativePath": "api/AdminPanell/User/{id}/DeleteUser",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.AdminPanellController",
+    "Method": "Role",
+    "RelativePath": "api/AdminPanell/User/{userid}Role/{role}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userid",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "role",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.AdminPanellController",
+    "Method": "Users",
+    "RelativePath": "api/AdminPanell/Users",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.CurrencyController",
+    "Method": "AddCurrency",
+    "RelativePath": "api/Currency/AddCurrency",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "entity",
+        "Type": "RGBA.Optio.Domain.Models.ValuteModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.CurrencyController",
+    "Method": "Add",
+    "RelativePath": "api/Currency/currency",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "entity",
+        "Type": "RGBA.Optio.Domain.Models.CurrencyModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.CurrencyController",
+    "Method": "GetAllAsync",
+    "RelativePath": "api/Currency/currency",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.CurrencyController",
+    "Method": "GetByIdAsync",
+    "RelativePath": "api/Currency/currency/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.CurrencyController",
+    "Method": "RemoveCurrencyAsync",
+    "RelativePath": "api/Currency/currency/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.CurrencyController",
+    "Method": "UpdateAsync",
+    "RelativePath": "api/Currency/currency/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "entity",
+        "Type": "RGBA.Optio.Domain.Models.CurrencyModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.CurrencyController",
+    "Method": "SoftDelete",
+    "RelativePath": "api/Currency/currency/{id}/SoftDelete",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.CurrencyController",
+    "Method": "GetAllActiveAsync",
+    "RelativePath": "api/Currency/currency/active",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.CurrencyController",
+    "Method": "AllActiveCurrency",
+    "RelativePath": "api/Currency/Currency/active",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.CurrencyController",
+    "Method": "GetAllValuteAsync",
+    "RelativePath": "api/Currency/valute",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.CurrencyController",
+    "Method": "GetByIdAsync",
+    "RelativePath": "api/Currency/valute/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int64",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.CurrencyController",
+    "Method": "RemoveValuteAsync",
+    "RelativePath": "api/Currency/valute/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int64",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.CurrencyController",
+    "Method": "UpdateAsync",
+    "RelativePath": "api/Currency/valute/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int64",
+        "IsRequired": true
+      },
+      {
+        "Name": "mod",
+        "Type": "RGBA.Optio.Domain.Models.ValuteModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.CurrencyController",
+    "Method": "SoftDelete",
+    "RelativePath": "api/Currency/valute/{id}/SoftDelete",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int64",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.CustomerController",
+    "Method": "ConfirmEmail",
+    "RelativePath": "api/Customer/ConfirmEmail",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.CustomerController",
+    "Method": "Info",
+    "RelativePath": "api/Customer/Info",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.CustomerController",
+    "Method": "Registration",
+    "RelativePath": "api/Customer/Registration",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "user",
+        "Type": "RGBA.Optio.Domain.Models.UserModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.CustomerController",
+    "Method": "ResetPassword",
+    "RelativePath": "api/Customer/ResetPassword",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "arg",
+        "Type": "RGBA.Optio.Domain.Models.RequestModels.PasswordResetModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.CustomerController",
+    "Method": "ResetPasswordNow",
+    "RelativePath": "api/Customer/ResetPasswordNow",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "email",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "NewPassword",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.CustomerController",
+    "Method": "SignIn",
+    "RelativePath": "api/Customer/SignIn",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "mod",
+        "Type": "RGBA.Optio.Domain.Models.RequestModels.SignInModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.CustomerController",
+    "Method": "Signout",
+    "RelativePath": "api/Customer/Signout",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.MerchantController",
+    "Method": "Get",
+    "RelativePath": "api/Merchant",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.MerchantController",
+    "Method": "Insert",
+    "RelativePath": "api/Merchant",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "value",
+        "Type": "RGBA.Optio.Domain.Models.MerchantModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.MerchantController",
+    "Method": "Get",
+    "RelativePath": "api/Merchant/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int64",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.MerchantController",
+    "Method": "Update",
+    "RelativePath": "api/Merchant/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int64",
+        "IsRequired": true
+      },
+      {
+        "Name": "value",
+        "Type": "RGBA.Optio.Domain.Models.MerchantModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.MerchantController",
+    "Method": "AllActive",
+    "RelativePath": "api/Merchant/AllActive",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.MerchantController",
+    "Method": "AllActiveLocation",
+    "RelativePath": "api/Merchant/AllActiveLocation",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.MerchantController",
+    "Method": "Delete",
+    "RelativePath": "api/Merchant/Delete/{id}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int64",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.MerchantController",
+    "Method": "DeleteLocationSoft",
+    "RelativePath": "api/Merchant/DeleteLocationSoft/{id}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int64",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.MerchantController",
+    "Method": "GetLocation",
+    "RelativePath": "api/Merchant/GetLocation",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.MerchantController",
+    "Method": "Insert",
+    "RelativePath": "api/Merchant/Location",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "value",
+        "Type": "RGBA.Optio.Domain.Models.locationModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.MerchantController",
+    "Method": "DeleteLocation",
+    "RelativePath": "api/Merchant/location/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int64",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.MerchantController",
+    "Method": "GetLocation",
+    "RelativePath": "api/Merchant/Location/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int64",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.MerchantController",
+    "Method": "Update",
+    "RelativePath": "api/Merchant/Location/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int64",
+        "IsRequired": true
+      },
+      {
+        "Name": "value",
+        "Type": "RGBA.Optio.Domain.Models.locationModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.MerchantController",
+    "Method": "Deletemerchant",
+    "RelativePath": "api/Merchant/merchant/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int64",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.MerchantController",
+    "Method": "AssignLocationtoMerchant",
+    "RelativePath": "api/Merchant/Merchant/{Merchantid}/Location/{Locationid}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Merchantid",
+        "Type": "System.Int64",
+        "IsRequired": true
+      },
+      {
+        "Name": "Locationid",
+        "Type": "System.Int64",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.StatisticController",
+    "Method": "GetAllTransactionBetweenDate",
+    "RelativePath": "api/Statistic/AllTransactionBetweenDate",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "date",
+        "Type": "RGBA.Optio.Domain.Models.RequestModels.DateRangeRequestModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.StatisticController",
+    "Method": "GetMostPopularCategoryAsync",
+    "RelativePath": "api/Statistic/MostPopularCategory",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "date",
+        "Type": "RGBA.Optio.Domain.Models.RequestModels.DateRangeRequestModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.StatisticController",
+    "Method": "GetMostPopularChannelAsync",
+    "RelativePath": "api/Statistic/MostPopularChannel",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "date",
+        "Type": "RGBA.Optio.Domain.Models.RequestModels.DateRangeRequestModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.StatisticController",
+    "Method": "GetMostPopularLocationAsync",
+    "RelativePath": "api/Statistic/MostPopularLocation",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "date",
+        "Type": "RGBA.Optio.Domain.Models.RequestModels.DateRangeRequestModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.StatisticController",
+    "Method": "GetMostPopularMerchantsAsync",
+    "RelativePath": "api/Statistic/MostPopularMerchants",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "date",
+        "Type": "RGBA.Optio.Domain.Models.RequestModels.DateRangeRequestModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.StatisticController",
+    "Method": "GetTransactionQuantityWithDateAsync",
+    "RelativePath": "api/Statistic/TransactionQuantityWithDate",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "date",
+        "Type": "RGBA.Optio.Domain.Models.RequestModels.DateRangeRequestModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.TransactionController",
+    "Method": "Get",
+    "RelativePath": "api/Transaction",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.TransactionController",
+    "Method": "Insert",
+    "RelativePath": "api/Transaction",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "RGBA.Optio.Domain.Models.TransactionModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.TransactionController",
+    "Method": "Get",
+    "RelativePath": "api/Transaction/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int64",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.TransactionController",
+    "Method": "AllActive",
+    "RelativePath": "api/Transaction/AllActive",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.TransactionController",
+    "Method": "DeleteSoft",
+    "RelativePath": "api/Transaction/DeleteSoft/{id}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int64",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.TransactionController",
+    "Method": "Delete",
+    "RelativePath": "api/Transaction/transaction/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int64",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.TransactionController",
+    "Method": "Update",
+    "RelativePath": "api/Transaction/Transaction/{id}/Update",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int64",
+        "IsRequired": true
+      },
+      {
+        "Name": "transactionModel",
+        "Type": "RGBA.Optio.Domain.Models.TransactionModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.TransactionRelatedController",
+    "Method": "AddAsync",
+    "RelativePath": "api/TransactionRelated/category",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "entity",
+        "Type": "RGBA.Optio.Domain.Models.CategoryModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.TransactionRelatedController",
+    "Method": "GetAllCategoryAsync",
+    "RelativePath": "api/TransactionRelated/category",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.TransactionRelatedController",
+    "Method": "GetcategoryByIdAsync",
+    "RelativePath": "api/TransactionRelated/category/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int64",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.TransactionRelatedController",
+    "Method": "RemoveCategoryAsync",
+    "RelativePath": "api/TransactionRelated/category/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int64",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.TransactionRelatedController",
+    "Method": "CategorySoftDeleteAsync",
+    "RelativePath": "api/TransactionRelated/category/{id}/softdelete",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int64",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.TransactionRelatedController",
+    "Method": "UpdateAsync",
+    "RelativePath": "api/TransactionRelated/category/{id}/update",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int64",
+        "IsRequired": true
+      },
+      {
+        "Name": "entity",
+        "Type": "RGBA.Optio.Domain.Models.CategoryModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.TransactionRelatedController",
+    "Method": "GetAllActiveCategorryAsync",
+    "RelativePath": "api/TransactionRelated/category/active",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.TransactionRelatedController",
+    "Method": "GetAllAsync",
+    "RelativePath": "api/TransactionRelated/Chanell",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.TransactionRelatedController",
+    "Method": "RemoveChanellAsync",
+    "RelativePath": "api/TransactionRelated/chanell/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int64",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.TransactionRelatedController",
+    "Method": "ChanellSoftDeleteAsync",
+    "RelativePath": "api/TransactionRelated/chanell/{id}/softdelete",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int64",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.TransactionRelatedController",
+    "Method": "UpdateAsync",
+    "RelativePath": "api/TransactionRelated/chanell/{id}/update",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int64",
+        "IsRequired": true
+      },
+      {
+        "Name": "entity",
+        "Type": "RGBA.Optio.Domain.Models.ChanellModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.TransactionRelatedController",
+    "Method": "GetAllActivecChanellAsync",
+    "RelativePath": "api/TransactionRelated/chanell/active",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.TransactionRelatedController",
+    "Method": "AddAsync",
+    "RelativePath": "api/TransactionRelated/channel",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "entity",
+        "Type": "RGBA.Optio.Domain.Models.ChanellModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.TransactionRelatedController",
+    "Method": "GetChanellByIdAsync",
+    "RelativePath": "api/TransactionRelated/GetChanellByIdAsync",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int64",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "RGBA.Optio.Domain.Responses.Response\u00601[[RGBA.Optio.Domain.Models.ChanellModel, RGBA.Optio.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.TransactionRelatedController",
+    "Method": "GetAllTransactionTypeAsync",
+    "RelativePath": "api/TransactionRelated/transactiontype",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.TransactionRelatedController",
+    "Method": "TransactionType",
+    "RelativePath": "api/TransactionRelated/TransactionType",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "entity",
+        "Type": "RGBA.Optio.Domain.Models.TransactionTypeModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.TransactionRelatedController",
+    "Method": "GetTransactionTypeByIdAsync",
+    "RelativePath": "api/TransactionRelated/transactiontype/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int64",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.TransactionRelatedController",
+    "Method": "RemoveTransactionTypeAsync",
+    "RelativePath": "api/TransactionRelated/transactiontype/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int64",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.TransactionRelatedController",
+    "Method": "TransactionTypeSoftDeleteAsync",
+    "RelativePath": "api/TransactionRelated/transactiontype/{id}/softdelete",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int64",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.TransactionRelatedController",
+    "Method": "UpdateAsync",
+    "RelativePath": "api/TransactionRelated/transactiontype/{id}/update",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int64",
+        "IsRequired": true
+      },
+      {
+        "Name": "entity",
+        "Type": "RGBA.Optio.Domain.Models.TransactionTypeModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RGBA.Optio.UI.Controllers.TransactionRelatedController",
+    "Method": "GetAllActiveTransactionAsync",
+    "RelativePath": "api/TransactionRelated/transactiontype/active",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  }
+]

@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Optio.Core.Entities
 {
     [Table("CategoryOfTransactions")]
-    [Index(nameof(TransactionCategory),IsDescending =new bool[]{true})]
+    [Index(nameof(TransactionCategory), IsDescending = [true])]
     public class Category:AbstractClass
     {
 

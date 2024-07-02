@@ -5,10 +5,8 @@ using RGBA.Optio.Core.Entities;
 
 namespace Optio.Core.Data
 {
-    public class OptioDB:IdentityDbContext<User>
-    { 
-        public OptioDB(DbContextOptions<OptioDB> bs) : base(bs) { }
-
+    public class OptioDB(DbContextOptions<OptioDB> bs) : IdentityDbContext<User>(bs)
+    {
         public virtual DbSet<LocationToMerchant> LoactionTomerchant { get; set; }
         public virtual DbSet<Category> CategoryOfTransactions { get; set; }
         public virtual DbSet<Channels>Channels { get; set; }
